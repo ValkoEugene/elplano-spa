@@ -9,8 +9,6 @@ import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 
-import { drawerWidth } from './Sidebar.js'
-
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -26,8 +24,6 @@ const styles = theme => ({
     }),
   },
   appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -40,10 +36,6 @@ const styles = theme => ({
 })
 
 class Header extends React.Component {
-  handleClick = () => {
-    console.log('click')
-  }
-
   render() {
     const { classes, toggleSidebar, isSidebarOpen } = this.props
     

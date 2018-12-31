@@ -11,9 +11,9 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
-    width: `calc(100% - ${drawerWidth}px)`,
     marginTop: 56
   },
+  // TODO: Нужно только для дектопной версии
   sideOpen: {
     marginLeft: drawerWidth
   },
@@ -33,7 +33,6 @@ class MainContent extends React.Component {
           [classes.sideClose]: !isSidebarOpen,
         })}
       >
-        <div className={classes.toolbar} />
 
         <Routes />
       </main>
