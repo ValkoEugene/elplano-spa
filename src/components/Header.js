@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import classNames from 'classnames'
 import AppBar from '@material-ui/core/AppBar'
@@ -8,6 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
+import { logout } from '../actions/AuthActions.js'
 
 const styles = theme => ({
   root: {
@@ -37,7 +39,7 @@ const styles = theme => ({
 
 class Header extends React.Component {
   render() {
-    const { classes, toggleSidebar, isSidebarOpen } = this.props
+    const { classes, toggleSidebar, isSidebarOpen, logoutAction } = this.props
     
 
     return (
@@ -67,8 +69,8 @@ class Header extends React.Component {
               EL Plano
             </Typography>
 
-            <Button color="inherit">
-              Login
+            <Button color="inherit" onClick={ logoutAction }>
+              Выход
             </Button>
           </Toolbar>
         </AppBar>
@@ -80,7 +82,19 @@ class Header extends React.Component {
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
   isSidebarOpen: PropTypes.bool.isRequired,
-  toggleSidebar: PropTypes.func.isRequired
+  toggleSidebar: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  logout: PropTypes.func.isRequired
 }
 
-export default withStyles(styles, { withTheme: true })(Header)
+const mapStateToProps = ({ user }) => {
+  const { name } = user
+  
+  return { name }
+}
+
+const mapDispatchToProps = dispatch => ({
+  logoutAction: () => dispatch(logout())
+})
+
+export default  connect(mapStateToProps, mapDispatchToProps)(withStyles(styles, { withTheme: true })(Header))

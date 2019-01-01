@@ -46,7 +46,9 @@ class Auth extends React.Component {
   }
 
   componentWillMount() {
-    this.props.history.push('/auth')
+    const path = this.props.isAuth ? '/' : '/auth'
+
+    this.props.history.push(path)
   }
 
   onChangeHandler = ({ target }) => {
@@ -127,7 +129,6 @@ Auth.propTypes = {
   loginAction: PropTypes.func.isRequired
 }
 
-// приклеиваем данные из store
 const mapStateToProps = ({ user }) => {
   const { name, isAuth } = user
   
