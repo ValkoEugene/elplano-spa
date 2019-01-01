@@ -1,5 +1,6 @@
 import React, { Comopnent } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import TeachersTable from './TeachersTable.js'
@@ -18,39 +19,8 @@ const styles = theme => ({
 })
 
 class Teachers extends React.Component {
-  state = {
-    teachers: [
-      {
-        id: 1,
-        name: 'Иван Иванов',
-        avatar: 'https://randomuser.me/api/portraits/men/75.jpg',
-        lesson: [
-          { title: 'Математический анализ' }
-        ]
-      },
-      {
-        id: 2,
-        name: 'Казим Нуримов',
-        avatar: 'https://randomuser.me/api/portraits/men/83.jpg',
-        lesson: [
-          { title: 'История Кубани' },
-          { title: 'БЖД' }
-        ]
-      },
-      {
-        id: 3,
-        name: 'Ирина Петрова',
-        avatar: 'https://randomuser.me/api/portraits/women/18.jpg',
-        lesson: [
-          { title: 'Экономика' }
-        ]
-      }
-    ]
-  }
-
   render() {
-    const { classes } = this.props
-    const { teachers } = this.state
+    const { classes, teachers } = this.props
 
     return (
       <Paper className={ classes.root } elevation={ 1 }>
@@ -64,6 +34,11 @@ class Teachers extends React.Component {
 
 Teachers.propTypes = {
   classes: PropTypes.object.isRequired,
+  teachers: PropTypes.array.isRequired
 }
 
-export default withStyles(styles, { withTheme: true })(Teachers)
+const mapStateToProps = ({ teachers }) => ({
+  teachers: teachers.teachersList,
+})
+
+export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(Teachers))
