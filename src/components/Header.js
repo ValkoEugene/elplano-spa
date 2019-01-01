@@ -84,7 +84,7 @@ Header.propTypes = {
   isSidebarOpen: PropTypes.bool.isRequired,
   toggleSidebar: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
-  logout: PropTypes.func.isRequired
+  logoutAction: PropTypes.func.isRequired
 }
 
 const mapStateToProps = ({ user }) => {
