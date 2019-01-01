@@ -3,9 +3,24 @@ import Teachers from './components/Teachers.js'
 import Lessons from './components/Lessons.js'
 import Ratings from './components/Ratings.js'
 import Timetable from './components/Timetable.js'
+import Group from './components/Group.js'
 import Auth from './components/Auth.js'
 
 const menuItems = [
+  {
+    text: 'Авторизация',
+    path: '/auth',
+    exact: false,
+    sidebar: false,
+    component: Auth
+  },
+  {
+    text: 'Расписание',
+    path: '/timetable',
+    exact: false,
+    sidebar: true,
+    component: Timetable
+  },
   {
     text: 'Главная',
     path: '/',
@@ -35,18 +50,11 @@ const menuItems = [
     component: Ratings
   },
   {
-    text: 'Расписание',
-    path: '/timetable',
+    text: 'Группа',
+    path: '/group',
     exact: false,
     sidebar: true,
-    component: Timetable
-  },
-  {
-    text: 'Авторизация',
-    path: '/auth',
-    exact: false,
-    sidebar: false,
-    component: Auth
+    component: Group
   },
 ]
 
