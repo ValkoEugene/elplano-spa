@@ -3,13 +3,15 @@ import React from 'react'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
-import InboxIcon from '@material-ui/icons/MoveToInbox'
+import Icon from '@material-ui/core/Icon'
 
 const SidebarItem = ({ menuItem }) => (
   <li>
     <ListItem button component={ Link } to={ menuItem.path }>
       <ListItemIcon>
-        <InboxIcon />
+        <Icon>
+          { menuItem.icon || 'add_circle' }
+        </Icon>
       </ListItemIcon>
       
       <ListItemText primary={ menuItem.text } />

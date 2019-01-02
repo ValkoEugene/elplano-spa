@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import { withStyles } from '@material-ui/core/styles'
 import classNames from 'classnames'
 import AppBar from '@material-ui/core/AppBar'
@@ -35,9 +36,21 @@ const styles = theme => ({
     marginLeft: -12,
     marginRight: 20,
   },
+  logo: {
+    cursor: 'pointer',
+    transition: '.5s',
+    padding: 5,
+    '&:hover': {
+      textShadow: '0 0 5px white, 0 0 10px white, 0 0 15px white'
+    }
+  }
 })
 
 class Header extends React.Component {
+  redirectToHomePage = () => {
+    this.props.history.push('/')
+  }
+
   render() {
     const { classes, toggleSidebar, isSidebarOpen, logoutAction } = this.props
     
@@ -66,7 +79,9 @@ class Header extends React.Component {
               color="inherit"
               className={ classes.grow }
             >
-              EL Plano
+              <span className={ classes.logo } onClick={ this.redirectToHomePage }>
+                EL Plano
+              </span>
             </Typography>
 
             <Button color="inherit" onClick={ logoutAction }>
@@ -97,4 +112,4 @@ const mapDispatchToProps = dispatch => ({
   logoutAction: () => dispatch(logout())
 })
 
-export default  connect(mapStateToProps, mapDispatchToProps)(withStyles(styles, { withTheme: true })(Header))
+export default  connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles, { withTheme: true })(Header)))
