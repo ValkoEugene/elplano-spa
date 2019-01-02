@@ -10,6 +10,25 @@ import Header from './components/Header.js'
 import MainContent from './components/MainContent.js'
 import Auth from './components/Auth.js'
 
+const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+  },
+  palette: {
+    primary: {
+      light: '#757ce8',
+      main: '#3f50b5',
+      dark: '#002884',
+      contrastText: '#fff',
+    },
+    secondary: {
+      light: '#ff7961',
+      main: '#f44336',
+      dark: '#ba000d',
+      contrastText: '#000',
+    },
+  },
+})
 
 class App extends Component {
   state = {
@@ -22,26 +41,6 @@ class App extends Component {
 
   render() {
     const { isAuth } = this.props
-
-    const theme = createMuiTheme({
-      typography: {
-        useNextVariants: true,
-      },
-      palette: {
-        primary: {
-          light: '#757ce8',
-          main: '#3f50b5',
-          dark: '#002884',
-          contrastText: '#fff',
-        },
-        secondary: {
-          light: '#ff7961',
-          main: '#f44336',
-          dark: '#ba000d',
-          contrastText: '#000',
-        },
-      },
-    })
 
     const mainApp = (
       <div className="App">
@@ -81,3 +80,4 @@ const mapStateToProps = ({ user }) => {
 
 // в наш компонент App, с помощью connect(mapStateToProps)
 export default connect(mapStateToProps)(App)
+export { theme }
