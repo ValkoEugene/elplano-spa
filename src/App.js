@@ -11,6 +11,9 @@ import MainContent from './components/MainContent.js'
 import Auth from './components/Auth.js'
 
 const theme = createMuiTheme({
+  custom: {
+    background: '#f7f7f7',
+  },
   typography: {
     useNextVariants: true,
   },
@@ -22,10 +25,10 @@ const theme = createMuiTheme({
       contrastText: '#fff',
     },
     secondary: {
-      light: '#F06292',
+      light: '#EC407A',
       main: '#C2185B',
       dark: '#880E4F',
-      contrastText: '#000',
+      contrastText: '#fff',
     },
   },
   // Стандартная

@@ -4,8 +4,6 @@ import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import BottomNavigation from '@material-ui/core/BottomNavigation'
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
-import Typography from '@material-ui/core/Typography'
-import Divider from '@material-ui/core/Divider'
 import TeacherName from './TeacherName'
 import Icon from '@material-ui/core/Icon'
 
@@ -16,8 +14,8 @@ const styles = theme => ({
   title: {
     padding: 15,
     fontSize: 22,
-    background: theme.palette.secondary.main,
-    color: theme.palette.primary.contrastText 
+    background: theme.custom.background,
+    color: theme.palette.secondary.main 
   },
   subTitle: {
     marginTop: 15,
@@ -35,6 +33,9 @@ const styles = theme => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  bottomNavigationWrapper: {
+    background: theme.custom.background
   }
 })
 
@@ -50,8 +51,6 @@ const LessonItem = ({ classes, lesson }) => {
       <h6 className={ classes.subTitle }> Средняя оценка: </h6>
       <p className={ classes.rating } > { rating || '-' } </p>
 
-      {/* <Divider variant="middle" /> */}
-
       <h6 className={ classes.subTitle }> Преподаватели: </h6>
 
       <div className={ classes.teachersWrapper }>
@@ -62,11 +61,12 @@ const LessonItem = ({ classes, lesson }) => {
       </div>
 
       <BottomNavigation
+        className={ classes.bottomNavigationWrapper }
         showLabels
       >
-        <BottomNavigationAction label="Задания" icon={<Icon color="secondary">work</Icon>} />
-        <BottomNavigationAction label="Оценки" icon={<Icon color="secondary">star_half</Icon>} />
-        <BottomNavigationAction label="Вложения" icon={<Icon color="secondary">unarchive</Icon>} />
+        <BottomNavigationAction label="Задания" icon={<Icon color="primary">work</Icon>} />
+        <BottomNavigationAction label="Оценки" icon={<Icon color="primary">star_half</Icon>} />
+        <BottomNavigationAction label="Вложения" icon={<Icon color="primary">unarchive</Icon>} />
       </BottomNavigation>
 
     </Paper>
