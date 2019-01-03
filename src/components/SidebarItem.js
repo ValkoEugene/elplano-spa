@@ -9,7 +9,7 @@ const SidebarItem = ({ menuItem }) => (
   <li>
     <ListItem button component={ Link } to={ menuItem.path }>
       <ListItemIcon>
-        <Icon>
+        <Icon color="secondary">
           { menuItem.icon || 'add_circle' }
         </Icon>
       </ListItemIcon>

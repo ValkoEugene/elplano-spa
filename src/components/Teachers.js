@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import TeachersTable from './TeachersTable.js'
+import Loader from './Loader.js'
+import { loadTeachers } from '../actions/TeachersActions.js' 
 
 
 const styles = theme => ({
@@ -19,14 +21,22 @@ const styles = theme => ({
 })
 
 class Teachers extends React.Component {
+  componentWillMount() {
+    this.props.loadTeachers()
+  }
+
   render() {
-    const { classes, teachers } = this.props
+    const { classes, teachers, loading } = this.props
 
     return (
       <Paper className={ classes.root } elevation={ 1 }>
         <h4 className={ classes.title }>Список преподавателей</h4>
 
-        <TeachersTable teachers={ teachers } />
+        {
+          loading ?
+            <Loader /> 
+            : <TeachersTable teachers={ teachers } />
+        }
       </Paper>
     )
   }
@@ -34,11 +44,18 @@ class Teachers extends React.Component {
 
 Teachers.propTypes = {
   classes: PropTypes.object.isRequired,
-  teachers: PropTypes.array.isRequired
+  teachers: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
+  loadTeachers: PropTypes.func.isRequired
 }
 
 const mapStateToProps = ({ teachers }) => ({
   teachers: teachers.teachersList,
+  loading: teachers.loading
 })
 
-export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(Teachers))
+const mapDispatchToProps = dispatch => ({
+  loadTeachers: () => dispatch(loadTeachers())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles, { withTheme: true })(Teachers))
