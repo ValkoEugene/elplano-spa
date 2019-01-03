@@ -16,18 +16,33 @@ const theme = createMuiTheme({
   },
   palette: {
     primary: {
-      light: '#757ce8',
-      main: '#3f50b5',
-      dark: '#002884',
+      light: '#BA68C8',
+      main: '#673AB7',
+      dark: '#4A148C',
       contrastText: '#fff',
     },
     secondary: {
-      light: '#ff7961',
-      main: '#f44336',
-      dark: '#ba000d',
+      light: '#F06292',
+      main: '#C2185B',
+      dark: '#880E4F',
       contrastText: '#000',
     },
   },
+  // Стандартная
+  // palette: {
+  //   primary: {
+  //     light: '#757ce8',
+  //     main: '#3f50b5',
+  //     dark: '#002884',
+  //     contrastText: '#fff',
+  //   },
+  //   secondary: {
+  //     light: '#ff7961',
+  //     main: '#f44336',
+  //     dark: '#ba000d',
+  //     contrastText: '#000',
+  //   },
+  // },
 })
 
 class App extends Component {
