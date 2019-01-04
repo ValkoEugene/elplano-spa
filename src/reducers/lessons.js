@@ -1,9 +1,13 @@
-import { LESSONS_LOADED_ERROR, LESSONS_LOADED_SECCUSS, LESSONS_LOADING_REQUEST } from '../actions/LessonsActions.js'
+import {
+  LESSONS_LOADED_ERROR,
+  LESSONS_LOADED_SECCUSS,
+  LESSONS_LOADING_REQUEST,
+} from '../actions/LessonsActions.js'
 
 const initialState = {
   loading: true,
   error: null,
-  lessonsList: []
+  lessonsList: [],
 }
 
 export const lessonsReducer = (state = initialState, action) => {

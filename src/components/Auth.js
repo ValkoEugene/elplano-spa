@@ -11,35 +11,24 @@ import FormControl from '@material-ui/core/FormControl'
 import Paper from '@material-ui/core/Paper'
 import { login } from '../actions/AuthActions.js'
 
-const styles = theme => ({
-  title: {  
-    color: theme.palette.primary.dark
-  },
-  authContainer: {
-    width: '100vw',
-    height: '100vh',
-    display: 'flex',
-    background: `linear-gradient(110deg, ${theme.palette.primary.light} 60%, ${theme.palette.primary.dark} 60%)`,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loginWrapper: {
-    display: 'flex',
-    height: '50%',
-    width:' 50%',
-  },
-  loginForm: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '25px',
-  },
-  margin: {
-    marginBottom: '15px'
-  },
+const mapStateToProps = ({ user }) => {
+  const { name, isAuth } = user
+
+  return { name, isAuth }
+}
+
+const mapDispatchToProps = dispatch => ({
+  loginAction: name => dispatch(login(name)),
 })
 
-class Auth extends React.Component {
+class Auth extends Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    name: PropTypes.string.isRequired,
+    isAuth: PropTypes.bool.isRequired,
+    loginAction: PropTypes.func.isRequired,
+  }
+
   state = {
     login: '',
     password: '',
@@ -55,7 +44,7 @@ class Auth extends React.Component {
     const { value, name } = target
 
     this.setState({
-      [name]: value
+      [name]: value,
     })
   }
 
@@ -68,12 +57,15 @@ class Auth extends React.Component {
     loginRequest({ login, password })
       .then(({ login }) => {
         this.props.loginAction(login)
+
         // TODO: Вызывать из redux
         this.props.history.push('/')
+
+        return login
       })
       .catch(error => console.error(`Ошибка: ${error}`))
   }
-  
+
   render() {
     const { classes } = this.props
 
@@ -89,8 +81,8 @@ class Auth extends React.Component {
                 name="login"
                 id="login"
                 type="email"
-                value={this.state.login}
-                onChange={this.onChangeHandler}
+                value={ this.state.login }
+                onChange={ this.onChangeHandler }
               />
             </FormControl>
 
@@ -100,16 +92,12 @@ class Auth extends React.Component {
                 id="password"
                 name="password"
                 type="password"
-                value={this.state.password}
-                onChange={this.onChangeHandler}
+                value={ this.state.password }
+                onChange={ this.onChangeHandler }
               />
             </FormControl>
 
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.auth}
-            >
+            <Button variant="contained" color="primary" onClick={ this.auth }>
               Войти
             </Button>
           </div>
@@ -119,24 +107,37 @@ class Auth extends React.Component {
   }
 }
 
-Auth.propTypes = {
-  classes: PropTypes.object.isRequired,
-}
-
-Auth.propTypes = {
-  name: PropTypes.string.isRequired,
-  isAuth: PropTypes.bool.isRequired,
-  loginAction: PropTypes.func.isRequired
-}
-
-const mapStateToProps = ({ user }) => {
-  const { name, isAuth } = user
-  
-  return { name, isAuth }
-}
-
-const mapDispatchToProps = dispatch => ({
-  loginAction: name => dispatch(login(name))
+const styles = theme => ({
+  title: {
+    color: theme.palette.primary.dark,
+  },
+  authContainer: {
+    width: '100vw',
+    height: '100vh',
+    display: 'flex',
+    background: `linear-gradient(110deg, ${theme.palette.primary.light} 60%, ${
+      theme.palette.primary.dark
+    } 60%)`,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loginWrapper: {
+    display: 'flex',
+    height: '50%',
+    width: ' 50%',
+  },
+  loginForm: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '25px',
+  },
+  margin: {
+    marginBottom: '15px',
+  },
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles,{ withTheme: true })(Auth)))
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(withStyles(styles, { withTheme: true })(Auth)))
