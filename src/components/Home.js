@@ -9,7 +9,8 @@ import { theme } from '../App.js'
 
 const styles = theme => ({
   paper: {
-    padding: 25
+    padding: 25,
+    ...theme.custom.shadow,
   },
 })
 
@@ -41,7 +42,7 @@ class Home extends React.Component {
         </Grid>
 
         <Grid item xs={6}>
-          <Grid container spacing={8}>
+          <Grid container spacing={16}>
             <Grid item xs={6}>
               <HomeWidget
                 text={ 'Заданий на сегодня' }

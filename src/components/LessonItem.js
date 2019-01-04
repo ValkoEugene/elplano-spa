@@ -9,9 +9,11 @@ import Icon from '@material-ui/core/Icon'
 
 const styles = theme => ({
   wrapper: {
+    ...theme.custom.shadow,
     textAlign: 'center',
   },
   title: {
+    ...theme.custom.borderRadiusTop,
     padding: 15,
     fontSize: 22,
     background: theme.custom.background,
@@ -35,7 +37,8 @@ const styles = theme => ({
     justifyContent: 'center'
   },
   bottomNavigationWrapper: {
-    background: theme.custom.background
+    background: theme.custom.background,
+    ...theme.custom.borderRadiusBottom
   }
 })
 
@@ -78,4 +81,4 @@ LessonItem.proptypes = {
   lesson: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(LessonItem)
+export default withStyles(styles, { theme: true })(LessonItem)

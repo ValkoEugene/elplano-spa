@@ -5,12 +5,13 @@ import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import TeachersTable from './TeachersTable.js'
 import Loader from './Loader.js'
-import { loadTeachers } from '../actions/TeachersActions.js' 
+import { loadTeachers } from '../actions/TeachersActions.js'
+import PaperHeader from './PaperHeader' 
 
 
 const styles = theme => ({
   root: {
-    padding: 15
+    ...theme.custom.shadow,
   },
   avatar: {
     margin: 10,
@@ -30,7 +31,7 @@ class Teachers extends React.Component {
 
     return (
       <Paper className={ classes.root } elevation={ 1 }>
-        <h4 className={ classes.title }>Список преподавателей</h4>
+        <PaperHeader title="Список преподавателей" showInput={ true } />
 
         {
           loading ?

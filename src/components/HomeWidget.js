@@ -5,7 +5,11 @@ import Paper from '@material-ui/core/Paper'
 import Icon from '@material-ui/core/Icon'
 
 const styles = theme => ({
+  paperWrapper: {
+    ...theme.custom.shadow,
+  },
   wrapper: {
+    ...theme.custom.shadow,
     padding: 5,
     display: 'flex',
     position: 'relative',
@@ -36,7 +40,7 @@ const styles = theme => ({
 })
 
 const HomeWidget = ({ wrapperStyle, classes, text, count, icon }) => (
-  <Paper>
+  <Paper className={ classes.paperWrapper }>
     <div className={ classes.wrapper } style={ wrapperStyle }>
       <div className={ classes.infoWrapper }>
         <p className={ classes.count }>{ count }</p>
