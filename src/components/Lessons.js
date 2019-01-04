@@ -9,65 +9,65 @@ import LessonItem from './LessonItem'
 import { loadLessons } from '../actions/LessonsActions'
 import PaperHeader from './PaperHeader'
 
-const styles = theme => ({
-  paperRootWrapper: {
-    ...theme.custom.shadow
-  },
-  lessonsWrapper: {
-    padding: 15
-  }
+const mapStateToProps = ({ lessons }) => ({
+  loading: lessons.loading,
+  error: lessons.error,
+  lessons: lessons.lessonsList,
 })
 
-class Lessons extends React.Component {
+const mapDispatchToProps = dispatch => ({
+  loadLessons: () => dispatch(loadLessons()),
+})
+
+class Lessons extends Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    loading: PropTypes.bool.isRequired,
+    lessons: PropTypes.array.isRequired,
+    loadLessons: PropTypes.func.isRequired,
+  }
+
   componentWillMount() {
     this.props.loadLessons()
   }
 
-  render () {
+  render() {
     const { lessons, loading, classes } = this.props
 
-    const lessonsItems = lessons.map(item => 
-      <Grid item xs={12} sm={6} key={ item.id }>
+    const lessonsItems = lessons.map(item => (
+      <Grid item xs={ 12 } sm={ 6 } key={ item.id }>
         <LessonItem lesson={ item } />
       </Grid>
-    )
-   
+    ))
+
     return (
       <div>
         <Paper className={ classes.paperRootWrapper }>
-          
           <PaperHeader title="Список предметов" showInput={ true } />
-          
-          {
-            loading ? (
-              <Loader />
-            ) : (
-              <Grid container spacing={24} className={ classes.lessonsWrapper }>
-                { lessonsItems }
-              </Grid>
-            )
-          }
+
+          { loading ? (
+            <Loader />
+          ) : (
+            <Grid container spacing={ 24 } className={ classes.lessonsWrapper }>
+              { lessonsItems }
+            </Grid>
+          ) }
         </Paper>
       </div>
     )
   }
 }
 
-Lessons.propTypes = {
-  classes: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired,
-  lessons: PropTypes.array.isRequired,
-  loadLessons: PropTypes.func.isRequired
-}
-
-const mapStateToProps = ({ lessons }) => ({
-  loading: lessons.loading,
-  error: lessons.error,
-  lessons: lessons.lessonsList
+const styles = theme => ({
+  paperRootWrapper: {
+    ...theme.custom.shadow,
+  },
+  lessonsWrapper: {
+    padding: 15,
+  },
 })
 
-const mapDispatchToProps = dispatch => ({
-  loadLessons: () => dispatch(loadLessons())
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Lessons))
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Lessons))

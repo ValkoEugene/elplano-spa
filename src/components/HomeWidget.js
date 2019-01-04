@@ -1,43 +1,8 @@
-import React, { Comopnent } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Icon from '@material-ui/core/Icon'
-
-const styles = theme => ({
-  paperWrapper: {
-    ...theme.custom.shadow,
-  },
-  wrapper: {
-    ...theme.custom.shadow,
-    padding: 5,
-    display: 'flex',
-    position: 'relative',
-    overflow: 'hidden'
-  },
-  infoWrapper: {
-    padding: 5,
-    width: '100%'
-  },
-  count: {
-    margin: 0,
-    fontSize: '34px',
-    marginLeft: 5
-  },
-  text: {
-    padding: 5,
-    margin: 0,
-  },
-  iconWrapper: {
-    position: 'absolute',
-    top: '10%',
-    right: '5%',
-    opacity: 0.1
-  },
-  icon: {
-    fontSize: '88px'
-  }
-})
 
 const HomeWidget = ({ wrapperStyle, classes, text, count, icon }) => (
   <Paper className={ classes.paperWrapper }>
@@ -59,7 +24,42 @@ HomeWidget.propTypes = {
   wrapperStyle: PropTypes.object,
   text: PropTypes.string.isRequired,
   count: PropTypes.number.isRequired,
-  icon: PropTypes.string.isRequired
+  icon: PropTypes.string.isRequired,
 }
+
+const styles = theme => ({
+  paperWrapper: {
+    ...theme.custom.shadow,
+  },
+  wrapper: {
+    ...theme.custom.shadow,
+    padding: 5,
+    display: 'flex',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  infoWrapper: {
+    padding: 5,
+    width: '100%',
+  },
+  count: {
+    margin: 0,
+    fontSize: '34px',
+    marginLeft: 5,
+  },
+  text: {
+    padding: 5,
+    margin: 0,
+  },
+  iconWrapper: {
+    position: 'absolute',
+    top: '10%',
+    right: '5%',
+    opacity: 0.1,
+  },
+  icon: {
+    fontSize: '88px',
+  },
+})
 
 export default withStyles(styles, { withTheme: true })(HomeWidget)

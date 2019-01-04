@@ -1,4 +1,4 @@
-import React, { Comopnent } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
@@ -7,6 +7,53 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Avatar from '@material-ui/core/Avatar'
+
+class Group extends Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    group: PropTypes.array.isRequired,
+  }
+
+  state = {
+    tableHeadsTitle: ['ФИО', 'Телефон', 'Почта'],
+  }
+
+  render() {
+    const { classes, group } = this.props
+    const { tableHeadsTitle } = this.state
+
+    const tableHeadsRow = tableHeadsTitle.map(item => (
+      <TableCell align="left" key={ item }>
+        { item }
+      </TableCell>
+    ))
+
+    const createGroupItemRow = row => (
+      <TableRow key={ row.id }>
+        <TableCell align="left" className={ classes.nameCell }>
+          <Avatar alt={ row.name } src={ row.avatar } className={ classes.avatar } />
+          { row.name }
+        </TableCell>
+
+        <TableCell align="left">{ row.tel }</TableCell>
+
+        <TableCell align="left">{ row.email }</TableCell>
+      </TableRow>
+    )
+
+    return (
+      <div className={ classes.root }>
+        <Table>
+          <TableHead>
+            <TableRow>{ tableHeadsRow }</TableRow>
+          </TableHead>
+
+          <TableBody>{ group.map(row => createGroupItemRow(row)) }</TableBody>
+        </Table>
+      </div>
+    )
+  }
+}
 
 const styles = theme => ({
   root: {
@@ -21,64 +68,8 @@ const styles = theme => ({
   },
   nameCell: {
     display: 'flex',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 })
-
-class Group extends React.Component {
-  state = {
-    tableHeadsTitle: ['ФИО', 'Телефон', 'Почта'],
-  }
-
-  render() {
-    const { classes, group } = this.props
-    const { tableHeadsTitle } = this.state
-
-    const tableHeadsRow = tableHeadsTitle.map(item => 
-      <TableCell align="left" key={item}>
-        { item }
-      </TableCell>
-    )
-
-    const createGroupItemRow = row => (
-      <TableRow key={row.id}>
-        <TableCell align="left" className={ classes.nameCell }>
-          <Avatar alt={ row.name } src={ row.avatar } className={classes.avatar} />
-          { row.name }
-        </TableCell>
-
-        <TableCell align="left">
-          { row.tel }
-        </TableCell>
-
-        <TableCell align="left">
-          { row.email }
-        </TableCell>
-      </TableRow>
-    )
-
-    return (
-      <div className={ classes.root }>
-        <Table>
-
-          <TableHead>
-            <TableRow>
-              { tableHeadsRow }
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            { group.map(row => createGroupItemRow(row)) }
-          </TableBody>
-        </Table>
-      </div>
-    )
-  }
-}
-
-Group.propTypes = {
-  classes: PropTypes.object.isRequired,
-  group: PropTypes.array.isRequired
-}
 
 export default withStyles(styles, { withTheme: true })(Group)

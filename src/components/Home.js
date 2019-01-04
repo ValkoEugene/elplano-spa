@@ -7,52 +7,58 @@ import Grid from '@material-ui/core/Grid'
 import HomeWidget from './HomeWidget.js'
 import { theme } from '../App.js'
 
-const styles = theme => ({
-  paper: {
-    padding: 25,
-    ...theme.custom.shadow,
-  },
+const mapStateToProps = ({ mainInfo }) => ({
+  ...mainInfo,
 })
 
-class Home extends React.Component {
+class Home extends Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    todayTaskCount: PropTypes.number.isRequired,
+    todayMeasuresCount: PropTypes.number.isRequired,
+    tomorroyTaskCount: PropTypes.number.isRequired,
+    tomorroyMeasuresCount: PropTypes.number.isRequired,
+    todayTimetable: PropTypes.array.isRequired,
+    todayTasks: PropTypes.array.isRequired,
+  }
+
   render() {
     const {
       classes,
       todayTaskCount,
       todayMeasuresCount,
       tomorroyTaskCount,
-      tomorroyMeasuresCount
+      tomorroyMeasuresCount,
     } = this.props
 
     const wrapperStyle1 = {
       color: 'white',
-      background: theme.palette.primary.light
+      background: theme.palette.primary.light,
     }
 
     const wrapperStyle2 = {
       color: 'white',
-      background: theme.palette.primary.main
+      background: theme.palette.primary.main,
     }
 
     return (
-      <Grid container spacing={24}>
-
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>Расписание на сегодня</Paper>
+      <Grid container spacing={ 24 }>
+        <Grid item xs={ 6 }>
+          <Paper className={ classes.paper }>Расписание на сегодня</Paper>
         </Grid>
 
-        <Grid item xs={6}>
-          <Grid container spacing={16}>
-            <Grid item xs={6}>
+        <Grid item xs={ 6 }>
+          <Grid container spacing={ 16 }>
+            <Grid item xs={ 6 }>
               <HomeWidget
                 text={ 'Заданий на сегодня' }
                 count={ todayTaskCount }
-                icon={ 'work' } 
+                icon={ 'work' }
                 wrapperStyle={ wrapperStyle1 }
               />
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={ 6 }>
               <HomeWidget
                 text={ 'Мероприятий на сегодня' }
                 count={ todayMeasuresCount }
@@ -61,7 +67,7 @@ class Home extends React.Component {
               />
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={ 6 }>
               <HomeWidget
                 text={ 'Заданий на завтра' }
                 count={ tomorroyTaskCount }
@@ -70,7 +76,7 @@ class Home extends React.Component {
               />
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={ 6 }>
               <HomeWidget
                 text={ 'Мероприятий на завтра' }
                 count={ tomorroyMeasuresCount }
@@ -78,27 +84,20 @@ class Home extends React.Component {
                 wrapperStyle={ wrapperStyle2 }
               />
             </Grid>
-           
           </Grid>
         </Grid>
-
       </Grid>
     )
   }
 }
 
-Home.propTypes = {
-  classes: PropTypes.object.isRequired,
-  todayTaskCount: PropTypes.number.isRequired,
-  todayMeasuresCount: PropTypes.number.isRequired,
-  tomorroyTaskCount: PropTypes.number.isRequired,
-  tomorroyMeasuresCount: PropTypes.number.isRequired,
-  todayTimetable: PropTypes.array.isRequired,
-  todayTasks: PropTypes.array.isRequired
-}
-
-const mapStateToProps = ({ mainInfo }) => ({
-  ...mainInfo
+const styles = theme => ({
+  paper: {
+    padding: 25,
+    ...theme.custom.shadow,
+  },
 })
 
-export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(Home))
+export default connect(mapStateToProps)(
+  withStyles(styles, { withTheme: true })(Home)
+)
