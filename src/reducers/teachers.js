@@ -1,33 +1,23 @@
+import { TEACHERS_LOADED_ERROR, TEACHERS_LOADING_REQUEST, TEACHERS_LOADED_SECCUSS } from '../actions/TeachersActions.js'
+
 const initialState = {
-  teachersList: [
-    {
-      id: 1,
-      name: 'Иван Иванов',
-      avatar: 'https://randomuser.me/api/portraits/men/75.jpg',
-      lesson: [
-        { title: 'Математический анализ' }
-      ]
-    },
-    {
-      id: 2,
-      name: 'Казим Нуримов',
-      avatar: 'https://randomuser.me/api/portraits/men/83.jpg',
-      lesson: [
-        { title: 'История Кубани' },
-        { title: 'БЖД' }
-      ]
-    },
-    {
-      id: 3,
-      name: 'Ирина Петрова',
-      avatar: 'https://randomuser.me/api/portraits/women/18.jpg',
-      lesson: [
-        { title: 'Экономика' }
-      ]
-    }
-  ]
+  loading: true,
+  error: null,
+  teachersList: []
 }
 
-export const teachersReducer = (state = initialState) => {
-  return state
+export const teachersReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case TEACHERS_LOADING_REQUEST:
+      return { ...state, loading: true, teachersList: [] }
+
+    case TEACHERS_LOADED_ERROR:
+      return { ...state, loading: false, error: action.payload }
+
+    case TEACHERS_LOADED_SECCUSS:
+      return { ...state, loading: false, teachersList: action.payload }
+
+    default:
+      return state
+  }
 }

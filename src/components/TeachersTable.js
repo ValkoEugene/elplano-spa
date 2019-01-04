@@ -6,22 +6,13 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import Avatar from '@material-ui/core/Avatar'
+import TeacherName from './TeacherName'
 
 const styles = theme => ({
   root: {
     width: '100%',
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
-  },
-  avatar: {
-    margin: 5,
-    width: 40,
-    height: 40,
-  },
-  teacherCell: {
-    display: 'flex',
-    alignItems: 'center'
   }
 })
 
@@ -52,9 +43,8 @@ class TeachersTables extends React.Component {
             {teachers.map(row => {
               return (
                 <TableRow key={row.id}>
-                  <TableCell align="left" className={ classes.teacherCell }>
-                    <Avatar alt={ row.name } src={ row.avatar } className={classes.avatar} />
-                    { row.name }
+                  <TableCell align="left" >
+                    <TeacherName teacher={row} />
                   </TableCell>
 
                   <TableCell align="left">

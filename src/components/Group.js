@@ -4,10 +4,11 @@ import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import GroupTable from './GroupTable'
+import PaperHeader from './PaperHeader'
 
 const styles = theme => ({
   root: {
-    padding: 15
+    ...theme.custom.shadow,
   },
   avatar: {
     margin: 10,
@@ -23,7 +24,7 @@ class Group extends React.Component {
 
     return (
       <Paper className={ classes.root } elevation={ 1 }>
-        <h4 className={ classes.title }>Список одногрупников</h4>
+        <PaperHeader title="Список одногрупников" showInput={ true } />
 
         <GroupTable group={ group } />
       </Paper>

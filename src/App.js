@@ -11,23 +11,53 @@ import MainContent from './components/MainContent.js'
 import Auth from './components/Auth.js'
 
 const theme = createMuiTheme({
+  custom: {
+    background: '#f7f7f7',
+    shadow: {
+      boxShadow: '0 6px 0 0 rgba(0,0,0,.01), 0 15px 32px 0 rgba(0,0,0,.06)',
+      borderRadius: 8
+    },
+    borderRadiusTop: {
+      borderTopLeftRadius: 8,
+      borderTopRightRadius: 8
+    },
+    borderRadiusBottom: {
+      borderBottomLeftRadius: 8,
+      borderBottomRightRadius: 8
+    }
+  },
   typography: {
     useNextVariants: true,
   },
   palette: {
     primary: {
-      light: '#757ce8',
-      main: '#3f50b5',
-      dark: '#002884',
+      light: '#BA68C8',
+      main: '#673AB7',
+      dark: '#4A148C',
       contrastText: '#fff',
     },
     secondary: {
-      light: '#ff7961',
-      main: '#f44336',
-      dark: '#ba000d',
-      contrastText: '#000',
+      light: '#EC407A',
+      main: '#C2185B',
+      dark: '#880E4F',
+      contrastText: '#fff',
     },
   },
+  // Стандартная
+  // palette: {
+  //   primary: {
+  //     light: '#757ce8',
+  //     main: '#3f50b5',
+  //     dark: '#002884',
+  //     contrastText: '#fff',
+  //   },
+  //   secondary: {
+  //     light: '#ff7961',
+  //     main: '#f44336',
+  //     dark: '#ba000d',
+  //     contrastText: '#000',
+  //   },
+  // },
 })
 
 class App extends Component {

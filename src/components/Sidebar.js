@@ -16,6 +16,15 @@ const styles = theme => ({
   root: {
     display: 'flex',
   },
+  sidebarBg: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    height: '100%',
+    width: '100%',
+    background: 'url(images/sidebar_bg.jpg)',
+    opacity: 0.1
+  },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
@@ -42,8 +51,10 @@ const styles = theme => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
+    backgroundImage: 'linear-gradient(45deg,#673ab7,#c2185b)'
   },
   drawerOpen: {
+    ...theme.custom.shadow,
     width: drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
@@ -51,6 +62,7 @@ const styles = theme => ({
     }),
   },
   drawerClose: {
+    ...theme.custom.shadow,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -108,6 +120,7 @@ class Sidebar extends React.Component {
         }}
         open={ isSidebarOpen }
       >
+        <div className={ classes.sidebarBg } />
         <div className={classes.toolbar}>
           <IconButton onClick={ toggleSidebar }>
             { theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon /> }
