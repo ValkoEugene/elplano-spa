@@ -12,21 +12,23 @@ import Paper from '@material-ui/core/Paper'
 import { login } from '../actions/AuthActions.js'
 
 const styles = theme => ({
-  title: {  
-    color: theme.palette.primary.dark
+  title: {
+    color: theme.palette.primary.dark,
   },
   authContainer: {
     width: '100vw',
     height: '100vh',
     display: 'flex',
-    background: `linear-gradient(110deg, ${theme.palette.primary.light} 60%, ${theme.palette.primary.dark} 60%)`,
+    background: `linear-gradient(110deg, ${theme.palette.primary.light} 60%, ${
+      theme.palette.primary.dark
+    } 60%)`,
     justifyContent: 'center',
     alignItems: 'center',
   },
   loginWrapper: {
     display: 'flex',
     height: '50%',
-    width:' 50%',
+    width: ' 50%',
   },
   loginForm: {
     width: '100%',
@@ -35,7 +37,7 @@ const styles = theme => ({
     padding: '25px',
   },
   margin: {
-    marginBottom: '15px'
+    marginBottom: '15px',
   },
 })
 
@@ -55,7 +57,7 @@ class Auth extends React.Component {
     const { value, name } = target
 
     this.setState({
-      [name]: value
+      [name]: value,
     })
   }
 
@@ -73,17 +75,17 @@ class Auth extends React.Component {
       })
       .catch(error => console.error(`Ошибка: ${error}`))
   }
-  
+
   render() {
     const { classes } = this.props
 
     return (
-      <div className={ classes.authContainer }>
-        <Paper className={ classes.loginWrapper }>
-          <div className={ classes.loginForm }>
-            <h2 className={ classes.title }>Welcom to EL Plano</h2>
+      <div className={classes.authContainer}>
+        <Paper className={classes.loginWrapper}>
+          <div className={classes.loginForm}>
+            <h2 className={classes.title}>Welcom to EL Plano</h2>
 
-            <FormControl className={ classes.margin }>
+            <FormControl className={classes.margin}>
               <InputLabel htmlFor="adornment-password">Логин</InputLabel>
               <Input
                 name="login"
@@ -94,7 +96,7 @@ class Auth extends React.Component {
               />
             </FormControl>
 
-            <FormControl className={ classes.margin }>
+            <FormControl className={classes.margin}>
               <InputLabel htmlFor="adornment-password">Пароль</InputLabel>
               <Input
                 id="password"
@@ -105,11 +107,7 @@ class Auth extends React.Component {
               />
             </FormControl>
 
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.auth}
-            >
+            <Button variant="contained" color="primary" onClick={this.auth}>
               Войти
             </Button>
           </div>
@@ -126,17 +124,20 @@ Auth.propTypes = {
 Auth.propTypes = {
   name: PropTypes.string.isRequired,
   isAuth: PropTypes.bool.isRequired,
-  loginAction: PropTypes.func.isRequired
+  loginAction: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = ({ user }) => {
   const { name, isAuth } = user
-  
+
   return { name, isAuth }
 }
 
 const mapDispatchToProps = dispatch => ({
-  loginAction: name => dispatch(login(name))
+  loginAction: name => dispatch(login(name)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles,{ withTheme: true })(Auth)))
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(withStyles(styles, { withTheme: true })(Auth)))
