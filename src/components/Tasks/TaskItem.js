@@ -54,7 +54,7 @@ class TaskItem extends Component {
 
         <div className={ classes.padding }>
           <FormControlLabel
-            control={ <Checkbox checked={ done } value="jason" /> }
+            control={ <Checkbox color="primary" checked={ done } /> }
             label={ done ? 'Выполнено' : 'Активное' }
           />
 
@@ -68,7 +68,7 @@ class TaskItem extends Component {
         <Divider />
 
         <div className={ classes.padding }>
-          <Button size="small" variant="outlined" color="secondary">
+          <Button size="small" variant="outlined" color="primary">
             Подробности
           </Button>
         </div>
@@ -93,7 +93,7 @@ const styles = theme => ({
   },
   lesson: {
     fontWeight: 'bold',
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.light,
     margin: 0,
     marginTop: 5,
   },
