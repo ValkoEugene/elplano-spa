@@ -200,17 +200,48 @@ export const loadTasksAPI = () =>
     ],
   })
 
-export const loadTaskInfoAPI = id => ({
-  data: {
-    id: 1,
-    title: 'Задание по истории',
-    done: false,
-    date: '2018-05-01',
-    text: 'текст задания...',
-    attachments: [
-      { name: 'учибник_такой_то.pdf' },
-      { name: 'какой_нибудь_файл.doc' },
+export const loadTaskInfoAPI = id =>
+  fakeApiCall({
+    data: {
+      id: 1,
+      title: 'Задание по истории',
+      done: false,
+      date: '2018-05-01',
+      text: 'текст задания...',
+      attachments: [
+        { name: 'учибник_такой_то.pdf' },
+        { name: 'какой_нибудь_файл.doc' },
+      ],
+      author: {
+        name: 'Семён Семеныч',
+        avatar: 'https://randomuser.me/api/portraits/men/75.jpg',
+      },
+      comments: [],
+    },
+  })
+
+export const loadMeasuresAPI = () =>
+  fakeApiCall({
+    data: [
+      {
+        id: 1,
+        date: '2018-06-01',
+        author: {
+          name: 'Семён Семеныч',
+          avatar: 'https://randomuser.me/api/portraits/men/75.jpg',
+        },
+        title: 'Флюрография',
+        text: 'Над всем сходить на флюру',
+      },
+      {
+        id: 2,
+        date: '2018-08-01',
+        author: {
+          name: 'Семён Семеныч',
+          avatar: 'https://randomuser.me/api/portraits/men/75.jpg',
+        },
+        title: 'Тест по бжд',
+        text: '',
+      },
     ],
-    comments: [],
-  },
-})
+  })

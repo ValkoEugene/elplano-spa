@@ -44,11 +44,7 @@ class TaskItem extends Component {
           </div>
 
           <div>
-            <PersonAvatar
-              rootClassName={ classes.avatar }
-              person={ author }
-              showNameText={ false }
-            />
+            <PersonAvatar person={ author } showNameText={ false } />
           </div>
         </div>
 
@@ -86,21 +82,13 @@ const styles = theme => ({
     justifyContent: 'space-between',
   },
   header: {
-    background: theme.custom.background,
-    padding: 15,
-    display: 'flex',
-    justifyContent: 'space-between',
+    ...theme.custom.cardHeaderSpaceBetween,
   },
   lesson: {
-    fontWeight: 'bold',
-    color: theme.palette.primary.light,
-    margin: 0,
-    marginTop: 5,
+    ...theme.custom.primaryTitle,
   },
   secondaryTitle: {
-    margin: 0,
-    color: 'gray',
-    fontSize: 14,
+    ...theme.custom.secondaryTitle,
   },
   padding: {
     padding: 15,

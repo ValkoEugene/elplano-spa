@@ -6,7 +6,7 @@ import Timetable from './components/Timetable'
 import Group from './components/Group'
 import Auth from './components/Auth'
 import TasksContainer from './components/Tasks/TasksContainer'
-import Measures from './components/Measures'
+import MeasuresContainer from './components/Measures/MeasuresContainer'
 import Attachments from './components/Attachments'
 
 const menuItems = [
@@ -46,7 +46,7 @@ const menuItems = [
     exact: false,
     sidebar: true,
     icon: 'event_note',
-    component: Measures,
+    component: MeasuresContainer,
   },
   {
     text: 'Преподаватели',

@@ -10,29 +10,52 @@ import Header from './components/Header.js'
 import MainContent from './components/MainContent.js'
 import Auth from './components/Auth.js'
 
+const THEME_COLORS = {
+  primary: {
+    light: '#BA68C8',
+    main: '#673AB7',
+    dark: '#4A148C',
+    contrastText: '#fff',
+  },
+  secondary: {
+    light: '#EC407A',
+    main: '#C2185B',
+    dark: '#880E4F',
+    contrastText: '#fff',
+  },
+}
+
+const BACKGROUND_COLOR = '#f7f7f7'
+const SUCCESS_COLOR = '#00d600'
+const WARNING_COLOR = '#ff8f00'
+
 const theme = createMuiTheme({
   custom: {
-    background: '#f7f7f7',
-    success: '#00d600',
-    warning: '#ff8f00',
+    background: BACKGROUND_COLOR,
+    success: SUCCESS_COLOR,
+    warning: WARNING_COLOR,
+    primaryTitle: {
+      fontWeight: 'bold',
+      color: THEME_COLORS.primary.light,
+      margin: 0,
+    },
+    secondaryTitle: {
+      margin: 0,
+      color: 'gray',
+      fontSize: 14,
+    },
+    cardHeaderSpaceBetween: {
+      background: BACKGROUND_COLOR,
+      padding: 15,
+      display: 'flex',
+      justifyContent: 'space-between',
+      flexWrap: 'wrap',
+    },
   },
   typography: {
     useNextVariants: true,
   },
-  palette: {
-    primary: {
-      light: '#BA68C8',
-      main: '#673AB7',
-      dark: '#4A148C',
-      contrastText: '#fff',
-    },
-    secondary: {
-      light: '#EC407A',
-      main: '#C2185B',
-      dark: '#880E4F',
-      contrastText: '#fff',
-    },
-  },
+  palette: THEME_COLORS,
 })
 
 const mapStateToProps = ({ user }) => {
