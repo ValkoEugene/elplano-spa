@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import BottomNavigation from '@material-ui/core/BottomNavigation'
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
-import TeacherName from './TeacherName'
+import PersonAvatar from './PersonAvatar'
 import Icon from '@material-ui/core/Icon'
 
 const LessonItem = ({ classes, lesson }) => {
@@ -25,7 +25,7 @@ const LessonItem = ({ classes, lesson }) => {
         { !haveTeachers ? (
           <p className={ classes.rating }>-</p>
         ) : (
-          teachers.map(item => <TeacherName teacher={ item } key={ item.id } />)
+          teachers.map(item => <PersonAvatar person={ item } key={ item.id } />)
         ) }
       </div>
 

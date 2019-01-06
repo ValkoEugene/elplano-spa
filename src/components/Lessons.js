@@ -41,19 +41,17 @@ class Lessons extends Component {
     ))
 
     return (
-      <div>
-        <Paper className={ classes.paperRootWrapper }>
-          <PaperHeader title="Список предметов" showInput={ true } />
+      <Paper className={ classes.paperRootWrapper }>
+        <PaperHeader title="Список предметов" showInput={ true } />
 
-          { loading ? (
-            <Loader />
-          ) : (
-            <Grid container spacing={ 24 } className={ classes.lessonsWrapper }>
-              { lessonsItems }
-            </Grid>
-          ) }
-        </Paper>
-      </div>
+        { loading ? (
+          <Loader />
+        ) : (
+          <Grid container spacing={ 24 } className={ classes.lessonsWrapper }>
+            { lessonsItems }
+          </Grid>
+        ) }
+      </Paper>
     )
   }
 }

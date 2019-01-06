@@ -80,6 +80,7 @@ const styles = theme => ({
     flexGrow: 1,
   },
   appBar: {
+    background: theme.palette.primary.dark,
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,

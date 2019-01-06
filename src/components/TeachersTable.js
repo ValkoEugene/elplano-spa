@@ -6,7 +6,7 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import TeacherName from './TeacherName'
+import PersonAvatar from './PersonAvatar'
 
 class TeachersTables extends Component {
   static propTypes = {
@@ -38,7 +38,7 @@ class TeachersTables extends Component {
               return (
                 <TableRow key={ row.id }>
                   <TableCell align="left">
-                    <TeacherName teacher={ row } />
+                    <PersonAvatar person={ row } />
                   </TableCell>
 
                   <TableCell align="left">

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
 
-const TeacherName = ({ classes, teacher }) => {
-  const { name, avatar } = teacher
+const PersonAvatar = ({ classes, person }) => {
+  const { name, avatar } = person
 
   return (
     <div className={ classes.wrapper }>
@@ -14,7 +14,7 @@ const TeacherName = ({ classes, teacher }) => {
   )
 }
 
-TeacherName.proptypes = {
+PersonAvatar.proptypes = {
   classes: PropTypes.object.isRequired,
   teacher: PropTypes.object.isRequired,
 }
@@ -31,4 +31,4 @@ const styles = theme => ({
   },
 })
 
-export default withStyles(styles)(TeacherName)
+export default withStyles(styles)(PersonAvatar)

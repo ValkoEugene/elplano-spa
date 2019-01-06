@@ -13,18 +13,20 @@ import Auth from './components/Auth.js'
 const theme = createMuiTheme({
   custom: {
     background: '#f7f7f7',
+    success: '#00d600',
+    warning: '#ff8f00',
     shadow: {
       boxShadow: '0 6px 0 0 rgba(0,0,0,.01), 0 15px 32px 0 rgba(0,0,0,.06)',
-      borderRadius: 8
+      borderRadius: 8,
     },
     borderRadiusTop: {
       borderTopLeftRadius: 8,
-      borderTopRightRadius: 8
+      borderTopRightRadius: 8,
     },
     borderRadiusBottom: {
       borderBottomLeftRadius: 8,
-      borderBottomRightRadius: 8
-    }
+      borderBottomRightRadius: 8,
+    },
   },
   typography: {
     useNextVariants: true,
@@ -43,26 +45,22 @@ const theme = createMuiTheme({
       contrastText: '#fff',
     },
   },
-  // Стандартная
-  // palette: {
-  //   primary: {
-  //     light: '#757ce8',
-  //     main: '#3f50b5',
-  //     dark: '#002884',
-  //     contrastText: '#fff',
-  //   },
-  //   secondary: {
-  //     light: '#ff7961',
-  //     main: '#f44336',
-  //     dark: '#ba000d',
-  //     contrastText: '#000',
-  //   },
-  // },
 })
 
+const mapStateToProps = ({ user }) => {
+  const { name, isAuth } = user
+
+  return { name, isAuth }
+}
+
 class App extends Component {
+  static propTypes = {
+    name: PropTypes.string.isRequired,
+    isAuth: PropTypes.bool.isRequired,
+  }
+
   state = {
-    isSidebarOpen: true
+    isSidebarOpen: true,
   }
 
   toggleSidebar = () => {
@@ -74,9 +72,15 @@ class App extends Component {
 
     const mainApp = (
       <div className="App">
-        <Sidebar toggleSidebar={ this.toggleSidebar } isSidebarOpen={ this.state.isSidebarOpen } />
-        
-        <Header toggleSidebar={ this.toggleSidebar } isSidebarOpen={ this.state.isSidebarOpen } />
+        <Sidebar
+          toggleSidebar={ this.toggleSidebar }
+          isSidebarOpen={ this.state.isSidebarOpen }
+        />
+
+        <Header
+          toggleSidebar={ this.toggleSidebar }
+          isSidebarOpen={ this.state.isSidebarOpen }
+        />
 
         <MainContent isSidebarOpen={ this.state.isSidebarOpen } />
       </div>
@@ -96,18 +100,5 @@ class App extends Component {
   }
 }
 
-App.propTypes = {
-  name: PropTypes.string.isRequired,
-  isAuth: PropTypes.bool.isRequired
-}
-
-// приклеиваем данные из store
-const mapStateToProps = ({ user }) => {
-  const { name, isAuth } = user
-  
-  return { name, isAuth }
-}
-
-// в наш компонент App, с помощью connect(mapStateToProps)
 export default connect(mapStateToProps)(App)
 export { theme }
