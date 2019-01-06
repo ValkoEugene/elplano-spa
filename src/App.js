@@ -15,18 +15,6 @@ const theme = createMuiTheme({
     background: '#f7f7f7',
     success: '#00d600',
     warning: '#ff8f00',
-    shadow: {
-      boxShadow: '0 6px 0 0 rgba(0,0,0,.01), 0 15px 32px 0 rgba(0,0,0,.06)',
-      borderRadius: 8,
-    },
-    borderRadiusTop: {
-      borderTopLeftRadius: 8,
-      borderTopRightRadius: 8,
-    },
-    borderRadiusBottom: {
-      borderBottomLeftRadius: 8,
-      borderBottomRightRadius: 8,
-    },
   },
   typography: {
     useNextVariants: true,

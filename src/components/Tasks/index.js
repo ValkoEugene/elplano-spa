@@ -24,7 +24,6 @@ class Tasks extends Component {
 
     return (
       <div>
-        <h2>Список заданий</h2>
         { /* <PaperHeader title="Список заданий" /> */ }
 
         { loading ? (

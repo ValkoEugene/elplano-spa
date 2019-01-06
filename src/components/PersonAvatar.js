@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
 
-const PersonAvatar = ({ classes, person }) => {
+const PersonAvatar = ({ classes, person, showNameText = true }) => {
   const { name, avatar } = person
 
   return (
     <div className={ classes.wrapper }>
       <Avatar alt={ name } src={ avatar } className={ classes.avatar } />
-      { name }
+      { showNameText && name }
     </div>
   )
 }

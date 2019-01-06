@@ -5,6 +5,7 @@ import { userReducer } from './user'
 import { mainInfoReducer } from './mainInfo'
 import { lessonsReducer } from './lessons'
 import { tasksReducer } from './tasks'
+import { routeReducer } from './route'
 
 export const rootReducer = combineReducers({
   group: groupReducer,
@@ -13,4 +14,5 @@ export const rootReducer = combineReducers({
   user: userReducer,
   tasks: tasksReducer,
   mainInfo: mainInfoReducer,
+  route: routeReducer,
 })
