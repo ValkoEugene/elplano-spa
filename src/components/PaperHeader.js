@@ -34,7 +34,7 @@ PaperHeader.propTypes = {
 
 const styles = theme => ({
   appBarRoot: {
-    background: theme.palette.secondary.main,
+    background: theme.palette.primary.light,
     ...theme.custom.borderRadiusTop,
   },
   toolBarRoot: {

@@ -75,9 +75,6 @@ class Sidebar extends Component {
 const drawerWidth = 240
 
 const styles = theme => ({
-  root: {
-    display: 'flex',
-  },
   sidebarBg: {
     position: 'absolute',
     top: 0,
@@ -116,7 +113,7 @@ const styles = theme => ({
     backgroundImage: 'linear-gradient(45deg,#673ab7,#c2185b)',
   },
   drawerOpen: {
-    ...theme.custom.shadow,
+    backgroundImage: 'linear-gradient(45deg,#c2185b,#ba68c8)',
     width: drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
@@ -124,7 +121,7 @@ const styles = theme => ({
     }),
   },
   drawerClose: {
-    ...theme.custom.shadow,
+    backgroundImage: 'linear-gradient(45deg,#c2185b,#ba68c8)',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,

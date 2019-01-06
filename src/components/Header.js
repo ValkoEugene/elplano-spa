@@ -11,15 +11,19 @@ import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import { logout } from '../actions/AuthActions.js'
+import { setCurrentRout } from '../actions/RouteActions'
+import menuItems from '../menuItems'
 
-const mapStateToProps = ({ user }) => {
+const mapStateToProps = ({ user, route }) => {
   const { name } = user
+  const { currentRout } = route
 
-  return { name }
+  return { name, currentRout }
 }
 
 const mapDispatchToProps = dispatch => ({
   logoutAction: () => dispatch(logout()),
+  setCurrentRoutAction: route => dispatch(setCurrentRout(route)),
 })
 
 class Header extends Component {
@@ -28,15 +32,49 @@ class Header extends Component {
     isSidebarOpen: PropTypes.bool.isRequired,
     toggleSidebar: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired,
+    currentRout: PropTypes.object.isRequired,
     logoutAction: PropTypes.func.isRequired,
+    setCurrentRoutAction: PropTypes.func.isRequired,
+  }
+
+  setCurrentRoute = route => {
+    this.props.setCurrentRoutAction(route)
+  }
+
+  getMenuTitle = pathname => {
+    const currentMenuItem = menuItems.find(item => item.path === pathname)
+
+    return currentMenuItem ? currentMenuItem.text : ''
   }
 
   redirectToHomePage = () => {
     this.props.history.push('/')
   }
 
+  componentWillMount() {
+    const history = this.props.history
+
+    this.setCurrentRoute(history.location)
+
+    this.unlisten = history.listen((location, action) => {
+      this.setCurrentRoute(location)
+    })
+  }
+
+  componentWillUnmount() {
+    this.unlisten()
+  }
+
   render() {
-    const { classes, toggleSidebar, isSidebarOpen, logoutAction } = this.props
+    const {
+      classes,
+      toggleSidebar,
+      isSidebarOpen,
+      logoutAction,
+      currentRout,
+    } = this.props
+
+    const pageTitle = this.getMenuTitle(currentRout.pathname)
 
     return (
       <div className={ classes.root }>
@@ -60,6 +98,7 @@ class Header extends Component {
               <span className={ classes.logo } onClick={ this.redirectToHomePage }>
                 EL Plano
               </span>
+              <span className={ classes.pageTitle }>{ pageTitle }</span>
             </Typography>
 
             <Button color="inherit" onClick={ logoutAction }>
@@ -79,7 +118,11 @@ const styles = theme => ({
   grow: {
     flexGrow: 1,
   },
+  pageTitle: {
+    marginLeft: 75,
+  },
   appBar: {
+    background: theme.palette.primary.dark,
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,

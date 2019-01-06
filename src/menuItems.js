@@ -1,13 +1,13 @@
-import Home from './components/Home.js'
-import Teachers from './components/Teachers.js'
-import Lessons from './components/Lessons.js'
-import Ratings from './components/Ratings.js'
-import Timetable from './components/Timetable.js'
-import Group from './components/Group.js'
-import Auth from './components/Auth.js'
-import Tasks from './components/Tasks.js'
-import Measures from './components/Measures.js'
-import Attachments from './components/Attachments.js'
+import Home from './components/Home'
+import Teachers from './components/Teachers'
+import Lessons from './components/Lessons'
+import Ratings from './components/Ratings'
+import Timetable from './components/Timetable'
+import Group from './components/Group'
+import Auth from './components/Auth'
+import TasksContainer from './components/Tasks/TasksContainer'
+import Measures from './components/Measures'
+import Attachments from './components/Attachments'
 
 const menuItems = [
   {
@@ -15,14 +15,14 @@ const menuItems = [
     path: '/auth',
     exact: false,
     sidebar: false,
-    component: Auth
+    component: Auth,
   },
   {
     text: 'Главная',
     path: '/',
     exact: true,
     sidebar: false, // Пока вынес переход в header - logo
-    component: Home
+    component: Home,
   },
   {
     text: 'Расписание',
@@ -30,7 +30,7 @@ const menuItems = [
     exact: false,
     sidebar: true,
     icon: 'school',
-    component: Timetable
+    component: Timetable,
   },
   {
     text: 'Задания',
@@ -38,7 +38,7 @@ const menuItems = [
     exact: false,
     sidebar: true,
     icon: 'work',
-    component: Tasks
+    component: TasksContainer,
   },
   {
     text: 'Мероприятия',
@@ -46,7 +46,7 @@ const menuItems = [
     exact: false,
     sidebar: true,
     icon: 'event_note',
-    component: Measures
+    component: Measures,
   },
   {
     text: 'Преподаватели',
@@ -54,7 +54,7 @@ const menuItems = [
     exact: false,
     sidebar: true,
     icon: 'contacts',
-    component: Teachers
+    component: Teachers,
   },
   {
     text: 'Предметы',
@@ -62,7 +62,7 @@ const menuItems = [
     exact: false,
     sidebar: true,
     icon: 'library_books',
-    component: Lessons
+    component: Lessons,
   },
   {
     text: 'Оценки',
@@ -70,7 +70,7 @@ const menuItems = [
     exact: false,
     sidebar: true,
     icon: 'star_half',
-    component: Ratings
+    component: Ratings,
   },
   {
     text: 'Вложения',
@@ -78,7 +78,7 @@ const menuItems = [
     exact: false,
     sidebar: true,
     icon: 'unarchive',
-    component: Attachments
+    component: Attachments,
   },
   {
     text: 'Группа',
@@ -86,8 +86,8 @@ const menuItems = [
     exact: false,
     sidebar: true,
     icon: 'people',
-    component: Group
+    component: Group,
   },
 ]
 
-export default menuItems 
+export default menuItems

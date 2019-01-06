@@ -4,10 +4,8 @@ import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import Loader from './Loader'
 import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
 import LessonItem from './LessonItem'
 import { loadLessons } from '../actions/LessonsActions'
-import PaperHeader from './PaperHeader'
 
 const mapStateToProps = ({ lessons }) => ({
   loading: lessons.loading,
@@ -42,30 +40,19 @@ class Lessons extends Component {
 
     return (
       <div>
-        <Paper className={ classes.paperRootWrapper }>
-          <PaperHeader title="Список предметов" showInput={ true } />
-
-          { loading ? (
-            <Loader />
-          ) : (
-            <Grid container spacing={ 24 } className={ classes.lessonsWrapper }>
-              { lessonsItems }
-            </Grid>
-          ) }
-        </Paper>
+        { loading ? (
+          <Loader />
+        ) : (
+          <Grid container spacing={ 24 }>
+            { lessonsItems }
+          </Grid>
+        ) }
       </div>
     )
   }
 }
 
-const styles = theme => ({
-  paperRootWrapper: {
-    ...theme.custom.shadow,
-  },
-  lessonsWrapper: {
-    padding: 15,
-  },
-})
+const styles = theme => ({})
 
 export default connect(
   mapStateToProps,

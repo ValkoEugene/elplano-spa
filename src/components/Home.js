@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import HomeWidget from './HomeWidget.js'
 import { theme } from '../App.js'
+import ThemeColors from './ThemeColors'
 
 const mapStateToProps = ({ mainInfo }) => ({
   ...mainInfo,
@@ -86,6 +87,8 @@ class Home extends Component {
             </Grid>
           </Grid>
         </Grid>
+
+        <ThemeColors />
       </Grid>
     )
   }

@@ -4,8 +4,9 @@ import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import BottomNavigation from '@material-ui/core/BottomNavigation'
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
-import TeacherName from './TeacherName'
+import PersonAvatar from './PersonAvatar'
 import Icon from '@material-ui/core/Icon'
+import Divider from '@material-ui/core/Divider'
 
 const LessonItem = ({ classes, lesson }) => {
   const { title, rating, teachers } = lesson
@@ -25,11 +26,13 @@ const LessonItem = ({ classes, lesson }) => {
         { !haveTeachers ? (
           <p className={ classes.rating }>-</p>
         ) : (
-          teachers.map(item => <TeacherName teacher={ item } key={ item.id } />)
+          teachers.map(item => <PersonAvatar person={ item } key={ item.id } />)
         ) }
       </div>
 
-      <BottomNavigation className={ classes.bottomNavigationWrapper } showLabels>
+      <Divider />
+
+      <BottomNavigation showLabels>
         <BottomNavigationAction
           label="Задания"
           icon={ <Icon color="primary">work</Icon> }
@@ -54,15 +57,13 @@ LessonItem.proptypes = {
 
 const styles = theme => ({
   wrapper: {
-    ...theme.custom.shadow,
     textAlign: 'center',
   },
   title: {
-    ...theme.custom.borderRadiusTop,
     padding: 15,
     fontSize: 22,
     background: theme.custom.background,
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.light,
   },
   subTitle: {
     marginTop: 15,
@@ -72,7 +73,7 @@ const styles = theme => ({
   rating: {
     fontSize: 45,
     margin: 0,
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.light,
   },
   teachersWrapper: {
     margin: 15,
@@ -80,10 +81,6 @@ const styles = theme => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  bottomNavigationWrapper: {
-    background: theme.custom.background,
-    ...theme.custom.borderRadiusBottom,
   },
 })
 
