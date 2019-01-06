@@ -6,6 +6,7 @@ import { mainInfoReducer } from './mainInfo'
 import { lessonsReducer } from './lessons'
 import { tasksReducer } from './tasks'
 import { routeReducer } from './route'
+import { measuresReducer } from './measures'
 
 export const rootReducer = combineReducers({
   group: groupReducer,
@@ -15,4 +16,5 @@ export const rootReducer = combineReducers({
   tasks: tasksReducer,
   mainInfo: mainInfoReducer,
   route: routeReducer,
+  measures: measuresReducer,
 })
