@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import GroupTable from './GroupTable'
-import PaperHeader from './PaperHeader'
+import PaperHeader from '../PaperHeader'
 
 const mapStateToProps = ({ group }) => ({
   group: group.groupList,
