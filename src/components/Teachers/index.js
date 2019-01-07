@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import TeachersTable from './TeachersTable.js'
-import Loader from './Loader.js'
-import { loadTeachers } from '../actions/TeachersActions.js'
-import PaperHeader from './PaperHeader'
+import Loader from '../Loader.js'
+import { loadTeachers } from '../../actions/TeachersActions.js'
+import PaperHeader from '../PaperHeader'
 
 const mapStateToProps = ({ teachers }) => ({
   teachers: teachers.teachersList,
