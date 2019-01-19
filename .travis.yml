@@ -5,6 +5,8 @@ branches:
   only:
     - master
     - develop
+before_script:
+  - npm install -g eslint-plugin-react
 deploy:
   provider: heroku
   app:
