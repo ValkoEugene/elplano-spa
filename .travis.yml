@@ -5,3 +5,10 @@ branches:
   only:
     - master
     - develop
+deploy:
+  provider: heroku
+  app:
+    develop: 'elplano-dev'
+    master: 'elplano'
+  api_key:
+    secure: 'd2e63150-c2c8-4481-ae19-76ef8cd9547a'
