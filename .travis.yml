@@ -7,8 +7,7 @@ branches:
   only:
     - master
     - develop
-install:
-  - yarn install --production=false
+before_deploy: yarn build
 deploy:
   provider: heroku
   app:
