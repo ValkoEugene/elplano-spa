@@ -7,7 +7,7 @@ branches:
   only:
     - master
     - develop
-before_deploy: yarn build
+before_deploy: CI=false yarn build
 deploy:
   provider: heroku
   app:
