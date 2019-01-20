@@ -7,8 +7,8 @@ branches:
   only:
     - master
     - develop
-before_script:
-  - npm install -g eslint-plugin-react
+install:
+  - yarn install --production=false
 deploy:
   provider: heroku
   app:
