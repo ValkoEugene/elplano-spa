@@ -13,9 +13,3 @@ deploy:
     develop: 'elplano'
   api_key:
     secure: 'd2e63150-c2c8-4481-ae19-76ef8cd9547a'
-before_deploy:
-  - NODE_ENV=DEVELOPMENT
-  - yarn install
-  - yarn build
-deploy:
-  skip_cleanup: true
