@@ -9,7 +9,7 @@ import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import Paper from '@material-ui/core/Paper'
-import { login } from '../actions/AuthActions.js'
+import { login, createUser } from '../actions/AuthActions.js'
 
 const mapStateToProps = ({ user }) => {
   const { name, isAuth } = user
@@ -18,7 +18,8 @@ const mapStateToProps = ({ user }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  loginAction: name => dispatch(login(name)),
+  login: name => dispatch(login(name)),
+  createUser: user => dispatch(createUser(user)),
 })
 
 class Auth extends Component {
@@ -26,7 +27,8 @@ class Auth extends Component {
     classes: PropTypes.object.isRequired,
     name: PropTypes.string.isRequired,
     isAuth: PropTypes.bool.isRequired,
-    loginAction: PropTypes.func.isRequired,
+    login: PropTypes.func.isRequired,
+    createUser: PropTypes.func.isRequired,
   }
 
   state = {
@@ -54,16 +56,22 @@ class Auth extends Component {
       return
     }
 
-    loginRequest({ login, password })
-      .then(({ login }) => {
-        this.props.loginAction(login)
+    // this.props.login({ email: login, password })
 
-        // TODO: Вызывать из redux
-        this.props.history.push('/')
+    this.props.createUser({ email: login, password })
+    // .then(() => this.props.history.push('/'))
+    // .catch(error => console.error(`Ошибка: ${error}`))
 
-        return login
-      })
-      .catch(error => console.error(`Ошибка: ${error}`))
+    // loginRequest({ login, password })
+    //   .then(({ login }) => {
+    //     this.props.login(login)
+
+    //     // TODO: Вызывать из redux
+    //     this.props.history.push('/')
+
+    //     return login
+    //   })
+    //   .catch(error => console.error(`Ошибка: ${error}`))
   }
 
   render() {
