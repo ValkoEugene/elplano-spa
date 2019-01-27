@@ -8,7 +8,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Sidebar from './components/Sidebar.js'
 import Header from './components/Header.js'
 import MainContent from './components/MainContent.js'
-import Auth from './components/Auth.js'
+import Auth from './components/Auth/index.js'
 
 const THEME_COLORS = {
   primary: {
@@ -59,14 +59,14 @@ const theme = createMuiTheme({
 })
 
 const mapStateToProps = ({ user }) => {
-  const { name, isAuth } = user
+  const { username, isAuth } = user
 
-  return { name, isAuth }
+  return { username, isAuth }
 }
 
 class App extends Component {
   static propTypes = {
-    name: PropTypes.string.isRequired,
+    username: PropTypes.string,
     isAuth: PropTypes.bool.isRequired,
   }
 

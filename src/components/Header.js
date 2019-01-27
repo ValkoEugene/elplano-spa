@@ -15,10 +15,10 @@ import { setCurrentRout } from '../actions/RouteActions'
 import menuItems from '../menuItems'
 
 const mapStateToProps = ({ user, route }) => {
-  const { name } = user
+  const { username } = user
   const { currentRout } = route
 
-  return { name, currentRout }
+  return { username, currentRout }
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -31,7 +31,7 @@ class Header extends Component {
     classes: PropTypes.object.isRequired,
     isSidebarOpen: PropTypes.bool.isRequired,
     toggleSidebar: PropTypes.func.isRequired,
-    name: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
     currentRout: PropTypes.object.isRequired,
     logoutAction: PropTypes.func.isRequired,
     setCurrentRoutAction: PropTypes.func.isRequired,
