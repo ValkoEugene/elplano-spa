@@ -6,9 +6,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
-import Input from '@material-ui/core/Input'
-import InputLabel from '@material-ui/core/InputLabel'
-import FormControl from '@material-ui/core/FormControl'
+import TextField from '@material-ui/core/TextField'
 import { login } from '../../actions/AuthActions.js'
 
 const mapDispatchToProps = dispatch => ({
@@ -24,6 +22,7 @@ class Login extends Component {
   state = {
     login: '',
     password: '',
+    afterSubmit: false,
   }
 
   onChangeHandler = ({ target }) => {
@@ -35,45 +34,51 @@ class Login extends Component {
   }
 
   auth = () => {
+    this.setState({
+      afterSubmit: true,
+    })
+
     const { login, password } = this.state
-    if (!login || !password) {
+
+    if (!login || !password || password.length < 6) {
       return
     }
 
     this.props
-      .login(this.state)
+      .login({ login, password })
       .then(() => this.props.history.push('/'))
       .catch(error => console.error(`Ошибка: ${error}`))
   }
 
   render() {
     const { classes } = this.props
+    const { login, password, afterSubmit } = this.state
 
     return (
       <div className={ classes.loginForm }>
         <h2 className={ classes.title }>Welcom to EL Plano</h2>
 
-        <FormControl className={ classes.margin }>
-          <InputLabel htmlFor="adornment-password">Логин</InputLabel>
-          <Input
-            name="login"
-            id="login"
-            type="email"
-            value={ this.state.login }
-            onChange={ this.onChangeHandler }
-          />
-        </FormControl>
+        <TextField
+          required
+          name="login"
+          label="Логин"
+          type="text"
+          error={ afterSubmit && !login }
+          className={ classes.margin }
+          value={ login }
+          onChange={ this.onChangeHandler }
+        />
 
-        <FormControl className={ classes.margin }>
-          <InputLabel htmlFor="adornment-password">Пароль</InputLabel>
-          <Input
-            id="password"
-            name="password"
-            type="password"
-            value={ this.state.password }
-            onChange={ this.onChangeHandler }
-          />
-        </FormControl>
+        <TextField
+          required
+          name="password"
+          label="Пароль"
+          type="password"
+          error={ afterSubmit && (!password || password.length < 6) }
+          className={ classes.margin }
+          value={ password }
+          onChange={ this.onChangeHandler }
+        />
 
         <Button variant="contained" color="primary" onClick={ this.auth }>
           Войти
