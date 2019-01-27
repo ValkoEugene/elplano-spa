@@ -12,14 +12,10 @@ export const LOGOUT = 'LOGOUT'
 // }
 
 export const login = user => {
-  const data = {
-    grant_type: 'password',
-    login: user.email,
-    password: user.password,
-  }
+  const data = { ...user, grant_type: 'password' }
 
   return dispatch => {
-    axios
+    return axios
       .post('https://elplano-api.herokuapp.com/oauth/token', data)
       .then(response => console.log(response))
       .then(data =>
@@ -28,7 +24,7 @@ export const login = user => {
           payload: user,
         })
       )
-      .catch(error => console.error(`Ну чет грохнулось: ${error}`))
+      .catch(error => console.error(`Ошибка при логине: ${error}`))
   }
 }
 
@@ -68,10 +64,13 @@ export const createUser = user => {
   }
 
   return dispatch => {
-    axios
-      .post('https://elplano-api.herokuapp.com/api/v1/users', { data })
-      .then(response => console.log(response))
-      .catch(error => console.error(`Ну чет грохнулось: ${error}`))
+    return (
+      axios
+        .post('https://elplano-api.herokuapp.com/api/v1/users', { data })
+        // return Promise.resolve({ data })
+        .then(response => console.log(response))
+        .catch(error => console.error(`Ну чет грохнулось: ${error}`))
+    )
   }
 }
 
