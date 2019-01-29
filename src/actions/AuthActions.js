@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { setRefreshToken, setToken } from '../plugins/token'
 
 export const LOGIN = 'LOGIN'
 export const LOGOUT = 'LOGOUT'
@@ -17,13 +18,20 @@ export const login = user => {
   return dispatch => {
     return axios
       .post('https://elplano-api.herokuapp.com/oauth/token', data)
-      .then(response => console.log(response))
-      .then(data =>
+      .then(response => response.data)
+      .then(data => {
+        const { access_token, refresh_token } = data
+
+        setToken(access_token)
+        setRefreshToken(refresh_token)
+
         dispatch({
           type: LOGIN,
           payload: user,
         })
-      )
+
+        return
+      })
       .catch(error => console.error(`Ошибка при логине: ${error}`))
   }
 }
