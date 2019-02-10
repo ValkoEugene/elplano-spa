@@ -7,6 +7,7 @@ import { lessonsReducer } from './lessons'
 import { tasksReducer } from './tasks'
 import { routeReducer } from './route'
 import { measuresReducer } from './measures'
+import { reducer as formReducer } from 'redux-form'
 
 export const rootReducer = combineReducers({
   group: groupReducer,
@@ -17,4 +18,5 @@ export const rootReducer = combineReducers({
   mainInfo: mainInfoReducer,
   route: routeReducer,
   measures: measuresReducer,
+  form: formReducer,
 })
