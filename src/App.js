@@ -10,6 +10,8 @@ import Header from './components/Header.js'
 import MainContent from './components/MainContent.js'
 import Auth from './components/Auth/index.js'
 
+import './global.css'
+
 const THEME_COLORS = {
   primary: {
     light: '#BA68C8',

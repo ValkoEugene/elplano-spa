@@ -25,12 +25,12 @@ class Home extends Component {
     todayTasks: PropTypes.array.isRequired,
   }
 
-  componentDidMount() {
-    axios
-      .get('/me')
-      .then(response => console.log(response))
-      .catch(error => console.log('Ошибка при загрузке', error))
-  }
+  // componentDidMount() {
+  //   axios
+  //     .get('/me')
+  //     .then(response => console.log(response))
+  //     .catch(error => console.log('Ошибка при загрузке', error))
+  // }
 
   render() {
     const {
