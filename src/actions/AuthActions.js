@@ -4,14 +4,6 @@ import { setRefreshToken, setToken } from '../plugins/token'
 export const LOGIN = 'LOGIN'
 export const LOGOUT = 'LOGOUT'
 
-// /oauth/token
-
-// {
-//   "grant_type": "password",
-//   "login": "username or email",
-//   "password": "password"
-// }
-
 export const login = user => {
   const data = { ...user, grant_type: 'password' }
 
@@ -36,21 +28,6 @@ export const login = user => {
   }
 }
 
-// POST : /api/v1/user
-
-// {
-//   "data": {
-//       "type": "user",
-//       "attributes": {
-//         "username": "wat esername",
-//         "email": "so@wat.email",
-//         "email_confirmation": "so@wat.email",
-//         "password":"123456",
-//         "password_confirmation":"123456"
-//       }
-//   }
-// }
-
 export const createUser = user => {
   const {
     username,
@@ -72,13 +49,10 @@ export const createUser = user => {
   }
 
   return dispatch => {
-    return (
-      axios
-        .post('https://elplano-api.herokuapp.com/api/v1/users', { data })
-        // return Promise.resolve({ data })
-        .then(response => console.log(response))
-        .catch(error => console.error(`Ну чет грохнулось: ${error}`))
-    )
+    return axios
+      .post('https://elplano-api.herokuapp.com/api/v1/users', { data })
+      .then(response => console.log(response))
+      .catch(error => console.error(`Ну чет грохнулось: ${error}`))
   }
 }
 

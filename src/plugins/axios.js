@@ -11,6 +11,10 @@ const baseURL = 'https://elplano-api.herokuapp.com'
 
 const axiosInstance = axios.create({
   baseURL: `${baseURL}/api/v1`,
+  data: {},
+  headers: {
+    'Content-Type': 'application/vnd.api+json',
+  },
 })
 
 // Добавляем токены для JWT каждому запросу

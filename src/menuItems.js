@@ -2,7 +2,8 @@ import Home from './components/Home'
 import Teachers from './components/Teachers'
 import Lessons from './components/Lessons'
 import Ratings from './components/Ratings'
-import Timetable from './components/Timetable'
+import TimetableContainer from './components/Timetable/TimetableContainer'
+import NewEvent from './components/NewEvent'
 import Group from './components/Group'
 import Auth from './components/Auth'
 import TasksContainer from './components/Tasks/TasksContainer'
@@ -27,10 +28,17 @@ const menuItems = [
   {
     text: 'Расписание',
     path: '/timetable',
-    exact: false,
+    exact: true,
     sidebar: true,
     icon: 'school',
-    component: Timetable,
+    component: TimetableContainer,
+  },
+  {
+    text: 'Добавить event',
+    path: '/timetable/new',
+    exact: true,
+    sidebar: false,
+    component: NewEvent,
   },
   {
     text: 'Задания',
