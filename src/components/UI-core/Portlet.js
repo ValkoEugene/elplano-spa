@@ -14,8 +14,8 @@ function Portlet({ children, classes }) {
 
 const styles = theme => ({
   paper: {
+    margin: 25,
     padding: 25,
-    paddingTop: 0,
     ...theme.custom.shadow,
   },
 })

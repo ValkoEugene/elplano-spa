@@ -3,6 +3,7 @@ import NewEventForm from './NewEventForm'
 import Portlet from '../UI-core/Portlet'
 import axios from '../../plugins/axios'
 import { EVENTS_URL } from '../../actions/EventsActions'
+import moment from 'moment-timezone'
 
 const NewEvent = ({ classes }) => {
   const createEvent = ({ title, description, start_at, end_at, by_day }) => {
@@ -18,7 +19,7 @@ const NewEvent = ({ classes }) => {
         start_at,
         end_at,
         recurrence,
-        timezone: 'Etc/GMT+12',
+        timezone: moment.tz.guess(),
       },
     }
 

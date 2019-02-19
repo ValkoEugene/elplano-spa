@@ -1,20 +1,13 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
+import Fab from '@material-ui/core/Fab'
+import AddIcon from '@material-ui/icons/Add'
 import Loader from '.././Loader'
 import moment from '../../plugins/moment'
 import clonedeep from 'lodash.clonedeep'
-
-// Шаблон событий на неделю
-const weekEventsTemplate = {
-  MO: [],
-  TU: [],
-  WE: [],
-  TH: [],
-  FR: [],
-  SA: [],
-  SU: [],
-}
+import EventByDay from './EventByDay'
 
 class Timetable extends Component {
   static propTypes = {
@@ -27,7 +20,20 @@ class Timetable extends Component {
     today: moment(),
     startWeekDate: moment().startOf('week'),
     endWeekDate: moment().endOf('week'),
+    // Шаблон событий на неделю
+    weekEventsTemplate: {
+      MO: [],
+      TU: [],
+      WE: [],
+      TH: [],
+      FR: [],
+      SA: [],
+      SU: [],
+    },
+    // События недели
     weekEvents: null,
+    // Массив с днями недели (нужен т.к. объект не гарантирует порядок прохода по свойствам)
+    daysOfWeekList: ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'],
   }
 
   componentWillMount() {
@@ -36,7 +42,7 @@ class Timetable extends Component {
 
   initWeekEvents = () => {
     const { events } = this.props
-    const { startWeekDate, endWeekDate } = this.state
+    const { startWeekDate, endWeekDate, weekEventsTemplate } = this.state
 
     // При каждой инициализации сбрасываем weekEvents
     const weekEvents = clonedeep(weekEventsTemplate)
@@ -73,7 +79,8 @@ class Timetable extends Component {
   }
 
   render() {
-    const { loading, error, events } = this.props
+    const { loading, error, events, classes } = this.props
+    const { weekEvents, daysOfWeekList } = this.state
 
     return (
       <div>
@@ -81,9 +88,19 @@ class Timetable extends Component {
           <Loader />
         ) : (
           <div>
-            <Link to="/timetable/new">Add event</Link>
+            <Fab
+              component={ Link }
+              color="primary"
+              aria-label="Add"
+              to="/timetable/new"
+              className={ classes.fab }
+            >
+              <AddIcon />
+            </Fab>
 
-            <div />
+            { daysOfWeekList.map(day => (
+              <EventByDay day={ day } events={ weekEvents[day] } key={ day } />
+            )) }
           </div>
         ) }
       </div>
@@ -91,4 +108,12 @@ class Timetable extends Component {
   }
 }
 
-export default Timetable
+const styles = theme => ({
+  fab: {
+    position: 'fixed',
+    bottom: 15,
+    right: 15,
+  },
+})
+
+export default withStyles(styles)(Timetable)
