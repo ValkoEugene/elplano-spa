@@ -1,11 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
 import Portlet from '../UI-core/Portlet'
 import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
 
-function EventByDay({ classes, events, day }) {
+EventByDay.propTypes = {
+  events: PropTypes.array.isRequired,
+  day: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+}
+
+function EventByDay({ events, day, date }) {
   const daysTitle = {
     MO: 'Понедельник',
     TU: 'Вторник',
@@ -38,7 +43,7 @@ function EventByDay({ classes, events, day }) {
   return (
     <Portlet>
       <Typography variant="h6" color="primary" paragraph>
-        { daysTitle[day] }
+        { daysTitle[day] } - { date }
       </Typography>
 
       <Divider />

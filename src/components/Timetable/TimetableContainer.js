@@ -19,7 +19,7 @@ const mapDispatchToProps = dispatch => ({
 class TimetableContainer extends Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
-    error: PropTypes.object.isRequired,
+    error: PropTypes.object,
     events: PropTypes.array.isRequired,
     loadEvents: PropTypes.func.isRequired,
   }
