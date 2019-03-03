@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import Button from '@material-ui/core/Button'
 import TextField from '../Forms/TextField'
@@ -58,25 +59,34 @@ const validate = ({ title, start_at, end_at, by_day }) => ({
   by_day: validators.required(by_day),
 })
 
-let NewEventForm = props => {
-  const { handleSubmit } = props
+class EventForm extends Component {
+  render() {
+    const { handleSubmit } = this.props
 
-  const fields = schema.map(item => <Field { ...item } key={ item.name } />)
+    const fields = schema.map(item => <Field { ...item } key={ item.name } />)
 
-  return (
-    <form onSubmit={ handleSubmit }>
-      { fields }
+    return (
+      <form onSubmit={ handleSubmit }>
+        { fields }
 
-      <Button variant="contained" color="primary" type="submit">
-        Создать
-      </Button>
-    </form>
-  )
+        <Button variant="contained" color="primary" type="submit">
+          Сохранить
+        </Button>
+      </form>
+    )
+  }
 }
 
-NewEventForm = reduxForm({
+const mapStateToProps = ({ event }) => ({
+  initialValues: event.currentEvent,
+})
+
+EventForm = reduxForm({
   form: 'newEvent',
   validate,
-})(NewEventForm)
+  enableReinitialize: true,
+})(EventForm)
 
-export default NewEventForm
+EventForm = connect(mapStateToProps)(EventForm)
+
+export default EventForm

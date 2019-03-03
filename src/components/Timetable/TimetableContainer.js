@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Timetable from './index'
-import Loader from '.././Loader'
+import Loader from '../Loader'
 
 import { loadEvents } from '../../actions/EventsActions'
 
@@ -24,7 +24,7 @@ class TimetableContainer extends Component {
     loadEvents: PropTypes.func.isRequired,
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.loadEvents()
   }
 

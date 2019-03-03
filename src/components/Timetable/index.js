@@ -7,10 +7,18 @@ import IconButton from '@material-ui/core/IconButton'
 import AddIcon from '@material-ui/icons/Add'
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons/'
 import Typography from '@material-ui/core/Typography'
-import Loader from '.././Loader'
+import Loader from '../Loader'
 import moment from '../../plugins/moment'
 import clonedeep from 'lodash.clonedeep'
 import EventByDay from './EventByDay'
+
+const parseDaysOfWeek = recurrence =>
+  recurrence
+    .find(item => item.includes('RRULE'))
+    .split(';')
+    .find(item => item.includes('BYDAY'))
+    .split('=')[1]
+    .split(',')
 
 class Timetable extends Component {
   static propTypes = {
@@ -23,6 +31,7 @@ class Timetable extends Component {
     today: moment(),
     startWeekDate: moment().startOf('week'),
     endWeekDate: moment().endOf('week'),
+    initing: true,
     // Шаблон событий на неделю
     weekEventsTemplate: {
       MO: [],
@@ -41,7 +50,7 @@ class Timetable extends Component {
     weekDates: [],
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { startWeekDate, endWeekDate } = this.state
     this.initWeekData({ startWeekDate, endWeekDate })
   }
@@ -82,12 +91,7 @@ class Timetable extends Component {
       }
 
       // Парсим дни недели события
-      const daysOfWeek = recurrence
-        .find(item => item.includes('RRULE'))
-        .split(';')
-        .find(item => item.includes('BYDAY'))
-        .split('=')[1]
-        .split(',')
+      const daysOfWeek = parseDaysOfWeek(recurrence)
 
       daysOfWeek.forEach(day => {
         weekEvents[day].push(event)
@@ -101,6 +105,7 @@ class Timetable extends Component {
       endWeekDate,
       weekEvents,
       weekDates,
+      initing: false,
     })
   }
 
@@ -120,19 +125,20 @@ class Timetable extends Component {
 
   render() {
     const { loading, error, events, classes } = this.props
-    const { weekEvents, daysOfWeekList, weekDates } = this.state
+    const { weekEvents, daysOfWeekList, weekDates, initing } = this.state
 
     return (
       <div>
-        { loading ? (
+        { loading || initing ? (
           <Loader />
         ) : (
           <div>
             <Fab
               component={ Link }
               color="primary"
+              size="large"
               aria-label="Add"
-              to="/timetable/new"
+              to="/timetable/event"
               className={ classes.fab }
             >
               <AddIcon />
@@ -181,3 +187,4 @@ const styles = theme => ({
 })
 
 export default withStyles(styles)(Timetable)
+export { parseDaysOfWeek }
