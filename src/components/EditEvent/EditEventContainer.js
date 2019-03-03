@@ -1,0 +1,38 @@
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import Event from './index'
+
+import { createEvent, loadEvent, updateEvent } from '../../actions/EventActions'
+
+const mapStateToProps = ({ event }) => ({
+  loading: event.loading,
+  error: event.error,
+  currentEvent: event.currentEvent,
+})
+
+const mapDispatchToProps = dispatch => ({
+  createEvent: data => dispatch(createEvent(data)),
+  loadEvent: id => dispatch(loadEvent(id)),
+  updateEvent: data => dispatch(updateEvent(data)),
+})
+
+class EditEventContainer extends Component {
+  static propTypes = {
+    loading: PropTypes.bool.isRequired,
+    error: PropTypes.object,
+    currentEvent: PropTypes.object.isRequired,
+    createEvent: PropTypes.func.isRequired,
+    loadEvent: PropTypes.func.isRequired,
+    updateEvent: PropTypes.func.isRequired,
+  }
+
+  render() {
+    return <Event { ...this.props } />
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditEventContainer)

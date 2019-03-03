@@ -25,7 +25,7 @@ class Lessons extends Component {
     loadLessons: PropTypes.func.isRequired,
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.loadLessons()
   }
 

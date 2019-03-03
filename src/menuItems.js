@@ -1,9 +1,10 @@
+import Confirm from './components/Confirm'
 import Home from './components/Home'
 import Teachers from './components/Teachers'
 import Lessons from './components/Lessons'
 import Ratings from './components/Ratings'
 import TimetableContainer from './components/Timetable/TimetableContainer'
-import NewEvent from './components/NewEvent'
+import EditEventContainer from './components/EditEvent/EditEventContainer'
 import Group from './components/Group'
 import Auth from './components/Auth'
 import TasksContainer from './components/Tasks/TasksContainer'
@@ -11,6 +12,13 @@ import MeasuresContainer from './components/Measures/MeasuresContainer'
 import Attachments from './components/Attachments'
 
 const menuItems = [
+  {
+    text: 'Подтверждение аккаунта',
+    path: '/confirm-account',
+    exact: true,
+    sidebar: false,
+    component: Confirm,
+  },
   {
     text: 'Авторизация',
     path: '/auth',
@@ -35,10 +43,10 @@ const menuItems = [
   },
   {
     text: 'Добавить event',
-    path: '/timetable/new',
+    path: '/timetable/event',
     exact: true,
     sidebar: false,
-    component: NewEvent,
+    component: EditEventContainer,
   },
   {
     text: 'Задания',

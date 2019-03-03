@@ -20,12 +20,12 @@ class MeasuresContainer extends Component {
     loadData: PropTypes.func.isRequired,
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.loadData()
   }
 
   render() {
-    return <Measures { ...this.props } />
+    return <Measures {...this.props} />
   }
 }
 

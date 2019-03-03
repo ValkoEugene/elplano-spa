@@ -25,7 +25,7 @@ class Teachers extends Component {
     loadTeachers: PropTypes.func.isRequired,
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.loadTeachers()
   }
 
@@ -33,10 +33,10 @@ class Teachers extends Component {
     const { classes, teachers, loading } = this.props
 
     return (
-      <Paper className={ classes.root } elevation={ 1 }>
-        <PaperHeader title="Список преподавателей" showInput={ true } />
+      <Paper className={classes.root} elevation={1}>
+        <PaperHeader title="Список преподавателей" showInput={true} />
 
-        { loading ? <Loader /> : <TeachersTable teachers={ teachers } /> }
+        {loading ? <Loader /> : <TeachersTable teachers={teachers} />}
       </Paper>
     )
   }

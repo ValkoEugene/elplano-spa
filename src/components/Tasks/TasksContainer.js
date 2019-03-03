@@ -21,12 +21,12 @@ class TasksContainer extends Component {
     loadTasks: PropTypes.func.isRequired,
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.loadTasks()
   }
 
   render() {
-    return <Tasks { ...this.props } />
+    return <Tasks {...this.props} />
   }
 }
 
