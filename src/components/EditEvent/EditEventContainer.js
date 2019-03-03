@@ -5,10 +5,10 @@ import Event from './index'
 
 import { createEvent, loadEvent, updateEvent } from '../../actions/EventActions'
 
-const mapStateToProps = ({ event }) => ({
-  loading: event.loading,
-  error: event.error,
-  currentEvent: event.currentEvent,
+const mapStateToProps = ({ event: { loading, error, currentEvent } }) => ({
+  loading,
+  error,
+  currentEvent,
 })
 
 const mapDispatchToProps = dispatch => ({
