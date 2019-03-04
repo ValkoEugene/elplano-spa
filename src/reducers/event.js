@@ -12,8 +12,8 @@ const initialState = {
     id: '',
     title: '',
     description: '',
-    start_at: '',
-    end_at: '',
+    start_at: null,
+    end_at: null,
     by_day: '',
   },
 }

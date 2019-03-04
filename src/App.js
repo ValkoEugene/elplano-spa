@@ -4,11 +4,14 @@ import { connect } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { createMuiTheme } from '@material-ui/core/styles'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
+import { MuiPickersUtilsProvider } from 'material-ui-pickers'
+import MomentUtils from '@date-io/moment'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Sidebar from './components/Sidebar.js'
 import Header from './components/Header.js'
 import MainContent from './components/MainContent.js'
 import Auth from './components/Auth/index.js'
+import moment from './plugins/moment'
 
 import './global.css'
 
@@ -101,13 +104,15 @@ class App extends Component {
 
     return (
       <MuiThemeProvider theme={ theme }>
-        <Router>
-          <React.Fragment>
-            <CssBaseline />
+        <MuiPickersUtilsProvider utils={ MomentUtils } moment={ moment }>
+          <Router>
+            <React.Fragment>
+              <CssBaseline />
 
-            { isAuth ? mainApp : <Auth /> }
-          </React.Fragment>
-        </Router>
+              { isAuth ? mainApp : <Auth /> }
+            </React.Fragment>
+          </Router>
+        </MuiPickersUtilsProvider>
       </MuiThemeProvider>
     )
   }
