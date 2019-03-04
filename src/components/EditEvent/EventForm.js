@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import Button from '@material-ui/core/Button'
 import TextField from '../Forms/TextField'
+import Datepicker from '../Forms/Datepicker'
 import CheckboxGroup from '../Forms/CheckboxGroup'
 import validators from '../../utils/validators'
 
@@ -19,21 +20,13 @@ const schema = [
   },
   {
     name: 'start_at',
-    type: 'date',
-    component: TextField,
+    component: Datepicker,
     label: 'Дата начала',
-    InputLabelProps: {
-      shrink: true,
-    },
   },
   {
     name: 'end_at',
-    type: 'date',
-    component: TextField,
+    component: Datepicker,
     label: 'Дата завершения',
-    InputLabelProps: {
-      shrink: true,
-    },
   },
   {
     name: 'by_day',
