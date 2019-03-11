@@ -16,6 +16,7 @@ class EditEvent extends Component {
     currentEvent: PropTypes.object.isRequired,
     createEvent: PropTypes.func.isRequired,
     loadEvent: PropTypes.func.isRequired,
+    deleteEvent: PropTypes.func.isRequired,
     updateEvent: PropTypes.func.isRequired,
   }
 
@@ -65,15 +66,24 @@ class EditEvent extends Component {
     // TODO : history.push
   }
 
+  initDeleteEvent = () => {
+    this.props
+      .deleteEvent(this.state.eventId)
+      .then(() => this.props.history.push('/timetable'))
+      .catch(error => console.error(`error catch: ${error}`))
+  }
+
   render() {
-    const { eventId } = this.state
     const { loading } = this.props
 
     return loading ? (
       <Loader />
     ) : (
       <Portlet>
-        <EventForm onSubmit={ this.update } />
+        <EventForm
+          onSubmit={ this.update }
+          initDeleteEvent={ this.initDeleteEvent }
+        />
       </Portlet>
     )
   }

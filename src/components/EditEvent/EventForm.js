@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
+import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import TextField from '../Forms/TextField'
 import Datepicker from '../Forms/Datepicker'
@@ -54,7 +55,7 @@ const validate = ({ title, start_at, end_at, by_day }) => ({
 
 class EventForm extends Component {
   render() {
-    const { handleSubmit } = this.props
+    const { handleSubmit, initDeleteEvent, classes } = this.props
 
     const fields = schema.map(item => <Field { ...item } key={ item.name } />)
 
@@ -62,8 +63,23 @@ class EventForm extends Component {
       <form onSubmit={ handleSubmit }>
         { fields }
 
-        <Button variant="contained" color="primary" type="submit">
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          className={ classes.button }
+        >
           Сохранить
+        </Button>
+
+        <Button
+          variant="contained"
+          color="secondary"
+          type="button"
+          className={ classes.button }
+          onClick={ initDeleteEvent }
+        >
+          Удалить
         </Button>
       </form>
     )
@@ -73,6 +89,14 @@ class EventForm extends Component {
 const mapStateToProps = ({ event }) => ({
   initialValues: event.currentEvent,
 })
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+})
+
+EventForm = withStyles(styles)(EventForm)
 
 EventForm = reduxForm({
   form: 'newEvent',
