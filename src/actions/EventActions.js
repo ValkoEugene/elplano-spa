@@ -8,6 +8,8 @@ export const EVENT_ERROR = 'EVENT_ERROR'
 export const SET_CURRENT_EVENT = 'SET_CURRENT_EVENT'
 export const EVENT_CREATED_ERROR = 'EVENT_CREATED_ERROR'
 
+export const EVENT_DELETED = 'EVENT_DELETED'
+
 export const EVENTS_URL = '/events'
 
 const formatResponse = data => {
@@ -65,7 +67,7 @@ export const loadEvent = id => {
 export const updateEvent = data => {
   return dispatch => {
     return axios
-      .put(`${EVENTS_URL}/${data.id}`, { data })
+      .put(`${EVENTS_URL}/${data.attributes.id}`, { data })
       .then(response => response.data)
       .then(({ data }) =>
         dispatch({
@@ -73,6 +75,15 @@ export const updateEvent = data => {
           payload: formatResponse(data),
         })
       )
+      .catch(error => dispatch({ type: EVENT_ERROR, payload: error }))
+  }
+}
+
+export const deleteEvent = id => {
+  return dispatch => {
+    return axios
+      .delete(`${EVENTS_URL}/${id}`)
+      .then(() => dispatch({ type: EVENT_DELETED, payload: id }))
       .catch(error => dispatch({ type: EVENT_ERROR, payload: error }))
   }
 }

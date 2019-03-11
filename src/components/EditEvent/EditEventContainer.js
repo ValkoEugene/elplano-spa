@@ -3,7 +3,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Event from './index'
 
-import { createEvent, loadEvent, updateEvent } from '../../actions/EventActions'
+import {
+  createEvent,
+  loadEvent,
+  updateEvent,
+  deleteEvent,
+} from '../../actions/EventActions'
 
 const mapStateToProps = ({ event: { loading, error, currentEvent } }) => ({
   loading,
@@ -15,6 +20,7 @@ const mapDispatchToProps = dispatch => ({
   createEvent: data => dispatch(createEvent(data)),
   loadEvent: id => dispatch(loadEvent(id)),
   updateEvent: data => dispatch(updateEvent(data)),
+  deleteEvent: id => dispatch(deleteEvent(id)),
 })
 
 class EditEventContainer extends Component {

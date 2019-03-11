@@ -3,6 +3,7 @@ import {
   EVENT_ERROR,
   EVENT_LOADED_SECCUSS,
   SET_CURRENT_EVENT,
+  EVENT_DELETED,
 } from '../actions/EventActions'
 
 const initialState = {
@@ -31,6 +32,9 @@ export const eventReducer = (state = initialState, action) => {
 
     case SET_CURRENT_EVENT:
       return { ...state, loading: false, currentEvent: action.payload }
+
+    case EVENT_DELETED:
+      return { ...initialState }
 
     default:
       return state
