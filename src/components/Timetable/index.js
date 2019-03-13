@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
-import Fab from '@material-ui/core/Fab'
 import IconButton from '@material-ui/core/IconButton'
-import AddIcon from '@material-ui/icons/Add'
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons/'
 import Typography from '@material-ui/core/Typography'
 import Loader from '../Loader'
 import moment from '../../plugins/moment'
 import clonedeep from 'lodash.clonedeep'
 import EventByDay from './EventByDay'
+import AddNew from '../UI-core/AddNew'
 
 const parseDaysOfWeek = recurrence =>
   recurrence
@@ -133,16 +131,7 @@ class Timetable extends Component {
           <Loader />
         ) : (
           <div>
-            <Fab
-              component={ Link }
-              color="primary"
-              size="large"
-              aria-label="Add"
-              to="/timetable/event"
-              className={ classes.fab }
-            >
-              <AddIcon />
-            </Fab>
+            <AddNew addLink="/timetable/event" />
 
             <div className={ classes.datesButtonWrapper }>
               <IconButton onClick={ this.prevWeek }>
@@ -174,11 +163,6 @@ class Timetable extends Component {
 }
 
 const styles = theme => ({
-  fab: {
-    position: 'fixed',
-    bottom: 15,
-    right: 15,
-  },
   datesButtonWrapper: {
     display: 'flex',
     justifyContent: 'center',
