@@ -33,12 +33,14 @@ const THEME_COLORS = {
 const BACKGROUND_COLOR = '#f7f7f7'
 const SUCCESS_COLOR = '#00d600'
 const WARNING_COLOR = '#ff8f00'
+const ERROR_COLOR = '#d32f2f'
 
 const theme = createMuiTheme({
   custom: {
     background: BACKGROUND_COLOR,
     success: SUCCESS_COLOR,
     warning: WARNING_COLOR,
+    error: ERROR_COLOR,
     primaryTitle: {
       fontWeight: 'bold',
       color: THEME_COLORS.primary.light,

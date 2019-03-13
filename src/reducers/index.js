@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { teachersReducer } from './teachers'
+import { teacherReducer } from './teacher'
 import { groupReducer } from './group'
 import { userReducer } from './user'
 import { confirmReducer } from './confirm'
@@ -15,6 +16,7 @@ import { reducer as formReducer } from 'redux-form'
 export const rootReducer = combineReducers({
   group: groupReducer,
   teachers: teachersReducer,
+  teacher: teacherReducer,
   lessons: lessonsReducer,
   user: userReducer,
   tasks: tasksReducer,
