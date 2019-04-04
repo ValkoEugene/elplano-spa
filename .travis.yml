@@ -12,4 +12,4 @@ deploy:
   app:
     develop: 'elplano'
   api_key:
-    secure: '655c9d12-f926-4cb3-942f-e5552c6be1c6
+    secure: '6baa5bc3-f27c-4a8c-885a-cff811116557'
