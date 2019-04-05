@@ -13,6 +13,7 @@ export default ({
     helperText={ Boolean(submitFailed && error) && error }
     margin="normal"
     fullWidth
+    variant="outlined"
     label={ label }
     { ...custom }
     { ...input }
