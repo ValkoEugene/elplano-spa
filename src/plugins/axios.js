@@ -7,7 +7,7 @@ import {
   unsetTokens,
 } from './token'
 
-const baseURL = 'https://elplano-api.herokuapp.com'
+const baseURL = process.env.REACT_APP_BASE_URL
 
 const axiosInstance = axios.create({
   baseURL: `${baseURL}/api/v1`,
@@ -20,6 +20,8 @@ const axiosInstance = axios.create({
 // Добавляем токены для JWT каждому запросу
 const addJWT = config => {
   const token = getToken()
+
+  console.log(process.env)
 
   if (token) {
     config.headers.common['Authorization'] = `Bearer ${token}`

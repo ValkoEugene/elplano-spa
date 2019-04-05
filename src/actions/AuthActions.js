@@ -9,7 +9,7 @@ export const login = user => {
 
   return dispatch => {
     return axios
-      .post('https://elplano-api.herokuapp.com/oauth/token', data)
+      .post(`${process.env.REACT_APP_BASE_URL}/oauth/token`, data)
       .then(response => response.data)
       .then(data => {
         const { access_token, refresh_token } = data
@@ -50,7 +50,7 @@ export const createUser = user => {
 
   return dispatch => {
     return axios
-      .post('https://elplano-api.herokuapp.com/api/v1/users', { data })
+      .post(`${process.env.REACT_APP_BASE_URL}/api/v1/users`, { data })
       .then(response => console.log(response))
       .catch(error => console.error(`Ну чет грохнулось: ${error}`))
   }

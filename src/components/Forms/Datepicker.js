@@ -16,6 +16,7 @@ export default ({
     format={ 'LLL' }
     invalidLabel={ '' }
     margin="normal"
+    variant="outlined"
     fullWidth
   />
 )

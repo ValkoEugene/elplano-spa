@@ -13,7 +13,7 @@ export const confirm = confirmation_token => {
 
     return axios({
       method: 'get',
-      url: 'https://elplano-api.herokuapp.com/api/v1/users/confirmation',
+      url: `${process.env.REACT_APP_BASE_URL}/api/v1/users/confirmation`,
       params,
       data: {},
       headers: {
