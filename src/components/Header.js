@@ -96,7 +96,7 @@ class Header extends Component {
 
             <Typography variant="h6" color="inherit" className={ classes.grow }>
               <span className={ classes.logo } onClick={ this.redirectToHomePage }>
-                EL Plano (1)
+                EL Plano (2)
               </span>
               <span className={ classes.pageTitle }>{ pageTitle }</span>
             </Typography>
