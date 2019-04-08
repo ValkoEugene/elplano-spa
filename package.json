@@ -27,7 +27,7 @@
   "scripts": {
     "dev": "cross-env HTTPS=true PORT=3002 REACT_APP_BASE_URL=https://elplano-api.herokuapp.com react-scripts start",
     "devapp": "cross-env HTTPS=false PORT=3002 REACT_APP_BASE_URL=http://api.elplano.app react-scripts start",
-    "build": "react-scripts build",
+    "build": "cross-env REACT_APP_BASE_URL=https://elplano-api.herokuapp.com react-scripts build",
     "deploy": "yarn build && aws s3 sync build/ s3://elplano-spa",
     "test": "react-scripts test",
     "start": "yarn --network-timeout 1000000 && react-scripts build && node server.js",
