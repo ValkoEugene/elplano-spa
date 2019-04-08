@@ -9,6 +9,8 @@ import {
 
 const baseURL = process.env.REACT_APP_BASE_URL
 
+console.log('baseURL', process.env.REACT_APP_BASE_URL)
+
 const axiosInstance = axios.create({
   baseURL: `${baseURL}/api/v1`,
   data: {},

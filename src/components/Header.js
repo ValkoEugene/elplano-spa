@@ -77,32 +77,32 @@ class Header extends Component {
     const pageTitle = this.getMenuTitle(currentRout.pathname)
 
     return (
-      <div className={classes.root}>
+      <div className={ classes.root }>
         <AppBar
           position="fixed"
-          className={classNames(classes.appBar, {
+          className={ classNames(classes.appBar, {
             [classes.appBarShift]: isSidebarOpen,
-          })}
+          }) }
         >
           <Toolbar>
             <IconButton
-              className={classes.menuButton}
+              className={ classes.menuButton }
               color="inherit"
               aria-label="Menu"
-              onClick={toggleSidebar}
+              onClick={ toggleSidebar }
             >
               <MenuIcon />
             </IconButton>
 
-            <Typography variant="h6" color="inherit" className={classes.grow}>
-              <span className={classes.logo} onClick={this.redirectToHomePage}>
-                EL Plano
+            <Typography variant="h6" color="inherit" className={ classes.grow }>
+              <span className={ classes.logo } onClick={ this.redirectToHomePage }>
+                EL Plano (1)
               </span>
-              <span className={classes.pageTitle}>{pageTitle}</span>
+              <span className={ classes.pageTitle }>{ pageTitle }</span>
             </Typography>
 
-            <Button color="inherit" onClick={logoutAction}>
-              Выход
+            <Button color="inherit" onClick={ logoutAction }>
+              Выход (1)
             </Button>
           </Toolbar>
         </AppBar>
