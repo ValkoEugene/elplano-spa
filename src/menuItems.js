@@ -11,6 +11,7 @@ import Auth from './components/Auth'
 import TasksContainer from './components/Tasks/TasksContainer'
 import MeasuresContainer from './components/Measures/MeasuresContainer'
 import Attachments from './components/Attachments'
+import ProfileEdit from './components/ProfileEdit'
 
 const menuItems = [
   {
@@ -111,6 +112,13 @@ const menuItems = [
     sidebar: true,
     icon: 'people',
     component: Group,
+  },
+  {
+    text: 'Профиль',
+    path: '/profile',
+    exact: false,
+    sidebar: false,
+    component: ProfileEdit,
   },
 ]
 
