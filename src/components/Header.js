@@ -10,6 +10,9 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
+import Menu from '@material-ui/core/Menu'
+import AccountCircle from '@material-ui/icons/AccountCircle'
 import { logout } from '../actions/AuthActions.js'
 import { setCurrentRout } from '../actions/RouteActions'
 import menuItems from '../menuItems'
@@ -37,6 +40,10 @@ class Header extends Component {
     setCurrentRoutAction: PropTypes.func.isRequired,
   }
 
+  state = {
+    anchorEl: null,
+  }
+
   setCurrentRoute = route => {
     this.props.setCurrentRoutAction(route)
   }
@@ -49,6 +56,19 @@ class Header extends Component {
 
   redirectToHomePage = () => {
     this.props.history.push('/')
+  }
+
+  redirectToProfilePage = () => {
+    this.props.history.push('/profile')
+    this.handleClose()
+  }
+
+  handleMenu = event => {
+    this.setState({ anchorEl: event.currentTarget })
+  }
+
+  handleClose = () => {
+    this.setState({ anchorEl: null })
   }
 
   componentDidMount() {
@@ -74,36 +94,69 @@ class Header extends Component {
       currentRout,
     } = this.props
 
+    const { anchorEl } = this.state
+    const open = Boolean(anchorEl)
+
     const pageTitle = this.getMenuTitle(currentRout.pathname)
 
     return (
-      <div className={classes.root}>
+      <div className={ classes.root }>
         <AppBar
           position="fixed"
-          className={classNames(classes.appBar, {
+          className={ classNames(classes.appBar, {
             [classes.appBarShift]: isSidebarOpen,
-          })}
+          }) }
         >
           <Toolbar>
             <IconButton
-              className={classes.menuButton}
+              className={ classes.menuButton }
               color="inherit"
               aria-label="Menu"
-              onClick={toggleSidebar}
+              onClick={ toggleSidebar }
             >
               <MenuIcon />
             </IconButton>
 
-            <Typography variant="h6" color="inherit" className={classes.grow}>
-              <span className={classes.logo} onClick={this.redirectToHomePage}>
+            <Typography variant="h6" color="inherit" className={ classes.grow }>
+              <span className={ classes.logo } onClick={ this.redirectToHomePage }>
                 EL Plano
               </span>
-              <span className={classes.pageTitle}>{pageTitle}</span>
+              <span className={ classes.pageTitle }>{ pageTitle }</span>
             </Typography>
 
-            <Button color="inherit" onClick={logoutAction}>
+            { /* <Button color="inherit" onClick={logoutAction}>
               Выход
-            </Button>
+            </Button> */ }
+
+            <div>
+              <IconButton
+                aria-owns={ open ? 'menu-appbar' : undefined }
+                aria-haspopup="true"
+                onClick={ this.handleMenu }
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={ anchorEl }
+                anchorOrigin={ {
+                  vertical: 'top',
+                  horizontal: 'right',
+                } }
+                transformOrigin={ {
+                  vertical: 'top',
+                  horizontal: 'right',
+                } }
+                open={ open }
+                onClose={ this.handleClose }
+              >
+                <MenuItem onClick={ this.redirectToProfilePage }>
+                  Профиль
+                </MenuItem>
+                <MenuItem onClick={ logoutAction }>Выход</MenuItem>
+              </Menu>
+            </div>
           </Toolbar>
         </AppBar>
       </div>
