@@ -41,6 +41,11 @@ const theme = createMuiTheme({
     success: SUCCESS_COLOR,
     warning: WARNING_COLOR,
     error: ERROR_COLOR,
+    shadow: {
+      main: {
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+      },
+    },
     primaryTitle: {
       fontWeight: 'bold',
       color: THEME_COLORS.primary.light,

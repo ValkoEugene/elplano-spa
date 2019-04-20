@@ -4,6 +4,7 @@ import queryString from 'query-string'
 import PropTypes from 'prop-types'
 import EventForm from './EventForm'
 import Portlet from '../UI-core/Portlet'
+import GoBack from '../UI-core/GoBack'
 import Loader from '../Loader'
 import moment from 'moment-timezone'
 
@@ -18,6 +19,7 @@ class EditEvent extends Component {
     loadEvent: PropTypes.func.isRequired,
     deleteEvent: PropTypes.func.isRequired,
     updateEvent: PropTypes.func.isRequired,
+    resetEvent: PropTypes.func.isRequired,
   }
 
   state = {
@@ -34,6 +36,10 @@ class EditEvent extends Component {
 
       loadEvent(id)
     }
+  }
+
+  componentWillUnmount() {
+    this.props.resetEvent()
   }
 
   formatData = ({ id, title, description, start_at, end_at, by_day }) => {
@@ -84,6 +90,8 @@ class EditEvent extends Component {
           onSubmit={ this.update }
           initDeleteEvent={ this.initDeleteEvent }
         />
+
+        <GoBack link="/timetable" />
       </Portlet>
     )
   }

@@ -8,6 +8,7 @@ import {
   loadEvent,
   updateEvent,
   deleteEvent,
+  resetEvent,
 } from '../../actions/EventActions'
 
 const mapStateToProps = ({ event: { loading, error, currentEvent } }) => ({
@@ -21,6 +22,7 @@ const mapDispatchToProps = dispatch => ({
   loadEvent: id => dispatch(loadEvent(id)),
   updateEvent: data => dispatch(updateEvent(data)),
   deleteEvent: id => dispatch(deleteEvent(id)),
+  resetEvent: () => dispatch(resetEvent()),
 })
 
 class EditEventContainer extends Component {
@@ -31,6 +33,7 @@ class EditEventContainer extends Component {
     createEvent: PropTypes.func.isRequired,
     loadEvent: PropTypes.func.isRequired,
     updateEvent: PropTypes.func.isRequired,
+    resetEvent: PropTypes.func.isRequired,
   }
 
   render() {

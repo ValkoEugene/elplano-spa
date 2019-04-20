@@ -124,10 +124,6 @@ class Header extends Component {
               <span className={ classes.pageTitle }>{ pageTitle }</span>
             </Typography>
 
-            { /* <Button color="inherit" onClick={logoutAction}>
-              Выход
-            </Button> */ }
-
             <div>
               <IconButton
                 aria-owns={ open ? 'menu-appbar' : undefined }

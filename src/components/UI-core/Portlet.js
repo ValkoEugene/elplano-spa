@@ -6,16 +6,28 @@ import Paper from '@material-ui/core/Paper'
 Portlet.propTypes = {
   children: PropTypes.any.isRequired,
   classes: PropTypes.object.isRequired,
+  padding: PropTypes.number.isRequired,
+  margin: PropTypes.number.isRequired,
 }
 
-function Portlet({ children, classes }) {
-  return <Paper className={ classes.paper }>{ children }</Paper>
+Portlet.defaultProps = {
+  padding: 25,
+  margin: 25,
+}
+
+function Portlet({ children, classes, padding, margin }) {
+  return (
+    <Paper
+      className={ classes.paper }
+      style={ { padding: `${padding}px`, margin: `${margin}px` } }
+    >
+      { children }
+    </Paper>
+  )
 }
 
 const styles = theme => ({
   paper: {
-    margin: 25,
-    padding: 25,
     ...theme.custom.shadow,
   },
 })

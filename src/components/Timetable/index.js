@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import IconButton from '@material-ui/core/IconButton'
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons/'
 import Typography from '@material-ui/core/Typography'
+import Alert from '../UI-core/Alert'
 import Loader from '../Loader'
 import moment from '../../plugins/moment'
 import clonedeep from 'lodash.clonedeep'
@@ -41,7 +42,7 @@ class Timetable extends Component {
       SU: [],
     },
     // События недели
-    weekEvents: null,
+    weekEvents: {},
     // Массив с днями недели (нужен т.к. объект не гарантирует порядок прохода по свойствам)
     daysOfWeekList: ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'],
     // Массив с датами на неделю
@@ -125,6 +126,14 @@ class Timetable extends Component {
     const { loading, error, events, classes } = this.props
     const { weekEvents, daysOfWeekList, weekDates, initing } = this.state
 
+    let haveEvents = false
+
+    Object.keys(weekEvents).forEach(day => {
+      if (weekEvents[day].length) haveEvents = true
+    })
+
+    const emptyAlert = <Alert color="warning">Нет пар</Alert>
+
     return (
       <div>
         { loading || initing ? (
@@ -147,14 +156,16 @@ class Timetable extends Component {
               </IconButton>
             </div>
 
-            { daysOfWeekList.map((day, index) => (
-              <EventByDay
-                day={ day }
-                events={ weekEvents[day] }
-                date={ weekDates[index] }
-                key={ day }
-              />
-            )) }
+            { haveEvents
+              ? daysOfWeekList.map((day, index) => (
+                  <EventByDay
+                    day={ day }
+                    events={ weekEvents[day] }
+                    date={ weekDates[index] }
+                    key={ day }
+                  />
+                ))
+              : emptyAlert }
           </div>
         ) }
       </div>
