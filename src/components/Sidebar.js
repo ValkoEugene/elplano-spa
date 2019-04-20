@@ -1,7 +1,8 @@
 import menuItems from '../menuItems.js'
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import withWidth from '@material-ui/core/withWidth'
 import { withStyles } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List'
@@ -10,66 +11,63 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import SidebarItem from './SidebarItem.js'
 
-class Sidebar extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
-    isSidebarOpen: PropTypes.bool.isRequired,
-    toggleSidebar: PropTypes.func.isRequired,
+Sidebar.propTypes = {
+  classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired,
+  isSidebarOpen: PropTypes.bool.isRequired,
+  toggleSidebar: PropTypes.func.isRequired,
+}
+
+function Sidebar({ isSidebarOpen, toggleSidebar, classes, theme, width }) {
+  const [screenWidth, setScreenWidth] = useState('')
+
+  useEffect(() => {
+    setScreenWidth(document.documentElement.clientWidth)
+  })
+
+  const isMobile = screenWidth < 600
+
+  const drawerType = !isMobile ? 'permanent' : 'temporary'
+
+  const closeSidebar = () => {
+    if (isSidebarOpen && isMobile) toggleSidebar()
   }
 
-  state = {
-    screenWidth: '',
-  }
+  const links = [...menuItems]
+    .filter(menuItem => menuItem.sidebar)
+    .map(menuItem => <SidebarItem menuItem={ menuItem } key={ menuItem.path } />)
 
-  setScreenWidth = screenWidth => {
-    this.setState({ screenWidth })
-  }
-
-  componentDidMount() {
-    this.setScreenWidth(document.documentElement.clientWidth)
-  }
-
-  render() {
-    const { isSidebarOpen, toggleSidebar, classes, theme } = this.props
-    const { screenWidth } = this.state
-
-    const drawerType = screenWidth > 600 ? 'permanent' : 'temporary'
-
-    const links = [...menuItems]
-      .filter(menuItem => menuItem.sidebar)
-      .map(menuItem => <SidebarItem menuItem={ menuItem } key={ menuItem.path } />)
-
-    return (
-      <Drawer
-        variant={ drawerType }
-        className={ classNames(classes.drawer, {
+  return (
+    <Drawer
+      variant={ drawerType }
+      className={ classNames(classes.drawer, {
+        [classes.drawerOpen]: isSidebarOpen,
+        [classes.drawerClose]: !isSidebarOpen,
+      }) }
+      classes={ {
+        paper: classNames({
           [classes.drawerOpen]: isSidebarOpen,
           [classes.drawerClose]: !isSidebarOpen,
-        }) }
-        classes={ {
-          paper: classNames({
-            [classes.drawerOpen]: isSidebarOpen,
-            [classes.drawerClose]: !isSidebarOpen,
-          }),
-        } }
-        open={ isSidebarOpen }
-      >
-        <div className={ classes.sidebarBg } />
-        <div className={ classes.toolbar }>
-          <IconButton onClick={ toggleSidebar }>
-            { theme.direction === 'rtl' ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            ) }
-          </IconButton>
-        </div>
+        }),
+      } }
+      open={ isSidebarOpen }
+    >
+      <div className={ classes.sidebarBg } />
+      <div className={ classes.toolbar }>
+        <IconButton onClick={ toggleSidebar }>
+          { theme.direction === 'rtl' ? (
+            <ChevronRightIcon />
+          ) : (
+            <ChevronLeftIcon />
+          ) }
+        </IconButton>
+      </div>
 
-        <List component="nav">{ links }</List>
-      </Drawer>
-    )
-  }
+      <List component="nav" onClick={ closeSidebar }>
+        { links }
+      </List>
+    </Drawer>
+  )
 }
 
 const drawerWidth = 240
@@ -141,5 +139,5 @@ const styles = theme => ({
   },
 })
 
-export default withStyles(styles, { withTheme: true })(Sidebar)
+export default withWidth()(withStyles(styles, { withTheme: true })(Sidebar))
 export { drawerWidth }

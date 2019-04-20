@@ -5,6 +5,8 @@ export const EVENT_LOADING_REQUEST = 'EVENT_LOADING_REQUEST'
 export const EVENT_LOADED_SECCUSS = 'EVENT_LOADED_SECCUSS'
 export const EVENT_ERROR = 'EVENT_ERROR'
 
+export const RESET_CURRENT_EVENT = 'RESET_CURRENT_EVENT'
+
 export const SET_CURRENT_EVENT = 'SET_CURRENT_EVENT'
 export const EVENT_CREATED_ERROR = 'EVENT_CREATED_ERROR'
 
@@ -87,3 +89,5 @@ export const deleteEvent = id => {
       .catch(error => dispatch({ type: EVENT_ERROR, payload: error }))
   }
 }
+
+export const resetEvent = () => ({ type: RESET_CURRENT_EVENT })

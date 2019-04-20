@@ -1,30 +1,26 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import Routes from './Routes.js'
 import { withStyles } from '@material-ui/core/styles'
 import classNames from 'classnames'
 import { drawerWidth } from './Sidebar.js'
 
-class MainContent extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    isSidebarOpen: PropTypes.bool.isRequired,
-  }
+MainContent.propTypes = {
+  classes: PropTypes.object.isRequired,
+  isSidebarOpen: PropTypes.bool.isRequired,
+}
 
-  render() {
-    const { classes, isSidebarOpen } = this.props
-
-    return (
-      <main
-        className={ classNames(classes.content, {
-          [classes.sideOpen]: isSidebarOpen,
-          [classes.sideClose]: !isSidebarOpen,
-        }) }
-      >
-        <Routes />
-      </main>
-    )
-  }
+function MainContent({ classes, isSidebarOpen }) {
+  return (
+    <main
+      className={ classNames(classes.content, {
+        [classes.sideOpen]: isSidebarOpen,
+        [classes.sideClose]: !isSidebarOpen,
+      }) }
+    >
+      <Routes />
+    </main>
+  )
 }
 
 const styles = theme => ({
@@ -34,12 +30,15 @@ const styles = theme => ({
     padding: theme.spacing.unit * 3,
     marginTop: 56,
   },
-  // TODO: Нужно только для дектопной версии
   sideOpen: {
-    marginLeft: drawerWidth,
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: drawerWidth,
+    },
   },
   sideClose: {
-    marginLeft: 57,
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: 57,
+    },
   },
 })
 

@@ -1,21 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
-import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router'
 import Portlet from '../UI-core/Portlet'
-import Divider from '@material-ui/core/Divider'
-import Typography from '@material-ui/core/Typography'
-import Fab from '@material-ui/core/Fab'
-import EditIcon from '@material-ui/icons/Edit'
+import MoreMenu from '../UI-core/MoreMenu'
 
 EventByDay.propTypes = {
+  history: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   events: PropTypes.array.isRequired,
   day: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
 }
 
-function EventByDay({ events, day, date, classes }) {
+function EventByDay({ events, day, date, classes, history }) {
   const daysTitle = {
     MO: 'Понедельник',
     TU: 'Вторник',
@@ -28,59 +26,111 @@ function EventByDay({ events, day, date, classes }) {
 
   const haveEvents = events.length > 0
 
-  const eventsView = haveEvents ? (
-    events.map(event => {
-      const { id, attributes } = event
-      const { title, description } = attributes
+  const eventsView = events.map(event => {
+    const { id, attributes } = event
+    const { title, description } = attributes
 
-      return (
-        <div key={ id }>
-          <div className={ classes.eventInfoWrapper }>
-            <div className={ classes.eventInfoDescription }>
-              <p>Название: { title }</p>
-              <p>Описание: { description || '-' }</p>
-            </div>
-            <Fab
-              component={ Link }
-              color="primary"
-              size="small"
-              to={ `/timetable/event?id=${id}` }
-            >
-              <EditIcon />
-            </Fab>
-          </div>
-          <Divider />
+    const MoreMenuOptions = [
+      {
+        title: 'Редактировать',
+        onClick: () => history.push(`/timetable/event?id=${id}`),
+      },
+      {
+        title: 'Добавить оценку',
+        onClick: () => console.log('onClick by option Добавить оценку'),
+      },
+      {
+        title: 'Добавить задание',
+        onClick: () => console.log('onClick by option Добавить оценку'),
+      },
+    ]
+
+    return (
+      <Portlet key={ id } padding={ 10 }>
+        <div className={ classes.eventLessonContainer }>
+          <p className={ classes.eventLessonTitle }>{ title }</p>
+          <MoreMenu options={ MoreMenuOptions } />
         </div>
-      )
-    })
-  ) : (
-    <p>Нет событий</p>
-  )
+      </Portlet>
+    )
+  })
 
-  return (
-    <Portlet>
-      <Typography variant="h6" color="primary" paragraph>
-        { daysTitle[day] } - { date }
-      </Typography>
+  return haveEvents ? (
+    <div className={ classes.container }>
+      <div className={ classes.dayContainer }>
+        <p className={ classes.dayTitle }>
+          { daysTitle[day] }
+          <br />
+          { date }
+        </p>
 
-      <Divider />
+        <span className={ classes.dayCircle } />
+        <span className={ classes.dayLine } />
+      </div>
 
-      { eventsView }
-    </Portlet>
-  )
+      <div className={ classes.contentContainer }>
+        <div>{ eventsView }</div>
+      </div>
+    </div>
+  ) : null
 }
 
 const styles = theme => ({
-  eventInfoWrapper: {
+  container: {
     display: 'flex',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    position: 'relative',
-    alignItems: 'center',
+    width: '100%',
+    [theme.breakpoints.only('xs')]: {
+      flexDirection: 'column',
+    },
   },
-  eventInfoDescription: {
-    width: 'fit-content',
+  dayContainer: {
+    width: 125,
+    padding: 5,
+    position: 'relative',
+  },
+  dayTitle: {
+    ...theme.custom.primaryTitle,
+    color: theme.palette.primary.main,
+  },
+  dayCircle: {
+    [theme.breakpoints.only('xs')]: {
+      display: 'none',
+    },
+    position: 'absolute',
+    top: 10,
+    right: -7,
+    height: 16,
+    width: 16,
+    borderRadius: '50%',
+    border: '4px solid',
+    borderColor: theme.palette.primary.light,
+    ...theme.custom.shadow.main,
+  },
+  dayLine: {
+    [theme.breakpoints.only('xs')]: {
+      display: 'none',
+    },
+    position: 'absolute',
+    width: 2,
+    height: 'calc(100% - 25px)',
+    top: 30,
+    right: 0,
+    background: theme.palette.primary.light,
+    ...theme.custom.shadow.main,
+  },
+  contentContainer: {
+    flexGrow: 1,
+    padding: 5,
+    boxSizing: 'content-box',
+  },
+  eventLessonContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  eventLessonTitle: {
+    ...theme.custom.primaryTitle,
   },
 })
 
-export default withStyles(styles)(EventByDay)
+export default withRouter(withStyles(styles, { theme: true })(EventByDay))

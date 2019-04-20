@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { createMuiTheme } from '@material-ui/core/styles'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
+import withWidth from '@material-ui/core/withWidth'
 import { MuiPickersUtilsProvider } from 'material-ui-pickers'
 import MomentUtils from '@date-io/moment'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -41,6 +42,11 @@ const theme = createMuiTheme({
     success: SUCCESS_COLOR,
     warning: WARNING_COLOR,
     error: ERROR_COLOR,
+    shadow: {
+      main: {
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+      },
+    },
     primaryTitle: {
       fontWeight: 'bold',
       color: THEME_COLORS.primary.light,
@@ -71,54 +77,51 @@ const mapStateToProps = ({ user }) => {
   return { username, isAuth }
 }
 
-class App extends Component {
-  static propTypes = {
-    username: PropTypes.string,
-    isAuth: PropTypes.bool.isRequired,
-  }
-
-  state = {
-    isSidebarOpen: true,
-  }
-
-  toggleSidebar = () => {
-    this.setState(state => ({ isSidebarOpen: !state.isSidebarOpen }))
-  }
-
-  render() {
-    const { isAuth } = this.props
-
-    const mainApp = (
-      <div className="App">
-        <Sidebar
-          toggleSidebar={ this.toggleSidebar }
-          isSidebarOpen={ this.state.isSidebarOpen }
-        />
-
-        <Header
-          toggleSidebar={ this.toggleSidebar }
-          isSidebarOpen={ this.state.isSidebarOpen }
-        />
-
-        <MainContent isSidebarOpen={ this.state.isSidebarOpen } />
-      </div>
-    )
-
-    return (
-      <MuiThemeProvider theme={ theme }>
-        <MuiPickersUtilsProvider utils={ MomentUtils } moment={ moment }>
-          <Router>
-            <React.Fragment>
-              <CssBaseline />
-
-              { isAuth ? mainApp : <Auth /> }
-            </React.Fragment>
-          </Router>
-        </MuiPickersUtilsProvider>
-      </MuiThemeProvider>
-    )
-  }
+App.propTypes = {
+  username: PropTypes.string,
+  isAuth: PropTypes.bool.isRequired,
 }
 
-export default connect(mapStateToProps)(App)
+function App({ isAuth, width }) {
+  const isMobile = Boolean(width !== 'xs')
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(isMobile)
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(value => !value)
+  }
+
+  useEffect(
+    () => {
+      setIsSidebarOpen(isMobile)
+    },
+    [width]
+  )
+
+  const mainApp = (
+    <div className="App">
+      <Sidebar toggleSidebar={ toggleSidebar } isSidebarOpen={ isSidebarOpen } />
+
+      <Header toggleSidebar={ toggleSidebar } isSidebarOpen={ isSidebarOpen } />
+
+      <MainContent isSidebarOpen={ isSidebarOpen } />
+    </div>
+  )
+
+  return (
+    <MuiThemeProvider theme={ theme }>
+      <MuiPickersUtilsProvider utils={ MomentUtils } moment={ moment }>
+        <Router>
+          <React.Fragment>
+            <CssBaseline />
+
+            { isAuth ? mainApp : <Auth /> }
+          </React.Fragment>
+        </Router>
+      </MuiPickersUtilsProvider>
+    </MuiThemeProvider>
+  )
+}
+
+export default connect(mapStateToProps)(withWidth()(App))
 export { theme }
