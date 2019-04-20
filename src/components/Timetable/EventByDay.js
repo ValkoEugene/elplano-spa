@@ -79,6 +79,9 @@ const styles = theme => ({
   container: {
     display: 'flex',
     width: '100%',
+    [theme.breakpoints.only('xs')]: {
+      flexDirection: 'column',
+    },
   },
   dayContainer: {
     width: 125,
@@ -90,6 +93,9 @@ const styles = theme => ({
     color: theme.palette.primary.main,
   },
   dayCircle: {
+    [theme.breakpoints.only('xs')]: {
+      display: 'none',
+    },
     position: 'absolute',
     top: 10,
     right: -7,
@@ -101,6 +107,9 @@ const styles = theme => ({
     ...theme.custom.shadow.main,
   },
   dayLine: {
+    [theme.breakpoints.only('xs')]: {
+      display: 'none',
+    },
     position: 'absolute',
     width: 2,
     height: 'calc(100% - 25px)',

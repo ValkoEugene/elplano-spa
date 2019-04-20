@@ -118,10 +118,10 @@ class Header extends Component {
             </IconButton>
 
             <Typography variant="h6" color="inherit" className={ classes.grow }>
-              <span className={ classes.logo } onClick={ this.redirectToHomePage }>
+              { /* <span className={ classes.logo } onClick={ this.redirectToHomePage }>
                 EL Plano
-              </span>
-              <span className={ classes.pageTitle }>{ pageTitle }</span>
+              </span> */ }
+              <span>{ pageTitle }</span>
             </Typography>
 
             <div>
@@ -166,9 +166,6 @@ const styles = theme => ({
   },
   grow: {
     flexGrow: 1,
-  },
-  pageTitle: {
-    marginLeft: 75,
   },
   appBar: {
     background: theme.palette.primary.dark,

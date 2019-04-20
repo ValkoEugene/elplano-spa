@@ -32,7 +32,8 @@ const menuItems = [
     text: 'Главная',
     path: '/',
     exact: true,
-    sidebar: false, // Пока вынес переход в header - logo
+    sidebar: true,
+    icon: 'home',
     component: Home,
   },
   {

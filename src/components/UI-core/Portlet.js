@@ -7,20 +7,15 @@ Portlet.propTypes = {
   children: PropTypes.any.isRequired,
   classes: PropTypes.object.isRequired,
   padding: PropTypes.number.isRequired,
-  margin: PropTypes.number.isRequired,
 }
 
 Portlet.defaultProps = {
   padding: 25,
-  margin: 25,
 }
 
 function Portlet({ children, classes, padding, margin }) {
   return (
-    <Paper
-      className={ classes.paper }
-      style={ { padding: `${padding}px`, margin: `${margin}px` } }
-    >
+    <Paper className={ classes.paper } style={ { padding: `${padding}px` } }>
       { children }
     </Paper>
   )
@@ -29,6 +24,12 @@ function Portlet({ children, classes, padding, margin }) {
 const styles = theme => ({
   paper: {
     ...theme.custom.shadow,
+    [theme.breakpoints.down('sm')]: {
+      margin: 10,
+    },
+    [theme.breakpoints.up('sm')]: {
+      margin: 25,
+    },
   },
 })
 
