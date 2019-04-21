@@ -4,15 +4,13 @@ import { connect } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { createMuiTheme } from '@material-ui/core/styles'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
-import withWidth from '@material-ui/core/withWidth'
 import { MuiPickersUtilsProvider } from 'material-ui-pickers'
 import MomentUtils from '@date-io/moment'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import Sidebar from './components/Sidebar.js'
-import Header from './components/Header.js'
 import MainContent from './components/MainContent.js'
-import Auth from './components/Auth/index.js'
 import moment from './plugins/moment'
+import { getUser } from './plugins/token'
+import { setUser } from './actions/AuthActions'
 
 import './global.css'
 
@@ -77,36 +75,25 @@ const mapStateToProps = ({ user }) => {
   return { username, isAuth }
 }
 
+const mapDispatchToProps = dispatch => ({
+  setUser: user => dispatch(setUser(user)),
+})
+
 App.propTypes = {
   username: PropTypes.string,
   isAuth: PropTypes.bool.isRequired,
 }
 
-function App({ isAuth, width }) {
-  const isMobile = Boolean(width !== 'xs')
+function App({ isAuth }) {
+  const [initing, setIniting] = useState(true)
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(isMobile)
+  useEffect(() => {
+    const user = getUser()
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(value => !value)
-  }
+    if (user) setUser(user)
 
-  useEffect(
-    () => {
-      setIsSidebarOpen(isMobile)
-    },
-    [width]
-  )
-
-  const mainApp = (
-    <div className="App">
-      <Sidebar toggleSidebar={ toggleSidebar } isSidebarOpen={ isSidebarOpen } />
-
-      <Header toggleSidebar={ toggleSidebar } isSidebarOpen={ isSidebarOpen } />
-
-      <MainContent isSidebarOpen={ isSidebarOpen } />
-    </div>
-  )
+    setIniting(false)
+  }, [])
 
   return (
     <MuiThemeProvider theme={ theme }>
@@ -115,7 +102,7 @@ function App({ isAuth, width }) {
           <React.Fragment>
             <CssBaseline />
 
-            { isAuth ? mainApp : <Auth /> }
+            { initing ? null : <MainContent isAuth={ isAuth } /> }
           </React.Fragment>
         </Router>
       </MuiPickersUtilsProvider>
@@ -123,5 +110,8 @@ function App({ isAuth, width }) {
   )
 }
 
-export default connect(mapStateToProps)(withWidth()(App))
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)
 export { theme }

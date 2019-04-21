@@ -8,8 +8,6 @@ import HomeWidget from './HomeWidget.js'
 import { theme } from '../../App.js'
 import ThemeColors from '../ThemeColors'
 
-import axios from '../../plugins/axios'
-
 const mapStateToProps = ({ mainInfo }) => ({
   ...mainInfo,
 })
@@ -24,13 +22,6 @@ class Home extends Component {
     todayTimetable: PropTypes.array.isRequired,
     todayTasks: PropTypes.array.isRequired,
   }
-
-  // componentDidMount() {
-  //   axios
-  //     .get('/me')
-  //     .then(response => console.log(response))
-  //     .catch(error => console.log('Ошибка при загрузке', error))
-  // }
 
   render() {
     const {

@@ -123,7 +123,7 @@ class Timetable extends Component {
   }
 
   render() {
-    const { loading, error, events, classes } = this.props
+    const { loading, classes } = this.props
     const { weekEvents, daysOfWeekList, weekDates, initing } = this.state
 
     let haveEvents = false
