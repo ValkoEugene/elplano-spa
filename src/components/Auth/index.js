@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 import { withStyles } from '@material-ui/core/styles'
@@ -7,28 +7,48 @@ import Tab from '@material-ui/core/Tab'
 import Paper from '@material-ui/core/Paper'
 import Login from './Login'
 import Registrate from './Registrate'
+import { logout } from '../../actions/AuthActions.js'
+import { unsetTokens } from '../../plugins/token'
+import { connect } from 'react-redux'
 
-class Auth extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch(logout()),
+})
+
+Auth.propTypes = {
+  classes: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired,
+}
+
+function Auth({ classes, history }) {
+  const [atciveTab, setActiveTab] = useState(0)
+
+  const onChangeHandler = (event, value) => {
+    setActiveTab(value)
   }
 
-  state = {
-    atciveTab: 0,
-  }
+  useEffect(() => {
+    history.push('/auth')
+  }, [])
 
-  onChangeHandler = (event, value) => {
-    this.setState({
-      atciveTab: value,
-    })
-  }
+  return (
+    <div className={ classes.authContainer }>
+      <div className={ classes.authContent }>
+        <div className={ classes.authAbout }>
+          <h2 className={ classes.title }>Welcom to EL Plano</h2>
 
-  render() {
-    const { classes } = this.props
-    const { atciveTab } = this.state
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </p>
 
-    return (
-      <div className={ classes.authContainer }>
+          <p>
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+            officia deserunt mollit anim id est laborum.
+          </p>
+        </div>
+
         <Paper className={ classes.tabsWrapper }>
           <Tabs
             value={ atciveTab }
@@ -36,7 +56,7 @@ class Auth extends Component {
             textColor="primary"
             fullWidth={ true }
             classes={ { root: classes.tabsRoot } }
-            onChange={ this.onChangeHandler }
+            onChange={ onChangeHandler }
           >
             <Tab label="Вход" className={ classes.tab } />
             <Tab label="Регистрация" className={ classes.tab } />
@@ -45,8 +65,8 @@ class Auth extends Component {
           { atciveTab === 1 && <Registrate /> }
         </Paper>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 const styles = theme => ({
@@ -55,16 +75,23 @@ const styles = theme => ({
   },
   authContainer: {
     width: '100vw',
-    height: '100vh',
+    minHeight: '100vh',
     display: 'flex',
-    background: `linear-gradient(110deg, ${theme.palette.primary.light} 60%, ${
-      theme.palette.primary.dark
-    } 60%)`,
     justifyContent: 'center',
     alignItems: 'center',
   },
+  authContent: {
+    width: '90%',
+    display: 'flex',
+    justifyContent: 'space-around',
+    flexDirection: 'column',
+    [theme.breakpoints.up('sm')]: { width: '100%', flexDirection: 'row' },
+  },
+  authAbout: {
+    [theme.breakpoints.up('sm')]: { width: '35%' },
+  },
   tabsWrapper: {
-    width: '50%',
+    [theme.breakpoints.up('sm')]: { width: '40%' },
   },
   tab: {
     width: '50%',
@@ -74,4 +101,7 @@ const styles = theme => ({
   },
 })
 
-export default withRouter(withStyles(styles, { withTheme: true })(Auth))
+export default connect(
+  null,
+  mapDispatchToProps
+)(withRouter(withStyles(styles, { withTheme: true })(Auth)))

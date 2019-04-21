@@ -3,7 +3,6 @@ import { teachersReducer } from './teachers'
 import { teacherReducer } from './teacher'
 import { groupReducer } from './group'
 import { userReducer } from './user'
-import { confirmReducer } from './confirm'
 import { mainInfoReducer } from './mainInfo'
 import { lessonsReducer } from './lessons'
 import { tasksReducer } from './tasks'
@@ -26,5 +25,4 @@ export const rootReducer = combineReducers({
   events: eventsReducer,
   event: eventReducer,
   form: formReducer,
-  confirm: confirmReducer,
 })

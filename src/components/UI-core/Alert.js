@@ -22,7 +22,7 @@ const styles = theme => ({
   root: {
     color: '#fff',
     display: 'flex',
-    padding: 25,
+    padding: 15,
     fontSize: '1.2em',
     flexWrap: 'wrap',
     alignItems: 'center',
@@ -31,7 +31,7 @@ const styles = theme => ({
     background: theme.custom.success,
   },
   warning: {
-    background: theme.custom.warning,
+    background: theme.palette.primary.light,
   },
   error: {
     background: theme.custom.error,

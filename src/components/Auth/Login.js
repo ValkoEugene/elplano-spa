@@ -30,8 +30,6 @@ class Login extends Component {
 
     return (
       <div className={ classes.loginForm }>
-        <h2 className={ classes.title }>Welcom to EL Plano</h2>
-
         <LoginForm onSubmit={ this.auth } />
       </div>
     )
@@ -39,9 +37,6 @@ class Login extends Component {
 }
 
 const styles = theme => ({
-  title: {
-    color: theme.palette.primary.dark,
-  },
   loginForm: {
     width: '100%',
     display: 'flex',

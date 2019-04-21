@@ -1,8 +1,19 @@
 import axios from 'axios'
-import { setRefreshToken, setToken } from '../plugins/token'
+import {
+  setRefreshToken,
+  setToken,
+  setUser as setUserToLocalStorage,
+  unsetTokens,
+} from '../plugins/token'
 
 export const LOGIN = 'LOGIN'
 export const LOGOUT = 'LOGOUT'
+export const SET_USER = 'SET_USER'
+
+export const setUser = user => ({
+  type: SET_USER,
+  payload: user,
+})
 
 export const login = user => {
   const data = { ...user, grant_type: 'password' }
@@ -14,17 +25,20 @@ export const login = user => {
       .then(data => {
         const { access_token, refresh_token } = data
 
+        // Доделать информацию о юзере
+        const mockUserInfo = { username: user.login, login: user.login }
+        setUserToLocalStorage(mockUserInfo)
         setToken(access_token)
         setRefreshToken(refresh_token)
 
         dispatch({
           type: LOGIN,
-          payload: user,
+          payload: mockUserInfo,
         })
 
         return
       })
-      .catch(error => console.error(`Ошибка при логине: ${error}`))
+      .catch(error => Promise.reject(error))
   }
 }
 
@@ -51,9 +65,12 @@ export const createUser = user => {
   return dispatch => {
     return axios
       .post(`${process.env.REACT_APP_BASE_URL}/api/v1/users`, { data })
-      .then(response => console.log(response))
-      .catch(error => console.error(`Ну чет грохнулось: ${error}`))
+      .then(() => ({ login: email, password }))
+      .catch(error => Promise.reject(error))
   }
 }
 
-export const logout = () => ({ type: LOGOUT })
+export const logout = () => {
+  unsetTokens()
+  return { type: LOGOUT }
+}

@@ -7,6 +7,7 @@ import { withRouter } from 'react-router'
 import { withStyles } from '@material-ui/core/styles'
 import { createUser } from '../../actions/AuthActions.js'
 import RegistrateForm from './RegistrateForm'
+import { setRegistrateInfo } from '../../plugins/token'
 
 const mapDispatchToProps = dispatch => ({
   createUser: user => dispatch(createUser(user)),
@@ -21,7 +22,11 @@ class Registrate extends Component {
   signup = user => {
     this.props
       .createUser(user)
-      .then(() => console.log('Подтверждение отправленно на указанную почту '))
+      .then(registrateInfo => {
+        setRegistrateInfo(registrateInfo)
+
+        return
+      })
       .catch(error => console.error(`Ошибка: ${error}`))
   }
 
@@ -30,8 +35,6 @@ class Registrate extends Component {
 
     return (
       <div className={ classes.loginForm }>
-        <h2 className={ classes.title }>Welcom to EL Plano</h2>
-
         <RegistrateForm onSubmit={ this.signup } />
       </div>
     )
@@ -39,9 +42,6 @@ class Registrate extends Component {
 }
 
 const styles = theme => ({
-  title: {
-    color: theme.palette.primary.dark,
-  },
   loginForm: {
     width: '100%',
     display: 'flex',
