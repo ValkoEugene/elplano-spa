@@ -7,6 +7,7 @@ import Ratings from './components/Ratings'
 import TimetableContainer from './components/Timetable/TimetableContainer'
 import EditEventContainer from './components/EditEvent/EditEventContainer'
 import Group from './components/Group'
+import GroupInfo from './components/GroupInfo'
 import Auth from './components/Auth'
 import TasksContainer from './components/Tasks/TasksContainer'
 import MeasuresContainer from './components/Measures/MeasuresContainer'
@@ -113,6 +114,13 @@ const menuItems = [
     sidebar: true,
     icon: 'people',
     component: Group,
+  },
+  {
+    text: 'Редактирование группы',
+    path: '/group-info',
+    exact: false,
+    sidebar: false,
+    component: GroupInfo,
   },
   {
     text: 'Профиль',

@@ -8,10 +8,12 @@
     "@material-ui/icons": "^3.0.1",
     "axios": "^0.18.0",
     "express": "^4.16.4",
+    "formik": "^1.5.2",
     "lodash.clonedeep": "^4.5.0",
     "material-ui-pickers": "^2.2.4",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.23",
+    "notistack": "^0.7.0",
     "query-string": "^6.2.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
@@ -22,7 +24,8 @@
     "redux": "^4.0.1",
     "redux-form": "^8.1.0",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "yup": "^0.27.0"
   },
   "scripts": {
     "dev": "cross-env HTTPS=true PORT=3002 REACT_APP_BASE_URL=https://elplano-api.herokuapp.com react-scripts start",

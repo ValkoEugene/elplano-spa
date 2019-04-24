@@ -53,12 +53,8 @@ class Header extends Component {
     return currentMenuItem ? currentMenuItem.text : ''
   }
 
-  redirectToHomePage = () => {
-    this.props.history.push('/')
-  }
-
-  redirectToProfilePage = () => {
-    this.props.history.push('/profile')
+  redirectTo = path => {
+    this.props.history.push(path)
     this.handleClose()
   }
 
@@ -117,9 +113,6 @@ class Header extends Component {
             </IconButton>
 
             <Typography variant="h6" color="inherit" className={ classes.grow }>
-              { /* <span className={ classes.logo } onClick={ this.redirectToHomePage }>
-                EL Plano
-              </span> */ }
               <span>{ pageTitle }</span>
             </Typography>
 
@@ -146,8 +139,11 @@ class Header extends Component {
                 open={ open }
                 onClose={ this.handleClose }
               >
-                <MenuItem onClick={ this.redirectToProfilePage }>
+                <MenuItem onClick={ () => this.redirectTo('/profile') }>
                   Профиль
+                </MenuItem>
+                <MenuItem onClick={ () => this.redirectTo('/group-info') }>
+                  Настройка группы
                 </MenuItem>
                 <MenuItem onClick={ logoutAction }>Выход</MenuItem>
               </Menu>
