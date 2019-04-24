@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { createMuiTheme } from '@material-ui/core/styles'
+import { SnackbarProvider } from 'notistack'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import { MuiPickersUtilsProvider } from 'material-ui-pickers'
 import MomentUtils from '@date-io/moment'
@@ -98,13 +99,15 @@ function App({ isAuth }) {
   return (
     <MuiThemeProvider theme={ theme }>
       <MuiPickersUtilsProvider utils={ MomentUtils } moment={ moment }>
-        <Router>
-          <React.Fragment>
-            <CssBaseline />
+        <SnackbarProvider maxSnack={ 3 }>
+          <Router>
+            <React.Fragment>
+              <CssBaseline />
 
-            { initing ? null : <MainContent isAuth={ isAuth } /> }
-          </React.Fragment>
-        </Router>
+              { initing ? null : <MainContent isAuth={ isAuth } /> }
+            </React.Fragment>
+          </Router>
+        </SnackbarProvider>
       </MuiPickersUtilsProvider>
     </MuiThemeProvider>
   )

@@ -3,6 +3,7 @@ import axios from '../../plugins/axios'
 import ProfileForm from './ProfileForm'
 import Portlet from '../UI-core/Portlet'
 import Loader from '../Loader'
+import Typography from '@material-ui/core/Typography'
 
 function ProfileEdit() {
   const REST_URL = '/student'
@@ -79,6 +80,10 @@ function ProfileEdit() {
         <Loader />
       ) : (
         <Portlet>
+          <Typography variant="h6" color="primary">
+            Настройка профиля
+          </Typography>
+
           <ProfileForm initialValues={ profile } onSubmit={ update } />
         </Portlet>
       ) }
