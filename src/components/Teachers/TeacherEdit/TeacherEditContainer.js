@@ -8,7 +8,7 @@ import {
   loadTeacher,
   updateTeacher,
   deleteTeacher,
-} from '../../actions/TeacherActions'
+} from '../../../actions/TeacherActions'
 
 const mapStateToProps = ({ event: { loading, error, currentTeacher } }) => ({
   loading,

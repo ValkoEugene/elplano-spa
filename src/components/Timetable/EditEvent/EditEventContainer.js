@@ -9,7 +9,7 @@ import {
   updateEvent,
   deleteEvent,
   resetEvent,
-} from '../../actions/EventActions'
+} from '../../../actions/EventActions'
 
 const mapStateToProps = ({ event: { loading, error, currentEvent } }) => ({
   loading,

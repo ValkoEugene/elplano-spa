@@ -1,72 +1,69 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles'
-import Paper from '@material-ui/core/Paper'
-import TeachersTable from './TeachersTable.js'
-import Loader from '../Loader.js'
-import { loadTeachers } from '../../actions/TeachersActions.js'
-import PaperHeader from '../PaperHeader'
+import axios from '../../plugins/axios'
+import Loader from '../Loader'
 import Alert from '../UI-core/Alert'
+import TeacherCard from './TeacherCard'
 import AddNew from '../UI-core/AddNew'
 
-const mapStateToProps = ({ teachers }) => ({
-  teachers: teachers.teachersList,
-  loading: teachers.loading,
-})
+function TeachersList({ classes }) {
+  const REST_URL = '/lecturers'
 
-const mapDispatchToProps = dispatch => ({
-  loadTeachers: () => dispatch(loadTeachers()),
-})
+  const [teachers, setTeachers] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-class Teachers extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    teachers: PropTypes.array.isRequired,
-    loading: PropTypes.bool.isRequired,
-    loadTeachers: PropTypes.func.isRequired,
-  }
+  const formatDataFromApi = items =>
+    items.map(({ id, attributes, relationships }) => {
+      const courses = relationships.courses && relationships.courses.data
+      const { first_name, last_name, patronymic } = attributes
 
-  componentDidMount() {
-    this.props.loadTeachers()
-  }
+      return { id, first_name, last_name, patronymic, courses }
+    })
 
-  render() {
-    const { classes, teachers, loading } = this.props
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios(REST_URL)
 
-    const emptyTable = <Alert color="warning">Нет преподавателей</Alert>
+        const teachers = result.data.data
 
-    const table = (
-      <Paper className={ classes.root } elevation={ 1 }>
-        <PaperHeader title="Список преподавателей" showInput={ false } />
-        <TeachersTable teachers={ teachers } />
-      </Paper>
-    )
+        setTeachers(teachers.length ? formatDataFromApi(teachers) : [])
+        setLoading(false)
+      } catch (e) {
+        setError(e)
+      }
+    }
 
-    const content = (
-      <div>
-        { teachers.length ? table : emptyTable }
-        <AddNew addLink="/teachers/edit" />
-      </div>
-    )
+    fetchData()
+  }, [])
 
-    return loading ? <Loader /> : content
-  }
+  const haveTeachers = Boolean(teachers.length)
+
+  const errorAlert = <Alert color="error">{ error }</Alert>
+
+  const emptyAlert = <Alert color="warning">Список преподавателей пуст</Alert>
+
+  const teachersList = teachers.map(teacher => (
+    <TeacherCard { ...teacher } key={ teacher.id } />
+  ))
+
+  return (
+    <>
+      { error ? (
+        errorAlert
+      ) : loading ? (
+        <Loader />
+      ) : !haveTeachers ? (
+        emptyAlert
+      ) : (
+        <div>
+          { teachersList }
+          <AddNew addLink="/teachers/edit" />
+        </div>
+      ) }
+    </>
+  )
 }
 
-const styles = theme => ({
-  root: {
-    ...theme.custom.shadow,
-  },
-  avatar: {
-    margin: 10,
-  },
-  title: {
-    color: theme.palette.primary.light,
-  },
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles, { withTheme: true })(Teachers))
+export default TeachersList

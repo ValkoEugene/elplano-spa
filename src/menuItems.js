@@ -1,11 +1,12 @@
 import Confirm from './components/Confirm'
 import Home from './components/Home'
 import Teachers from './components/Teachers'
-import TeacherEditContainer from './components/TeacherEdit/TeacherEditContainer'
+import TeacherEditContainer from './components/Teachers/TeacherEdit/TeacherEditContainer'
 import Lessons from './components/Lessons'
+import LessonsEdit from './components/Lessons/LessonEdit'
 import Ratings from './components/Ratings'
 import TimetableContainer from './components/Timetable/TimetableContainer'
-import EditEventContainer from './components/EditEvent/EditEventContainer'
+import EditEventContainer from './components/Timetable/EditEvent/EditEventContainer'
 import Group from './components/Group'
 import GroupInfo from './components/GroupInfo'
 import Auth from './components/Auth'
@@ -86,10 +87,17 @@ const menuItems = [
   {
     text: 'Предметы',
     path: '/lessons',
-    exact: false,
+    exact: true,
     sidebar: true,
     icon: 'library_books',
     component: Lessons,
+  },
+  {
+    text: 'Редактироавние предмета',
+    path: '/lessons/edit',
+    exact: false,
+    sidebar: false,
+    component: LessonsEdit,
   },
   {
     text: 'Оценки',

@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
-import TextField from '../Forms/TextField'
-import validators from '../../utils/validators'
+import TextField from '../../Forms/TextField'
+import validators from '../../../utils/validators'
 
 const schema = [
   {
