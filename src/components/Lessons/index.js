@@ -1,60 +1,71 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles'
+import axios from '../../plugins/axios'
 import Loader from '../Loader'
-import Grid from '@material-ui/core/Grid'
+import Alert from '../UI-core/Alert'
 import LessonItem from './LessonItem'
-import { loadLessons } from '../../actions/LessonsActions'
+import AddNew from '../UI-core/AddNew'
 
-const mapStateToProps = ({ lessons }) => ({
-  loading: lessons.loading,
-  error: lessons.error,
-  lessons: lessons.lessonsList,
-})
+function TeachersList({ classes }) {
+  const REST_URL = '/courses'
 
-const mapDispatchToProps = dispatch => ({
-  loadLessons: () => dispatch(loadLessons()),
-})
+  const [courses, setCourses] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-class Lessons extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    loading: PropTypes.bool.isRequired,
-    lessons: PropTypes.array.isRequired,
-    loadLessons: PropTypes.func.isRequired,
-  }
+  const formatDataFromApi = items =>
+    items.map(({ id, attributes, relationships }) => {
+      const lecturers = relationships.lecturers && relationships.lecturers.data
+      const { title } = attributes
 
-  componentDidMount() {
-    this.props.loadLessons()
-  }
+      return { id, title, lecturers }
+    })
 
-  render() {
-    const { lessons, loading, classes } = this.props
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios(REST_URL)
 
-    const lessonsItems = lessons.map(item => (
-      <Grid item xs={ 12 } sm={ 6 } key={ item.id }>
-        <LessonItem lesson={ item } />
-      </Grid>
-    ))
+        const courses = result.data.data
 
-    return (
-      <div>
-        { loading ? (
-          <Loader />
-        ) : (
-          <Grid container spacing={ 24 }>
-            { lessonsItems }
-          </Grid>
-        ) }
-      </div>
-    )
-  }
+        setCourses(courses.length ? formatDataFromApi(courses) : [])
+        setLoading(false)
+      } catch (e) {
+        setError(e)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  const haveCourses = Boolean(courses.length)
+
+  const errorAlert = <Alert color="error">{ error }</Alert>
+
+  const emptyAlert = <Alert color="warning">Список предметов пуст</Alert>
+
+  const coursesList = courses.map(course => (
+    <LessonItem { ...course } key={ course.id } />
+  ))
+
+  return (
+    <>
+      { (() => {
+        if (error) {
+          return errorAlert
+        } else if (loading) {
+          return <Loader />
+        } else {
+          return (
+            <>
+              { !haveCourses ? emptyAlert : coursesList }
+              <AddNew addLink="/lessons/edit" />
+            </>
+          )
+        }
+      })() }
+    </>
+  )
 }
 
-const styles = theme => ({})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles)(Lessons))
+export default TeachersList
