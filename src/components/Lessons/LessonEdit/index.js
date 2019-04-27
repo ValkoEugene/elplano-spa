@@ -24,6 +24,11 @@ function LessonEdit({ history, location, enqueueSnackbar }) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
+  const [lecturersList, setLecturersList] = useState([])
+
+  /**
+   * Флаг что предмет еще не создан
+   */
   const isNew = !Boolean(lessonId)
 
   /**
@@ -36,13 +41,15 @@ function LessonEdit({ history, location, enqueueSnackbar }) {
       title,
     },
     relationships: {
-      lecturers: { data: lecturers },
+      lecturers: {
+        data: lecturers.map(id => ({ type: 'lecturer', id })),
+      },
     },
   })
 
   /**
    * Сохранение предмета
-   * @param {Object} group - данные о предмете (required)
+   * @param {Object} lesson - данные о предмете (required)
    * @param {Object} actions  - объект c методами из Formik (передаётся по умолчанию)
    */
   const save = async (lesson, actions) => {
@@ -77,11 +84,50 @@ function LessonEdit({ history, location, enqueueSnackbar }) {
     await axios.put(`${REST_URL}/${lessonId}`, { data })
   }
 
+  /**
+   * Удалить предмет
+   * @param {String} id - id предмета
+   */
   const deleteLesson = async id => {
     await axios.delete(`${REST_URL}/${lessonId}`)
 
     enqueueSnackbar('Удалено')
     history.push('/lessons')
+  }
+
+  /**
+   * Загрузить список преподавателей
+   */
+  const loadLecturers = async () => {
+    const response = await axios.get('/lecturers')
+
+    const lecturers = response.data.data.map(
+      ({ id, attributes: { first_name, last_name, patronymic } }) => ({
+        value: id,
+        view: [last_name, first_name, patronymic].join(' '),
+      })
+    )
+
+    setLecturersList(lecturers)
+  }
+
+  /**
+   * Загрузить предмет
+   * @param {String} id - id предмета
+   */
+  const loadLesson = async id => {
+    if (!id) {
+      return
+    }
+
+    const response = await axios(`${REST_URL}/${id}`)
+
+    const lesson = response.data.data
+    const { title } = lesson.attributes
+    const lecturers = lesson.relationships.lecturers.data.map(({ id }) => id)
+
+    setLessonId(id)
+    setLesson({ title, lecturers })
   }
 
   /**
@@ -92,23 +138,16 @@ function LessonEdit({ history, location, enqueueSnackbar }) {
 
     const fetchData = async id => {
       try {
-        const result = await axios(`${REST_URL}/${id}`)
+        await Promise.all([loadLecturers(), loadLesson(id)])
 
-        const lesson = result.data.data.attributes
-
-        setLessonId(id)
-        setLesson(lesson)
         setLoading(false)
       } catch (e) {
-        console.log('loading eror', e)
         setError(e)
       }
     }
 
-    id ? fetchData(id) : setLoading(false)
+    fetchData(id)
   }, [])
-
-  console.log('render', lessonId)
 
   return (
     <div>
@@ -128,6 +167,7 @@ function LessonEdit({ history, location, enqueueSnackbar }) {
                 <LessonEditForm
                   isNew={ isNew }
                   initialValues={ lesson }
+                  lecturersList={ lecturersList }
                   onSubmit={ save }
                   onDelete={ deleteLesson }
                 />

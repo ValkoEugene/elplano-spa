@@ -6,13 +6,20 @@ import Alert from '../UI-core/Alert'
 import LessonItem from './LessonItem'
 import AddNew from '../UI-core/AddNew'
 
-function TeachersList({ classes }) {
+function LessonsList({ classes }) {
   const REST_URL = '/courses'
 
   const [courses, setCourses] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
+  const [lecturersList, setLecturersList] = useState([])
+
+  /**
+   * Формотирование данных от api
+   * @param {Array} items - список предметов
+   * @returns {Array} форматированный список предметов
+   */
   const formatDataFromApi = items =>
     items.map(({ id, attributes, relationships }) => {
       const lecturers = relationships.lecturers && relationships.lecturers.data
@@ -21,14 +28,41 @@ function TeachersList({ classes }) {
       return { id, title, lecturers }
     })
 
+  /**
+   * Загрузить список предметов
+   */
+  const loadLessons = async () => {
+    const result = await axios(REST_URL)
+
+    const courses = result.data.data
+
+    setCourses(courses.length ? formatDataFromApi(courses) : [])
+  }
+
+  /**
+   * Загрузить список преподавателей
+   */
+  const loadLecturers = async () => {
+    const response = await axios.get('/lecturers')
+
+    const lecturers = response.data.data.map(
+      ({ id, attributes: { first_name, last_name, patronymic } }) => ({
+        id,
+        view: [last_name, first_name, patronymic].join(' '),
+      })
+    )
+
+    setLecturersList(lecturers)
+  }
+
+  /**
+   * Инициализация данных
+   */
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await axios(REST_URL)
+        await Promise.all([loadLecturers(), loadLessons()])
 
-        const courses = result.data.data
-
-        setCourses(courses.length ? formatDataFromApi(courses) : [])
         setLoading(false)
       } catch (e) {
         setError(e)
@@ -38,14 +72,30 @@ function TeachersList({ classes }) {
     fetchData()
   }, [])
 
+  /**
+   * Флаг наличия предметов
+   * @type {Boolean}
+   */
   const haveCourses = Boolean(courses.length)
 
+  /**
+   * Сообщение о ошибки
+   * @type {JSX}
+   */
   const errorAlert = <Alert color="error">{ error }</Alert>
 
+  /**
+   * Сообщение об отсутствие предметов
+   * @type {JSX}
+   */
   const emptyAlert = <Alert color="warning">Список предметов пуст</Alert>
 
+  /**
+   * Список предметов
+   * @type {JSX}
+   */
   const coursesList = courses.map(course => (
-    <LessonItem { ...course } key={ course.id } />
+    <LessonItem { ...course } lecturersList={ lecturersList } key={ course.id } />
   ))
 
   return (
@@ -68,4 +118,4 @@ function TeachersList({ classes }) {
   )
 }
 
-export default TeachersList
+export default LessonsList

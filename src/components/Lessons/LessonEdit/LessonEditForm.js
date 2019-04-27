@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import TextField from '../../FormsFormik/TextField'
+import MultiselectField from '../../FormsFormik/MultiselectField'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 
@@ -16,9 +17,17 @@ LessonEditForm.propTypes = {
   onDelete: PropTypes.func.isRequired,
   initialValues: PropTypes.object.isRequired,
   isNew: PropTypes.bool.isRequired,
+  lecturersList: PropTypes.array.isRequired,
 }
 
-function LessonEditForm({ isNew, classes, onSubmit, onDelete, initialValues }) {
+function LessonEditForm({
+  isNew,
+  classes,
+  onSubmit,
+  onDelete,
+  initialValues,
+  lecturersList,
+}) {
   return (
     <Formik
       initialValues={ initialValues }
@@ -27,27 +36,39 @@ function LessonEditForm({ isNew, classes, onSubmit, onDelete, initialValues }) {
       render={ props => (
         <form onSubmit={ props.handleSubmit }>
           <TextField name="title" label="Название" { ...props } />
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            disabled={ props.isSubmitting }
-            className={ classes.button }
-          >
-            { isNew ? 'Создать' : 'Обновить' }
-          </Button>
 
-          { !isNew && (
+          {
+            <MultiselectField
+              name="lecturers"
+              options={ lecturersList }
+              label="Преподаватели"
+              { ...props }
+            />
+          }
+
+          <div>
             <Button
               variant="contained"
-              color="secondary"
-              type="button"
+              color="primary"
+              type="submit"
+              disabled={ props.isSubmitting }
               className={ classes.button }
-              onClick={ onDelete }
             >
-              Удалить
+              { isNew ? 'Создать' : 'Обновить' }
             </Button>
-          ) }
+
+            { !isNew && (
+              <Button
+                variant="contained"
+                color="secondary"
+                type="button"
+                className={ classes.button }
+                onClick={ onDelete }
+              >
+                Удалить
+              </Button>
+            ) }
+          </div>
         </form>
       ) }
     />
