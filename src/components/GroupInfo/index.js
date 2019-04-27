@@ -38,12 +38,10 @@ function GroupInfo({ enqueueSnackbar }) {
 
   /**
    * Обновление данных о группе
-   * @param {Object} group - данные о группе (required)
+   * @param {Object} data - данные о группе (required)
    * @param {Object} actions  - объект c методами из Formik (передаётся по умолчанию)
    */
-  const update = (group, actions) => {
-    const data = formatDataForApi(group)
-
+  const update = (data, actions) => {
     axios
       .put(REST_URL, { data })
       .then(() => {
@@ -59,12 +57,10 @@ function GroupInfo({ enqueueSnackbar }) {
 
   /**
    * Создание группы
-   * @param {Object} group - данные о группе (required)
+   * @param {Object} data - данные о группе (required)
    * @param {Object} actions  - объект c методами из Formik (передаётся по умолчанию)
    */
-  const create = (group, actions) => {
-    const data = formatDataForApi(group)
-
+  const create = (data, actions) => {
     axios
       .post(REST_URL, { data })
       .then(() => {
@@ -84,7 +80,9 @@ function GroupInfo({ enqueueSnackbar }) {
    * @param {Object} actions  - объект c методами из Formik (передаётся по умолчанию)
    */
   const save = (group, actions) => {
-    haveGroup ? update(group, actions) : create(group, actions)
+    const data = formatDataForApi(group)
+
+    haveGroup ? update(data, actions) : create(data, actions)
   }
 
   /**

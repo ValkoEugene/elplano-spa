@@ -7,8 +7,8 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 
 const validationSchema = Yup.object({
-  number: Yup.string('Введите Название').required('Обязательное поле'),
-  title: Yup.string('Введите Номер').required('Обязательное поле'),
+  number: Yup.string('Введите Номер').required('Обязательное поле'),
+  title: Yup.string('Введите Название').required('Обязательное поле'),
 })
 
 GroupInfoForm.propTypes = {

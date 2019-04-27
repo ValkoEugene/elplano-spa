@@ -3,8 +3,8 @@ import { withRouter } from 'react-router'
 import queryString from 'query-string'
 import PropTypes from 'prop-types'
 import TeacherForm from './TeacherForm'
-import Portlet from '../UI-core/Portlet'
-import Loader from '../Loader'
+import Portlet from '../../UI-core/Portlet'
+import Loader from '../../Loader'
 
 class EditTeacher extends Component {
   static propTypes = {

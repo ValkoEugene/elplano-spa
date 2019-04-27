@@ -70,8 +70,33 @@ const updateToken = error => {
   return Promise.reject(error)
 }
 
-axiosInstance.interceptors.request.use(addJWT)
+// Обработка ошибок
+const handlingErrors = error => {
+  // Обрабатываем ошибки сети
+  // в них нет ответа и соответственно status, data что нужны
+  if (!error.response) {
+    console.error('Network error')
+    return
+  }
 
+  // Получаем статус ошибки и данные
+  const { status, data } = error.response
+
+  if (status === 401) {
+    return // Отдельно обрабатываем в updateToken
+  } else if (status === 404) {
+    error.message = 'Запись не найдена'
+  } else if (status >= 400 && status < 500 && data.errors) {
+    error.message = data.errors.map(({ detail }) => detail).join(', ')
+  } else if (status >= 500) {
+    error.message = 'Извините, возникла ошибка на сервере'
+  }
+
+  return Promise.reject(error.message)
+}
+
+axiosInstance.interceptors.request.use(addJWT)
 axiosInstance.interceptors.response.use(response => response, updateToken)
+axiosInstance.interceptors.response.use(response => response, handlingErrors)
 
 export default axiosInstance

@@ -1,60 +1,121 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles'
+import axios from '../../plugins/axios'
 import Loader from '../Loader'
-import Grid from '@material-ui/core/Grid'
+import Alert from '../UI-core/Alert'
 import LessonItem from './LessonItem'
-import { loadLessons } from '../../actions/LessonsActions'
+import AddNew from '../UI-core/AddNew'
 
-const mapStateToProps = ({ lessons }) => ({
-  loading: lessons.loading,
-  error: lessons.error,
-  lessons: lessons.lessonsList,
-})
+function LessonsList({ classes }) {
+  const REST_URL = '/courses'
 
-const mapDispatchToProps = dispatch => ({
-  loadLessons: () => dispatch(loadLessons()),
-})
+  const [courses, setCourses] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-class Lessons extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    loading: PropTypes.bool.isRequired,
-    lessons: PropTypes.array.isRequired,
-    loadLessons: PropTypes.func.isRequired,
+  const [lecturersList, setLecturersList] = useState([])
+
+  /**
+   * Формотирование данных от api
+   * @param {Array} items - список предметов
+   * @returns {Array} форматированный список предметов
+   */
+  const formatDataFromApi = items =>
+    items.map(({ id, attributes, relationships }) => {
+      const lecturers = relationships.lecturers && relationships.lecturers.data
+      const { title } = attributes
+
+      return { id, title, lecturers }
+    })
+
+  /**
+   * Загрузить список предметов
+   */
+  const loadLessons = async () => {
+    const result = await axios(REST_URL)
+
+    const courses = result.data.data
+
+    setCourses(courses.length ? formatDataFromApi(courses) : [])
   }
 
-  componentDidMount() {
-    this.props.loadLessons()
-  }
+  /**
+   * Загрузить список преподавателей
+   */
+  const loadLecturers = async () => {
+    const response = await axios.get('/lecturers')
 
-  render() {
-    const { lessons, loading, classes } = this.props
-
-    const lessonsItems = lessons.map(item => (
-      <Grid item xs={ 12 } sm={ 6 } key={ item.id }>
-        <LessonItem lesson={ item } />
-      </Grid>
-    ))
-
-    return (
-      <div>
-        { loading ? (
-          <Loader />
-        ) : (
-          <Grid container spacing={ 24 }>
-            { lessonsItems }
-          </Grid>
-        ) }
-      </div>
+    const lecturers = response.data.data.map(
+      ({ id, attributes: { first_name, last_name, patronymic } }) => ({
+        id,
+        view: [last_name, first_name, patronymic].join(' '),
+      })
     )
+
+    setLecturersList(lecturers)
   }
+
+  /**
+   * Инициализация данных
+   */
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await Promise.all([loadLecturers(), loadLessons()])
+
+        setLoading(false)
+      } catch (e) {
+        setError(e)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  /**
+   * Флаг наличия предметов
+   * @type {Boolean}
+   */
+  const haveCourses = Boolean(courses.length)
+
+  /**
+   * Сообщение о ошибки
+   * @type {JSX}
+   */
+  const errorAlert = <Alert color="error">{ error }</Alert>
+
+  /**
+   * Сообщение об отсутствие предметов
+   * @type {JSX}
+   */
+  const emptyAlert = <Alert color="warning">Список предметов пуст</Alert>
+
+  /**
+   * Список предметов
+   * @type {JSX}
+   */
+  const coursesList = courses.map(course => (
+    <LessonItem { ...course } lecturersList={ lecturersList } key={ course.id } />
+  ))
+
+  return (
+    <>
+      { (() => {
+        if (error) {
+          return errorAlert
+        } else if (loading) {
+          return <Loader />
+        } else {
+          return (
+            <>
+              { !haveCourses ? emptyAlert : coursesList }
+              <AddNew addLink="/lessons/edit" />
+            </>
+          )
+        }
+      })() }
+    </>
+  )
 }
 
-const styles = theme => ({})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles)(Lessons))
+export default LessonsList

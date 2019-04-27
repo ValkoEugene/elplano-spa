@@ -3,9 +3,9 @@ import { withRouter } from 'react-router'
 import queryString from 'query-string'
 import PropTypes from 'prop-types'
 import EventForm from './EventForm'
-import Portlet from '../UI-core/Portlet'
-import GoBack from '../UI-core/GoBack'
-import Loader from '../Loader'
+import Portlet from '../../UI-core/Portlet'
+import GoBack from '../../UI-core/GoBack'
+import Loader from '../../Loader'
 import moment from 'moment-timezone'
 
 class EditEvent extends Component {

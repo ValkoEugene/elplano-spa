@@ -1,86 +1,61 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
-import Paper from '@material-ui/core/Paper'
-import BottomNavigation from '@material-ui/core/BottomNavigation'
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
-import PersonAvatar from '../PersonAvatar'
-import Icon from '@material-ui/core/Icon'
-import Divider from '@material-ui/core/Divider'
-
-const LessonItem = ({ classes, lesson }) => {
-  const { title, rating, teachers } = lesson
-
-  const haveTeachers = teachers && teachers.length
-
-  return (
-    <Paper className={ classes.wrapper }>
-      <h5 className={ classes.title }> { title } </h5>
-
-      <h6 className={ classes.subTitle }> Средняя оценка: </h6>
-      <p className={ classes.rating }> { rating || '-' } </p>
-
-      <h6 className={ classes.subTitle }> Преподаватели: </h6>
-
-      <div className={ classes.teachersWrapper }>
-        { !haveTeachers ? (
-          <p className={ classes.rating }>-</p>
-        ) : (
-          teachers.map(item => <PersonAvatar person={ item } key={ item.id } />)
-        ) }
-      </div>
-
-      <Divider />
-
-      <BottomNavigation showLabels>
-        <BottomNavigationAction
-          label="Задания"
-          icon={ <Icon color="primary">work</Icon> }
-        />
-        <BottomNavigationAction
-          label="Оценки"
-          icon={ <Icon color="primary">star_half</Icon> }
-        />
-        <BottomNavigationAction
-          label="Вложения"
-          icon={ <Icon color="primary">unarchive</Icon> }
-        />
-      </BottomNavigation>
-    </Paper>
-  )
-}
+import Portlet from '../UI-core/Portlet'
+import Chip from '@material-ui/core/Chip'
 
 LessonItem.proptypes = {
   classes: PropTypes.object.isRequired,
   lesson: PropTypes.object.isRequired,
 }
 
+function LessonItem({ classes, title, lecturers, lecturersList }) {
+  /**
+   * Получить отображение преподавателя
+   * @param {String} id - id преподавателя
+   * @returns {String} отображение преподавателя
+   *
+   */
+  const getLuctureView = id => {
+    const lecture = lecturersList.find(item => item.id === id)
+
+    return lecture ? lecture.view : null
+  }
+
+  /**
+   * Бэйджики с преподавателями
+   * @type {JSX}
+   */
+  const lecturersChips = lecturers.length
+    ? lecturers.map(({ id }) => (
+        <Chip
+          label={ getLuctureView(id) }
+          className={ classes.chip }
+          color="primary"
+        />
+      ))
+    : '-'
+
+  return (
+    <Portlet className={ classes.wrapper } padding={ 10 }>
+      <p className={ classes.lessonTitle }>{ title }</p>
+      <span>Преподаватели:</span> { lecturersChips }
+    </Portlet>
+  )
+}
+
 const styles = theme => ({
   wrapper: {
-    textAlign: 'center',
-  },
-  title: {
-    padding: 15,
-    fontSize: 22,
-    background: theme.custom.background,
-    color: theme.palette.primary.light,
-  },
-  subTitle: {
-    marginTop: 15,
-    marginBottom: 0,
-    fontSize: 18,
-  },
-  rating: {
-    fontSize: 45,
-    margin: 0,
-    color: theme.palette.primary.light,
-  },
-  teachersWrapper: {
-    margin: 15,
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
     justifyContent: 'center',
+    flexWrap: 'wrap',
+    padding: theme.spacing.unit / 2,
+  },
+  chip: {
+    margin: theme.spacing.unit / 2,
+  },
+  lessonTitle: {
+    ...theme.custom.primaryTitle,
   },
 })
 
