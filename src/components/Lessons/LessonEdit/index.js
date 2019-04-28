@@ -8,6 +8,7 @@ import Portlet from '../../UI-core/Portlet'
 import Loader from '../../Loader'
 import Alert from '../../UI-core/Alert'
 import Typography from '@material-ui/core/Typography'
+import GoBack from '../../UI-core/GoBack'
 import { withSnackbar } from 'notistack'
 
 LessonEdit.propTypes = {
@@ -172,6 +173,8 @@ function LessonEdit({ history, location, enqueueSnackbar }) {
                   onDelete={ deleteLesson }
                 />
               </Portlet>
+
+              <GoBack link="/lessons" />
             </>
           )
         }
