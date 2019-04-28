@@ -35,7 +35,7 @@ function LectureEdit({ id, setId, history, location, enqueueSnackbar }) {
   }))
 
   /**
-   * Флаг что предмет еще не создан
+   * Флаг что преподаватель еще не создан
    */
   const isNew = !Boolean(id)
 
@@ -61,9 +61,9 @@ function LectureEdit({ id, setId, history, location, enqueueSnackbar }) {
   }
 
   /**
-   * Удалить предмет
+   * Удалить преподавателя
    */
-  const deleteLesson = async () => {
+  const deleteLecture = async () => {
     await lecturersApi.deleteById(id)
 
     enqueueSnackbar('Удалено')
@@ -93,7 +93,7 @@ function LectureEdit({ id, setId, history, location, enqueueSnackbar }) {
                     initialValues={ lecture }
                     coursesOptions={ coursesOptions }
                     onSubmit={ save }
-                    onDelete={ deleteLesson }
+                    onDelete={ deleteLecture }
                   />
                 }
               </Portlet>

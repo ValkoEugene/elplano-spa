@@ -44,8 +44,6 @@ function Lecturers({ classes }) {
     </div>
   ))
 
-  console.log('render', lecturers)
-
   return (
     <>
       { (() => {

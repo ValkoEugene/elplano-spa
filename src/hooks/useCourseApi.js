@@ -2,7 +2,10 @@ import { useState, useEffect } from 'react'
 import coursesApi from '../api/CoursesApi'
 
 const useCourseApi = id => {
-  const [course, setCourse] = useState({})
+  const [course, setCourse] = useState({
+    title: '',
+    lecturers: [],
+  })
   const [loadingCourse, setLoadingCourse] = useState(true)
   const [errorCourse, setErrorCourse] = useState(null)
 
