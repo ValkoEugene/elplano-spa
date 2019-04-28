@@ -1,7 +1,7 @@
 import Confirm from './components/Confirm'
 import Home from './components/Home'
-import Teachers from './components/Teachers'
-import TeacherEditContainer from './components/Teachers/TeacherEdit/TeacherEditContainer'
+import Lecturers from './components/Lecturers'
+import LecturerEdit from './components/Lecturers/LectureEdit'
 import Lessons from './components/Lessons'
 import LessonsEdit from './components/Lessons/LessonEdit'
 import Ratings from './components/Ratings'
@@ -71,18 +71,18 @@ const menuItems = [
   },
   {
     text: 'Преподаватели',
-    path: '/teachers',
+    path: '/lecturers',
     exact: true,
     sidebar: true,
     icon: 'contacts',
-    component: Teachers,
+    component: Lecturers,
   },
   {
     text: 'Добавить преподавателя',
-    path: '/teachers/edit',
+    path: '/lecturers/edit',
     exact: true,
     sidebar: false,
-    component: TeacherEditContainer,
+    component: LecturerEdit,
   },
   {
     text: 'Предметы',
