@@ -96,7 +96,7 @@ function LessonsList({ classes }) {
    * @type {JSX}
    */
   const coursesList = courses.map(course => (
-    <div className={ classes.coursesItem }>
+    <div className={ classes.item }>
       <LessonItem { ...course } lecturersList={ lecturersList } key={ course.id } />
     </div>
   ))
@@ -114,7 +114,7 @@ function LessonsList({ classes }) {
               { !haveCourses ? (
                 emptyAlert
               ) : (
-                <div className={ classes.coursesListWrapper }>{ coursesList }</div>
+                <div className={ classes.wrapper }>{ coursesList }</div>
               ) }
               <AddNew addLink="/lessons/edit" />
             </>
@@ -126,13 +126,13 @@ function LessonsList({ classes }) {
 }
 
 const styles = theme => ({
-  coursesListWrapper: {
+  wrapper: {
     display: 'flex',
     justifyContent: 'center',
     flexWrap: 'wrap',
     padding: theme.spacing.unit / 2,
   },
-  coursesItem: {
+  item: {
     [theme.breakpoints.down('sm')]: {
       width: '100%',
     },
