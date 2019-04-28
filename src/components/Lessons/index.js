@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
 import axios from '../../plugins/axios'
 import Loader from '../Loader'
 import Alert from '../UI-core/Alert'
@@ -95,7 +96,9 @@ function LessonsList({ classes }) {
    * @type {JSX}
    */
   const coursesList = courses.map(course => (
-    <LessonItem { ...course } lecturersList={ lecturersList } key={ course.id } />
+    <div className={ classes.coursesItem }>
+      <LessonItem { ...course } lecturersList={ lecturersList } key={ course.id } />
+    </div>
   ))
 
   return (
@@ -108,7 +111,11 @@ function LessonsList({ classes }) {
         } else {
           return (
             <>
-              { !haveCourses ? emptyAlert : coursesList }
+              { !haveCourses ? (
+                emptyAlert
+              ) : (
+                <div className={ classes.coursesListWrapper }>{ coursesList }</div>
+              ) }
               <AddNew addLink="/lessons/edit" />
             </>
           )
@@ -118,4 +125,22 @@ function LessonsList({ classes }) {
   )
 }
 
-export default LessonsList
+const styles = theme => ({
+  coursesListWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    padding: theme.spacing.unit / 2,
+  },
+  coursesItem: {
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: '50%',
+    },
+    flexGrow: 1,
+  },
+})
+
+export default withStyles(styles, { theme: true })(LessonsList)
