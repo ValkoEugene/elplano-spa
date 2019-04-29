@@ -57,7 +57,7 @@ function LessonEdit({ history, location, enqueueSnackbar }) {
     const data = formatDataForApi(lesson)
 
     try {
-      lessonId ? await update(data, actions) : await create(data, actions)
+      lessonId ? await update(data) : await create(data)
 
       enqueueSnackbar('Сохранено')
     } catch (error) {
