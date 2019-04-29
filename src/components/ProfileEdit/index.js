@@ -4,15 +4,21 @@ import ProfileForm from './ProfileForm'
 import Portlet from '../UI-core/Portlet'
 import Loader from '../Loader'
 import Typography from '@material-ui/core/Typography'
+import { withSnackbar } from 'notistack'
 
-function ProfileEdit() {
+function ProfileEdit({ enqueueSnackbar }) {
   const REST_URL = '/student'
 
   const [profile, setProfile] = useState({})
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  const update = profile => {
+  /**
+   * Сохранение данных о профиле
+   * @param {Object} profile - данные о профиле (required)
+   * @param {Object} actions  - объект c методами из Formik (передаётся по умолчанию)
+   */
+  const update = async (profile, actions) => {
     const {
       email,
       phone,
@@ -38,9 +44,17 @@ function ProfileEdit() {
       },
     }
 
-    axios.put(REST_URL, { data }).catch(error => setError(error))
+    try {
+      await axios.put(REST_URL, { data })
+      enqueueSnackbar('Сохранено')
+    } catch (error) {
+      setError(error)
+    } finally {
+      actions.setSubmitting(false)
+    }
   }
 
+  // TODO вынести хук
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -91,4 +105,4 @@ function ProfileEdit() {
   )
 }
 
-export default ProfileEdit
+export default withSnackbar(ProfileEdit)

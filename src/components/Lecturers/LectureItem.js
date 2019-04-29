@@ -82,6 +82,7 @@ const styles = theme => ({
   contentWrapper: {
     display: 'flex',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   chip: {
     margin: theme.spacing.unit / 2,

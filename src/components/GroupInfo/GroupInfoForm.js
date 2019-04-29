@@ -36,7 +36,7 @@ function GroupInfoForm({ classes, onSubmit, initialValues }) {
             disabled={ props.isSubmitting }
             className={ classes.button }
           >
-            Отправить
+            Сохранить
           </Button>
         </form>
       ) }

@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import TextField from '../FormsFormik/TextField'
+import { withStyles } from '@material-ui/core/styles'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 
@@ -17,7 +17,7 @@ AddGroupMemberForm.propTypes = {
   onSubmit: PropTypes.func,
 }
 
-function AddGroupMemberForm({ classes, onSubmit }) {
+function AddGroupMemberForm({ onSubmit, classes }) {
   return (
     <Formik
       initialValues={ { email: '' } }
@@ -31,8 +31,8 @@ function AddGroupMemberForm({ classes, onSubmit }) {
             variant="contained"
             color="primary"
             type="submit"
-            disabled={ props.isSubmitting }
             className={ classes.button }
+            disabled={ props.isSubmitting }
           >
             Отправить
           </Button>

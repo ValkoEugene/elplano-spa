@@ -69,7 +69,7 @@ class EditEvent extends Component {
 
     eventId ? updateEvent(formatedData) : createEvent(formatedData)
 
-    // TODO : history.push
+    // TODO : history.push Вынести из redux
   }
 
   initDeleteEvent = () => {

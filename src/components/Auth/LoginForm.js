@@ -24,7 +24,7 @@ const validate = ({ login, password }) => ({
 })
 
 let LoginForm = props => {
-  const { handleSubmit } = props
+  const { handleSubmit, isSubmitting } = props
 
   const fields = schema.map(item => <Field { ...item } key={ item.name } />)
 
@@ -32,7 +32,12 @@ let LoginForm = props => {
     <form onSubmit={ handleSubmit }>
       { fields }
 
-      <Button variant="contained" color="primary" type="submit">
+      <Button
+        variant="contained"
+        color="primary"
+        type="submit"
+        disabled={ isSubmitting }
+      >
         Войти
       </Button>
     </form>

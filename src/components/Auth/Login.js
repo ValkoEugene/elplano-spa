@@ -1,6 +1,6 @@
 // Компонент логина
 
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
@@ -12,28 +12,30 @@ const mapDispatchToProps = dispatch => ({
   login: user => dispatch(login(user)),
 })
 
-class Login extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    login: PropTypes.func.isRequired,
-  }
+Login.propTypes = {
+  classes: PropTypes.object.isRequired,
+  login: PropTypes.func.isRequired,
+}
 
-  auth = ({ login, password }) => {
-    this.props
+function Login(props) {
+  const { classes, login, history } = props
+  const [isSubmitting, setSubmitting] = useState(false)
+
+  const auth = ({ login, password }) => {
+    setSubmitting(true)
+
+    props
       .login({ login, password })
-      .then(() => this.props.history.push('/'))
+      .then(() => history.push('/'))
       .catch(error => console.error(`Ошибка: ${error}`))
+      .then(() => setSubmitting(false))
   }
 
-  render() {
-    const { classes } = this.props
-
-    return (
-      <div className={ classes.loginForm }>
-        <LoginForm onSubmit={ this.auth } />
-      </div>
-    )
-  }
+  return (
+    <div className={ classes.loginForm }>
+      <LoginForm onSubmit={ auth } isSubmitting={ isSubmitting } />
+    </div>
+  )
 }
 
 const styles = theme => ({
