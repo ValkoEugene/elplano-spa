@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import axios from '../../plugins/axios'
 import GroupInfoForm from './GroupInfoForm'
 import AddGroupMemberForm from './AddGroupMemberForm'
+import GropuInvites from './GropuInvites'
 import Portlet from '../UI-core/Portlet'
 import Loader from '../Loader'
 import Typography from '@material-ui/core/Typography'
@@ -159,6 +160,8 @@ function GroupInfo({ enqueueSnackbar }) {
               <AddGroupMemberForm onSubmit={ addMember } />
             </Portlet>
           ) }
+
+          <GropuInvites />
         </div>
       ) }
     </div>
