@@ -6,6 +6,8 @@ import {
   setToken,
   unsetTokens,
 } from './token'
+import { store } from '../store/configureStore'
+import { logout } from '../actions/AuthActions'
 
 const baseURL = process.env.REACT_APP_BASE_URL
 
@@ -59,8 +61,7 @@ const updateToken = error => {
         return axios(originalRequest)
       })
       .catch(error => {
-        // TODO редирект на страницу log-off
-        unsetTokens()
+        store.dispatch(logout())
         console.error(`Не получилось получить token: ${error}`)
       })
   }
