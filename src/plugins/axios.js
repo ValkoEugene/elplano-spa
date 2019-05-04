@@ -6,6 +6,8 @@ import {
   setToken,
   unsetTokens,
 } from './token'
+import { store } from '../store/configureStore'
+import { logout } from '../actions/AuthActions'
 
 const baseURL = process.env.REACT_APP_BASE_URL
 
@@ -20,8 +22,6 @@ const axiosInstance = axios.create({
 // Добавляем токены для JWT каждому запросу
 const addJWT = config => {
   const token = getToken()
-
-  console.log(process.env)
 
   if (token) {
     config.headers.common['Authorization'] = `Bearer ${token}`
@@ -43,7 +43,7 @@ const updateToken = error => {
       refresh_token: getRefreshToken(),
     }
 
-    axios
+    return axios
       .post(`${baseURL}/oauth/token`, data)
       .then(response => response.data)
       .then(data => {
@@ -61,13 +61,10 @@ const updateToken = error => {
         return axios(originalRequest)
       })
       .catch(error => {
-        // TODO редирект на страницу log-off
-        unsetTokens()
+        store.dispatch(logout())
         console.error(`Не получилось получить token: ${error}`)
       })
   }
-
-  return Promise.reject(error)
 }
 
 // Обработка ошибок
