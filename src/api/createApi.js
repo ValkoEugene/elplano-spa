@@ -30,7 +30,7 @@ export default ({ restUrl, formatDataFromApi, formatDataForApi }) => ({
 
       return respone.data.data.map(item => formatDataFromApi(item))
     } catch (error) {
-      Promise.reject(error)
+      return Promise.reject(error)
     }
   },
 
@@ -46,7 +46,7 @@ export default ({ restUrl, formatDataFromApi, formatDataForApi }) => ({
 
       return formatDataFromApi(response.data.data)
     } catch (error) {
-      Promise.reject(error)
+      return Promise.reject(error)
     }
   },
 
@@ -64,7 +64,7 @@ export default ({ restUrl, formatDataFromApi, formatDataForApi }) => ({
 
       return formatDataFromApi(response.data.data)
     } catch (error) {
-      Promise.reject(error)
+      return Promise.reject(error)
     }
   },
 
@@ -83,7 +83,7 @@ export default ({ restUrl, formatDataFromApi, formatDataForApi }) => ({
 
       return formatDataFromApi(response.data.data)
     } catch (error) {
-      Promise.reject(error)
+      return Promise.reject(error)
     }
   },
 
@@ -96,7 +96,7 @@ export default ({ restUrl, formatDataFromApi, formatDataForApi }) => ({
       console.log('deleteById')
       await axios.delete(`${restUrl}/${id}`)
     } catch (error) {
-      Promise.reject(error)
+      return Promise.reject(error)
     }
   },
 })

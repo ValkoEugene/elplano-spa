@@ -1,15 +1,13 @@
 import React from 'react'
 import { withRouter } from 'react-router'
 import { withStyles } from '@material-ui/core/styles'
-import Loader from '../Loader'
-import Alert from '../UI-core/Alert'
 import AddNew from '../UI-core/AddNew'
 import useLecturersIndex from '../../hooks/useLecturersIndex'
 import useCoursesIndex from '../../hooks/useCoursesIndex'
 import LectureItem from './LectureItem'
+import ApiWrapper from '../UI-core/ApiWrapper'
 
 function Lecturers({ classes }) {
-  /** */
   const { loadingLecturers, errorLecturers, lecturers } = useLecturersIndex()
 
   const { loadingCourses, errorCourses, courses } = useCoursesIndex()
@@ -21,20 +19,6 @@ function Lecturers({ classes }) {
   const haveCourses = Boolean(lecturers.length)
 
   /**
-   * Сообщение о ошибки
-   * @type {JSX}
-   */
-  const errorAlert = (
-    <Alert color="error">{ errorLecturers || errorCourses }</Alert>
-  )
-
-  /**
-   * Сообщение об отсутствие препродавателей
-   * @type {JSX}
-   */
-  const emptyAlert = <Alert color="warning">Список препродавателей пуст</Alert>
-
-  /**
    * Список предметов
    * @type {JSX}
    */
@@ -44,27 +28,30 @@ function Lecturers({ classes }) {
     </div>
   ))
 
+  /**
+   * Ошибка при загрузке данных
+   * @type {Error | Null}
+   */
+  const error = errorLecturers || errorCourses
+
+  /**
+   * Флаг загрузки данных
+   * @type {Boolean}
+   */
+  const loading = loadingLecturers || loadingCourses
+
   return (
-    <>
-      { (() => {
-        if (errorLecturers || errorCourses) {
-          return errorAlert
-        } else if (loadingLecturers || loadingCourses) {
-          return <Loader />
-        } else {
-          return (
-            <>
-              { !haveCourses ? (
-                emptyAlert
-              ) : (
-                <div className={ classes.wrapper }>{ lecturersList }</div>
-              ) }
-              <AddNew addLink="/lecturers/edit" />
-            </>
-          )
-        }
-      })() }
-    </>
+    <ApiWrapper
+      loading={ loading }
+      error={ error }
+      haveData={ haveCourses }
+      emptyText="Список препродавателей пуст"
+    >
+      <>
+        <div className={ classes.wrapper }>{ lecturersList }</div>
+        <AddNew addLink="/lecturers/edit" />
+      </>
+    </ApiWrapper>
   )
 }
 

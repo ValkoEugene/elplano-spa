@@ -32,7 +32,12 @@ const addJWT = config => {
 
 // Обновляем токен при 401 статусе
 const updateToken = error => {
+  console.log('updateToken')
   const originalRequest = error.config
+
+  if (error.response.status !== 401) {
+    return Promise.reject(error)
+  }
 
   // Проверяем статус и что это не повторный запрос
   if (error.response.status === 401 && !originalRequest._retry) {
@@ -69,11 +74,12 @@ const updateToken = error => {
 
 // Обработка ошибок
 const handlingErrors = error => {
+  console.log('axios errorHandker', error)
   // Обрабатываем ошибки сети
   // в них нет ответа и соответственно status, data что нужны
   if (!error.response) {
-    console.error('Network error')
-    return
+    console.log('Network error')
+    return Promise.reject(new Error('Network error'))
   }
 
   // Получаем статус ошибки и данные
@@ -89,7 +95,8 @@ const handlingErrors = error => {
     error.message = 'Извините, возникла ошибка на сервере'
   }
 
-  return Promise.reject(error.message)
+  console.log('before axios reject', error.message)
+  return Promise.reject(error)
 }
 
 axiosInstance.interceptors.request.use(addJWT)

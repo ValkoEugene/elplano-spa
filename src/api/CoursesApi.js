@@ -22,7 +22,7 @@ const formatDataForApi = ({ title, lecturers = [] }) => ({
     title,
   },
   relationships: {
-    courses: {
+    lecturers: {
       data: lecturers.map(id => ({
         id,
         type: 'lecturer',
