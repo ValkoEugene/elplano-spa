@@ -7,6 +7,7 @@ import Tab from '@material-ui/core/Tab'
 import Paper from '@material-ui/core/Paper'
 import Login from './Login'
 import Registrate from './Registrate'
+import ResetPassword from './ResetPassword'
 import { logout } from '../../actions/AuthActions.js'
 import { unsetTokens } from '../../plugins/token'
 import { connect } from 'react-redux'
@@ -60,9 +61,14 @@ function Auth({ classes, history }) {
           >
             <Tab label="Вход" className={ classes.tab } />
             <Tab label="Регистрация" className={ classes.tab } />
+            <Tab label="Сброс пароля" className={ classes.tab } />
           </Tabs>
-          { atciveTab === 0 && <Login /> }
-          { atciveTab === 1 && <Registrate /> }
+
+          <div className={ classes.formContent }>
+            { atciveTab === 0 && <Login /> }
+            { atciveTab === 1 && <Registrate /> }
+            { atciveTab === 2 && <ResetPassword /> }
+          </div>
         </Paper>
       </div>
     </div>
@@ -94,10 +100,16 @@ const styles = theme => ({
     [theme.breakpoints.up('sm')]: { width: '40%' },
   },
   tab: {
-    width: '50%',
+    width: '33.3333%',
   },
   tabsRoot: {
     width: '100%',
+  },
+  formContent: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '25px',
   },
 })
 

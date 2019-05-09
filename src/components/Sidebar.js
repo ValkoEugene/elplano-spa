@@ -1,4 +1,4 @@
-import menuItems from '../menuItems.js'
+import pagesSettings from '../pagesSettings.js'
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
@@ -33,7 +33,7 @@ function Sidebar({ isSidebarOpen, toggleSidebar, classes, theme, width }) {
     if (isSidebarOpen && isMobile) toggleSidebar()
   }
 
-  const links = [...menuItems]
+  const links = [...pagesSettings]
     .filter(menuItem => menuItem.sidebar)
     .map(menuItem => <SidebarItem menuItem={ menuItem } key={ menuItem.path } />)
 
