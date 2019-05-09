@@ -33,7 +33,7 @@ function LessonItem({ id, classes, title, lecturers, lecturersList, history }) {
    * @type {JSX}
    */
   const lecturersChips = lecturers.length
-    ? lecturers.map(({ id }) => (
+    ? lecturers.map(id => (
         <Chip
           label={ getLuctureView(id) }
           className={ classes.chip }
