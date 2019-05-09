@@ -6,90 +6,43 @@ import Loader from '../Loader'
 import Alert from '../UI-core/Alert'
 import LessonItem from './LessonItem'
 import AddNew from '../UI-core/AddNew'
+import useLecturersIndex from '../../hooks/useLecturersIndex'
+import useCoursesIndex from '../../hooks/useCoursesIndex'
+import ApiWrapper from '../UI-core/ApiWrapper'
 
 function LessonsList({ classes }) {
-  const REST_URL = '/courses'
+  const { loadingLecturers, errorLecturers, lecturers } = useLecturersIndex()
 
-  const [courses, setCourses] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-
-  const [lecturersList, setLecturersList] = useState([])
+  const { loadingCourses, errorCourses, courses } = useCoursesIndex()
 
   /**
-   * Формотирование данных от api
-   * @param {Array} items - список предметов
-   * @returns {Array} форматированный список предметов
+   * Флаг загрузки данных
+   * @type {Boolean}
    */
-  const formatDataFromApi = items =>
-    items.map(({ id, attributes, relationships }) => {
-      const lecturers = relationships.lecturers && relationships.lecturers.data
-      const { title } = attributes
+  const loading = loadingCourses || loadingLecturers
 
-      return { id, title, lecturers }
+  /**
+   * Ошибка при загрузке данных
+   * @type {Error | Null}
+   */
+  const error = errorCourses || errorLecturers
+
+  /**
+   * Список преподавателей на отображение
+   * @type {Array}
+   */
+  const lecturersList = lecturers.map(
+    ({ id, last_name, first_name, patronymic }) => ({
+      id,
+      view: [last_name, first_name, patronymic].join(' '),
     })
-
-  /**
-   * Загрузить список предметов
-   */
-  const loadLessons = async () => {
-    const result = await axios(REST_URL)
-
-    const courses = result.data.data
-
-    setCourses(courses.length ? formatDataFromApi(courses) : [])
-  }
-
-  /**
-   * Загрузить список преподавателей
-   */
-  const loadLecturers = async () => {
-    const response = await axios.get('/lecturers')
-
-    const lecturers = response.data.data.map(
-      ({ id, attributes: { first_name, last_name, patronymic } }) => ({
-        id,
-        view: [last_name, first_name, patronymic].join(' '),
-      })
-    )
-
-    setLecturersList(lecturers)
-  }
-
-  /**
-   * Инициализация данных
-   */
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await Promise.all([loadLecturers(), loadLessons()])
-
-        setLoading(false)
-      } catch (e) {
-        setError(e)
-      }
-    }
-
-    fetchData()
-  }, [])
+  )
 
   /**
    * Флаг наличия предметов
    * @type {Boolean}
    */
   const haveCourses = Boolean(courses.length)
-
-  /**
-   * Сообщение о ошибки
-   * @type {JSX}
-   */
-  const errorAlert = <Alert color="error">{ error }</Alert>
-
-  /**
-   * Сообщение об отсутствие предметов
-   * @type {JSX}
-   */
-  const emptyAlert = <Alert color="warning">Список предметов пуст</Alert>
 
   /**
    * Список предметов
@@ -102,26 +55,17 @@ function LessonsList({ classes }) {
   ))
 
   return (
-    <>
-      { (() => {
-        if (error) {
-          return errorAlert
-        } else if (loading) {
-          return <Loader />
-        } else {
-          return (
-            <>
-              { !haveCourses ? (
-                emptyAlert
-              ) : (
-                <div className={ classes.wrapper }>{ coursesList }</div>
-              ) }
-              <AddNew addLink="/lessons/edit" />
-            </>
-          )
-        }
-      })() }
-    </>
+    <ApiWrapper
+      loading={ loading }
+      error={ error }
+      haveData={ haveCourses }
+      emptyText="Список предметов пуст"
+    >
+      <>
+        <div className={ classes.wrapper }>{ coursesList }</div>
+        <AddNew addLink="/lessons/edit" />
+      </>
+    </ApiWrapper>
   )
 }
 

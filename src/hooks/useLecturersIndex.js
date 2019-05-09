@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import lecturersApi from '../api/LecturersApi'
 
-const useLecturersApi = () => {
+function useLecturersIndex() {
   const [lecturers, setLecturers] = useState([])
   const [loadingLecturers, setLoadingLecturers] = useState(true)
   const [errorLecturers, setErrorLecturers] = useState(null)
@@ -25,4 +25,4 @@ const useLecturersApi = () => {
   return { lecturers, loadingLecturers, errorLecturers }
 }
 
-export default useLecturersApi
+export default useLecturersIndex

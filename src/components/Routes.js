@@ -1,9 +1,9 @@
 import React from 'react'
 import { Route } from "react-router-dom"
-import menuItems from '../menuItems.js'
+import pagesSettings from '../pagesSettings.js'
 
 const Routes = () => (
-  menuItems.map(item => {
+  pagesSettings.map(item => {
     const props = { path: item.path, component: item.component }
 
     if (item.exact) props.exact = item.exact

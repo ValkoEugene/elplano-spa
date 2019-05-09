@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import CoursesApi from '../api/CoursesApi'
 
-const useCoursesApi = () => {
+function useCoursesIndex() {
   const [courses, setCourses] = useState([])
   const [loadingCourses, setLoadingCourses] = useState(true)
   const [errorCourses, setErrorCourses] = useState(null)
@@ -25,4 +25,4 @@ const useCoursesApi = () => {
   return { courses, loadingCourses, errorCourses }
 }
 
-export default useCoursesApi
+export default useCoursesIndex

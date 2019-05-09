@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import coursesApi from '../api/CoursesApi'
 
-const useCourseApi = id => {
+function useCoursesShow(id) {
   const [course, setCourse] = useState({
     title: '',
     lecturers: [],
@@ -33,4 +33,4 @@ const useCourseApi = id => {
   return { course, loadingCourse, errorCourse }
 }
 
-export default useCourseApi
+export default useCoursesShow

@@ -14,7 +14,7 @@ import Menu from '@material-ui/core/Menu'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import { logout } from '../actions/AuthActions.js'
 import { setCurrentRout } from '../actions/RouteActions'
-import menuItems from '../menuItems'
+import pagesSettings from '../pagesSettings'
 
 const mapStateToProps = ({ user, route }) => {
   const { username } = user
@@ -48,7 +48,7 @@ class Header extends Component {
   }
 
   getMenuTitle = pathname => {
-    const currentMenuItem = menuItems.find(item => item.path === pathname)
+    const currentMenuItem = pagesSettings.find(item => item.path === pathname)
 
     return currentMenuItem ? currentMenuItem.text : ''
   }

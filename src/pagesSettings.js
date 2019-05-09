@@ -14,21 +14,32 @@ import TasksContainer from './components/Tasks/TasksContainer'
 import MeasuresContainer from './components/Measures/MeasuresContainer'
 import Attachments from './components/Attachments'
 import ProfileEdit from './components/ProfileEdit'
+import UpdatePassword from './components/UpdatePassword'
 
-const menuItems = [
+const pagesSettings = [
   {
     text: 'Подтверждение аккаунта',
     path: '/confirm-account',
     exact: true,
     sidebar: false,
     component: Confirm,
+    layout: false,
   },
   {
     text: 'Авторизация',
     path: '/auth',
-    exact: false,
+    exact: true,
     sidebar: false,
     component: Auth,
+    layout: false,
+  },
+  {
+    text: 'Новый пароль',
+    path: '/update-password',
+    exact: true,
+    sidebar: false,
+    component: UpdatePassword,
+    layout: false,
   },
   {
     text: 'Главная',
@@ -37,6 +48,7 @@ const menuItems = [
     sidebar: true,
     icon: 'home',
     component: Home,
+    layout: true,
   },
   {
     text: 'Расписание',
@@ -45,6 +57,7 @@ const menuItems = [
     sidebar: true,
     icon: 'school',
     component: TimetableContainer,
+    layout: true,
   },
   {
     text: 'Добавить event',
@@ -52,6 +65,7 @@ const menuItems = [
     exact: true,
     sidebar: false,
     component: EditEventContainer,
+    layout: true,
   },
   {
     text: 'Преподаватели',
@@ -60,6 +74,7 @@ const menuItems = [
     sidebar: true,
     icon: 'contacts',
     component: Lecturers,
+    layout: true,
   },
   {
     text: 'Добавить преподавателя',
@@ -67,6 +82,7 @@ const menuItems = [
     exact: true,
     sidebar: false,
     component: LecturerEdit,
+    layout: true,
   },
   {
     text: 'Предметы',
@@ -75,6 +91,7 @@ const menuItems = [
     sidebar: true,
     icon: 'library_books',
     component: Lessons,
+    layout: true,
   },
   {
     text: 'Редактироавние предмета',
@@ -82,6 +99,7 @@ const menuItems = [
     exact: false,
     sidebar: false,
     component: LessonsEdit,
+    layout: true,
   },
   {
     text: 'Группа',
@@ -97,6 +115,7 @@ const menuItems = [
     exact: false,
     sidebar: false,
     component: GroupInfo,
+    layout: true,
   },
   {
     text: 'Профиль',
@@ -104,6 +123,7 @@ const menuItems = [
     exact: false,
     sidebar: false,
     component: ProfileEdit,
+    layout: true,
   },
   {
     text: 'Задания',
@@ -112,6 +132,7 @@ const menuItems = [
     sidebar: true,
     icon: 'work',
     component: TasksContainer,
+    layout: true,
   },
   {
     text: 'Мероприятия',
@@ -120,6 +141,7 @@ const menuItems = [
     sidebar: true,
     icon: 'event_note',
     component: MeasuresContainer,
+    layout: true,
   },
   {
     text: 'Оценки',
@@ -128,6 +150,7 @@ const menuItems = [
     sidebar: true,
     icon: 'star_half',
     component: Ratings,
+    layout: true,
   },
   {
     text: 'Вложения',
@@ -136,7 +159,8 @@ const menuItems = [
     sidebar: true,
     icon: 'unarchive',
     component: Attachments,
+    layout: true,
   },
 ]
 
-export default menuItems
+export default pagesSettings
