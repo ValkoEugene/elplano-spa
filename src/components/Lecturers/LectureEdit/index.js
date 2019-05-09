@@ -8,8 +8,8 @@ import Alert from '../../UI-core/Alert'
 import Typography from '@material-ui/core/Typography'
 import GoBack from '../../UI-core/GoBack'
 import { withSnackbar } from 'notistack'
-import useLecureApi from '../../../hooks/useLecureApi'
-import useCoursesApi from '../../../hooks/useCoursesApi'
+import useLecturesShow from '../../../hooks/useLecturesShow'
+import useCoursesIndex from '../../../hooks/useCoursesIndex'
 import lecturersApi from '../../../api/LecturersApi'
 
 LectureEdit.propTypes = {
@@ -21,9 +21,9 @@ LectureEdit.propTypes = {
 }
 
 function LectureEdit({ id, setId, history, location, enqueueSnackbar }) {
-  const { lecture, loadingLecture, errorLecture } = useLecureApi(id)
+  const { lecture, loadingLecture, errorLecture } = useLecturesShow(id)
 
-  const { courses, loadingCourses, errorCourses } = useCoursesApi()
+  const { courses, loadingCourses, errorCourses } = useCoursesIndex()
 
   /**
    * Список предметов для multiselect

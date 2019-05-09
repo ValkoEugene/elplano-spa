@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import lecturersApi from '../api/LecturersApi'
 
-const useLectureApi = id => {
+function useLecturesShow(id) {
   const [lecture, setLecture] = useState({
     first_name: '',
     last_name: '',
@@ -35,4 +35,4 @@ const useLectureApi = id => {
   return { lecture, loadingLecture, errorLecture }
 }
 
-export default useLectureApi
+export default useLecturesShow

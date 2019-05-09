@@ -4,15 +4,15 @@ import { withStyles } from '@material-ui/core/styles'
 import Loader from '../Loader'
 import Alert from '../UI-core/Alert'
 import AddNew from '../UI-core/AddNew'
-import useLecturersApi from '../../hooks/useLecturersApi'
-import useCoursesApi from '../../hooks/useCoursesApi'
+import useLecturersIndex from '../../hooks/useLecturersIndex'
+import useCoursesIndex from '../../hooks/useCoursesIndex'
 import LectureItem from './LectureItem'
 
 function Lecturers({ classes }) {
   /** */
-  const { loadingLecturers, errorLecturers, lecturers } = useLecturersApi()
+  const { loadingLecturers, errorLecturers, lecturers } = useLecturersIndex()
 
-  const { loadingCourses, errorCourses, courses } = useCoursesApi()
+  const { loadingCourses, errorCourses, courses } = useCoursesIndex()
 
   /**
    * Флаг наличия препродавателей
